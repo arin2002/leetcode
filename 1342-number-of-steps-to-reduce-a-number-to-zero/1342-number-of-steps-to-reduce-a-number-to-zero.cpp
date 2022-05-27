@@ -7,7 +7,7 @@ public:
             if(n%2==0)
                 n/=2;
             else
-                n -=1;
+                n --;
             count++;
         }
         
