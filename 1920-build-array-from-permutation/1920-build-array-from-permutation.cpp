@@ -5,7 +5,8 @@ public:
         vector<int> v;
         for(int i = 0 ; i< n ; i++)
         {
-            int x = nums[nums[i]];
+            int j = nums[i];
+            int x = nums[j];
             v.push_back(x);
         }
         
