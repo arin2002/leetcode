@@ -1,33 +1,26 @@
 class Solution {
 public:
     vector<int> sortEvenOdd(vector<int>& nums) {
+        vector<int> odd;
+        vector<int> even;
         int n = nums.size();
-        priority_queue<int> maxheap;
-        priority_queue <int, vector<int>, greater<int> > minheap;
-        
-        // even fill  (0,2,4,6....)
-        for(int i=0; i<n;){
-            minheap.push(nums[i]);
-            i = i+2;
-        }
-        // odd fill  (1,3,5,7,....)
-        for(int i=1; i<n;){
-            maxheap.push(nums[i]);
-            i = i+2;
-        }
-        //
-        // nums.clear();
-        int i = 0;
-        while(i<n){
-            if(i%2==0){
-                nums[i] = minheap.top();
-                minheap.pop();
+        for(int i=0;i<n;i++){
+            if(i&1){
+                odd.push_back(nums[i]);
             }
             else{
-                nums[i] = maxheap.top();
-                maxheap.pop();
+                even.push_back(nums[i]);
             }
-            i++;
+        }
+        sort(odd.begin(),odd.end(),greater<int>());
+        sort(even.begin(),even.end());
+        int p = 0;
+        for(int i=1;i<n;i+=2){
+            nums[i] = odd[p++];
+        }
+        p = 0;
+        for(int i=0;i<n;i+=2){
+            nums[i] = even[p++];
         }
         return nums;
     }
