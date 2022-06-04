@@ -1,31 +1,26 @@
 class Solution {
 public:
     vector<int> sortEvenOdd(vector<int>& nums) {
-        int gap = 2;
-        for(int i=gap; i<nums.size(); i+=2)             //Shell Sort on even indexes
-        {
-            int temp = nums[i];
-            int j = i;
-            
-            while(j - gap >=0 && nums[j-gap] > temp)
-            {
-                nums[j] = nums[j - gap];
-                j -= gap;
-            }
-            nums[j] = temp;
-        }
+        int n = nums.size();
+        vector<int> v1,v2;
         
-        for(int i=3; i<nums.size(); i+=2)          //Shell Sort on odd indexes
+        for(int i = 0; i<n; i++)
         {
-            int temp = nums[i];
-            int j = i;
-            
-            while(j - gap >=0 && nums[j-gap] < temp)
-            {
-                nums[j] = nums[j - gap];
-                j -= gap;
-            }
-            nums[j] = temp;
+            if(i%2 == 0)
+                v1.push_back(nums[i]);
+            else
+                v2.push_back(nums[i]);
+        }
+        sort(v1.begin(),v1.end());
+        sort(v2.begin(),v2.end());
+        reverse(v2.begin(),v2.end());
+        int j = 0, k =0;
+        for(int i = 0 ; i<n;i++)
+        {
+            if(i %2 == 0)
+                nums[i] = v1[j++];
+            else 
+                nums[i] = v2[k++];
         }
         
         return nums;
