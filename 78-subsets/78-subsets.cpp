@@ -9,9 +9,9 @@ public:
             ans.push_back(temp);
             return;
         }
-        
-        sub(nums, i+1, temp);
         temp.push_back(nums[i]);
+        sub(nums, i+1, temp);
+        temp.pop_back();
         sub(nums, i+1, temp);
     }
     
