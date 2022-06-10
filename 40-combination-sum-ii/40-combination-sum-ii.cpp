@@ -14,7 +14,7 @@ public:
         for(int i = itr; i<n; i++)
         {
             if(i>itr  && nums[i] == nums[i-1]) continue;
-            if(nums[i] > target) return;
+            if(nums[i] > target) break;
             temp.push_back(nums[i]);
             sum(i+1,nums,target-nums[i],n);
             temp.pop_back();
