@@ -10,9 +10,6 @@ public:
                 d = 0;
         }
         
-        if(c || d)
-        return true;
-        
-        return false;
+        return c||d;
     }
 };
