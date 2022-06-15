@@ -32,18 +32,18 @@ public:
     {
         if (ind == n)
             return 0;
-        if (dp[ind][prev_index] != -1)
-            return dp[ind][prev_index];
+        if (dp[ind][prev_index+1] != -1)
+            return dp[ind][prev_index+1];
 
         int len = f(ind + 1, prev_index, dp, arr, n); // not take
         if (prev_index == n-1 || arr[ind] > arr[prev_index])
             len = max(len, 1 + f(ind + 1, ind, dp, arr, n)); // take condition
-        return dp[ind][prev_index] = len;
+        return dp[ind][prev_index+1] = len;
     }
     
     int lengthOfLIS(vector<int>& arr) {
         int n = arr.size();
-        vector<vector<int>> dp(n, vector<int>(n , -1));
+        vector<vector<int>> dp(n, vector<int>(n+1 , -1));
         return f(0, n-1, dp, arr, n);
     }
 };
