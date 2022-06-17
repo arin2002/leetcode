@@ -1,22 +1,27 @@
 class Solution {
 public:
-    int finalValueAfterOperations(vector<string>& nums) {
-        
-        int n = nums.size();
-        int x = 0;
-        for(int i = 0; i<n; i++)
+    int finalValueAfterOperations(vector<string>& operations) 
+    {
+        int X = 0;
+        for(int i=0;i<operations.size();i++)
         {
-            int k = 0;
-            string s =  nums[i];
-            
-            while(s[k] == 'X'){k++;}
-            
-            if(s[k] == '-')
-                x--;
-            else
-                x++;
+            if(operations[i]=="X++")
+            {
+                X++;
+            }
+            else if(operations[i] == "++X")
+            {
+                ++X;
+            }
+            else if(operations[i] == "X--")
+            {
+                X--;
+            }
+            else if(operations[i] == "--X")
+            {
+                --X;
+            }
         }
-        
-        return x;
+        return X;
     }
 };
