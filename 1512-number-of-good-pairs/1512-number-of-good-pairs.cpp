@@ -7,10 +7,8 @@ public:
         unordered_map<int,int> mp;
         
         for(int i =0; i<n; i++)
-        {
             count+=mp[nums[i]]++;
-            cout<<count;
-        }
+        
         return count;
     }
 };
