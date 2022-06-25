@@ -1,19 +1,14 @@
 class Solution {
 public:
     string toLowerCase(string s) {
-        string st = "";
+        int n = s.length();
         
-        for(auto i : s)
+        for(int i = 0; i<n; i++)
         {
-            if(i >='A' && i<='Z')
-            {
-                i +=32;
-            }
-            
-            st+=i;
-
+            if(s[i] >='A' && s[i]<='Z')
+                s[i] +=32;
         }
         
-        return st;
+        return s;
     }
 };
