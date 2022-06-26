@@ -12,21 +12,26 @@
 class Solution {
 public:
     
-    TreeNode* ans = NULL;
+    // TreeNode* ans = NULL;
     
-    void search(TreeNode* root,int v)
-    {
-        if(root ==  NULL)
-            return;
-        if(root->val == v){
-            ans = root;
-            return;
-        }
-        search(root->left,v);
-        search(root->right,v);
-    }
+    // void search(TreeNode* root,int v)
+    // {
+    //     if(root ==  NULL)
+    //         return;
+    //     if(root->val == v){
+    //         ans = root;
+    //         return;
+    //     }
+    //      search(root->left,v);
+    //      search(root->right,v);
+    // }
     TreeNode* searchBST(TreeNode* root, int val) {
-        search(root,val);
-        return ans;
+        if(!root || root->val == val)
+            return root;
+        
+        if(val<root->val)
+           return searchBST(root->left,val);
+        
+        return searchBST(root->right,val);
     }
 };
