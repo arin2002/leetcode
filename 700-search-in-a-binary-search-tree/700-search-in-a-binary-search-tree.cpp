@@ -26,12 +26,16 @@ public:
     //      search(root->right,v);
     // }
     TreeNode* searchBST(TreeNode* root, int val) {
-        if(!root || root->val == val)
-            return root;
+        while(root)
+        {
+            if(root->val == val)
+                return root;
+            else if(root->val > val)
+                root = root->left;
+            else
+               root = root->right;
+        }
         
-        if(val<root->val)
-           return searchBST(root->left,val);
-        
-        return searchBST(root->right,val);
+        return root;
     }
 };
