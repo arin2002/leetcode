@@ -1,24 +1,29 @@
 class Solution {
 public:
+    bool checkForVowel(char chr){
+        if(chr=='a' || chr=='e' || chr=='i' || chr=='o' || chr=='u' || chr=='A' || chr=='E' || chr=='I' || chr=='O' || chr=='U' )
+            return true;
+        else
+            return false;
+    }
     string reverseVowels(string s) {
-        vector<char> v;
         int n = s.length();
-        //s = s.toLower()
-        
-        for(int i =0; i<n; i++)
-        {
-            if(s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o'|| s[i] == 'u'|| s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O'|| s[i] == 'U')
-                v.push_back(s[i]);
+        int i = 0,j=n-1;
+        while(i<j){
+            if(checkForVowel(s[i]) && checkForVowel(s[j])){
+                swap(s[i],s[j]);
+                i++;
+                j--;
+            }
+            else if(checkForVowel(s[i]))
+                j--;
+            else if(checkForVowel(s[j]))
+                i++;
+            else{
+                i++;
+                j--;
+            }
         }
-        
-        reverse(v.begin(),v.end());
-        int k = 0;
-        for(int i =0; i<n; i++)
-        {
-                        if(s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o'|| s[i] == 'u'|| s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O'|| s[i] == 'U')
-                s[i] = v[k++];
-        }
-
         return s;
     }
 };
