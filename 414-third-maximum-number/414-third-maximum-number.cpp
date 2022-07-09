@@ -1,21 +1,24 @@
 class Solution {
 public:
     int thirdMax(vector<int>& nums) {
-        int n = nums.size();
         
-        sort(nums.begin(),nums.end());
-        int count = 1, i= n-1;
-        for(; i>=1; i--)
-        {
-            if(count == 3)
-                break;
+        long one = LONG_MIN, two = LONG_MIN, three = LONG_MIN;
+        for (int num : nums) {
+            if (num == one || num == two || num == three)
+                continue;
             
-            if(nums[i] != nums[i-1])
-                count++;
+            if (num > one) {
+                three = two;
+                two = one;
+                one = num;
+            } else if (num > two) {
+                three = two;
+                two = num;
+            } else if (num > three) {
+                three = num;
+            }
         }
         
-        if(count == 3)
-            return nums[i];
-        return nums[n-1];
+        return three == LONG_MIN ? one : three;
     }
 };
