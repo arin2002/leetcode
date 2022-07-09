@@ -8,7 +8,7 @@ public:
         for(; i>=1; i--)
         {
             if(count == 3)
-                return nums[i];
+                break;
             
             if(nums[i] != nums[i-1])
                 count++;
