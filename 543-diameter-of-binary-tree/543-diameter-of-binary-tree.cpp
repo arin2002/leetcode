@@ -20,6 +20,7 @@ public:
         int l = helper(root->left);
         int r = helper(root->right);
         
+        maxi = max(maxi,l+r);
         return 1+max(l,r);
     }
     
@@ -27,14 +28,14 @@ public:
         if(!root)
             return 0;
         
-        int l = helper(root->left);
-        int r = helper(root->right);
+//         int l = helper(root->left);
+//         int r = helper(root->right);
         
-        maxi = max(maxi,l+r);
+//         maxi = max(maxi,l+r);
         
-        diameterOfBinaryTree(root->left);
-        diameterOfBinaryTree(root->right);
-        
+//         diameterOfBinaryTree(root->left);
+//         diameterOfBinaryTree(root->right);
+        int l = helper(root);
         return maxi;
     }
 };
