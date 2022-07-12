@@ -35,7 +35,7 @@ public:
         
 //         diameterOfBinaryTree(root->left);
 //         diameterOfBinaryTree(root->right);
-        int l = helper(root);
+        helper(root);
         return maxi;
     }
 };
