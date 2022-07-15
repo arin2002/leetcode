@@ -20,24 +20,26 @@ public:
         queue<TreeNode *> q;
         q.push(root);
         
-        int k = 0;
+        bool flag = true;
         while(!q.empty())
         {
-            vector<int> temp;
             int n = q.size();
+            vector<int> temp(n);
             for(int i = 0; i<n; i++)
             {
                 TreeNode *node = q.front();
                 q.pop();
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
                 
-                temp.push_back(node->val);
+                int index = flag ? i : n-1-i;
+                if(node->left) q.push(node->left);
+                if(node->right)  q.push(node->right);
+                
+                temp[index] = node->val;
             }
-            
-            if(k%2 !=0)
-                reverse(temp.begin(),temp.end());
-            k++;
+            flag = !flag;
+            // if(k%2 !=0)
+            //     reverse(temp.begin(),temp.end());
+            // k++;
             ans.push_back(temp);
         }
         return ans;
