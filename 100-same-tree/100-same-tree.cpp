@@ -11,24 +11,24 @@
  */
 class Solution {
 public:
-    int helper(TreeNode *p, TreeNode *q)
-    {
-        if(!p && !q)
-            return 1;
+//     bool helper(TreeNode *p, TreeNode *q)
+//     {
+//         if(!p && !q)
+//             return true;
         
-        if(!p || !q)
-            return 0;
+//         if(!p || !q)
+//             return false;
         
-        int l = helper(p->left,q->left);
-        int r = helper(p->right, q->right);
+//         if(p->val != q->val)
+//             return false;
         
-        if(l==1 && r==1 && p->val==q->val)
-            return 1;
+//         return helper(p->left,q->right) && helper(p->right,q->right);
         
-        return 0;
-    }
+//     }
     
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        return helper(p,q);
+        if(p==NULL||q==NULL)
+            return p==q;
+     return(p->val==q->val)&&isSameTree(p->left,q->left)&&isSameTree(p->right,q->right);   
     }
 };
