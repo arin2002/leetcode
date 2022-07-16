@@ -10,8 +10,11 @@ public:
     void findPaths(TreeNode* node, int sum, vector<int>& path, vector<vector<int> >& paths) {
         if (!node) return;
         path.push_back(node -> val);
-        if (!(node -> left) && !(node -> right) && sum == node -> val)
+        if (!(node -> left) && !(node -> right) && sum == node -> val){
             paths.push_back(path);
+            path.pop_back();
+            return;
+        }
         findPaths(node -> left, sum - node -> val, path, paths);
         findPaths(node -> right, sum - node -> val, path, paths);
         path.pop_back();
