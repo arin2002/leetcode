@@ -15,8 +15,8 @@ public:
 
     void helper(TreeNode *r,string st){
         
-        if(r == NULL)
-            return;
+        // if(r == NULL)
+        //     return;
         
         if(r && !r->left && !r->right){
             s.push_back(st);
