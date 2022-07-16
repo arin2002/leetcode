@@ -30,12 +30,11 @@ public:
                 temp.push_back(root->val);
                 ans.push_back(temp);
                 temp.pop_back();
-                return;
             }
+                            return;
+
         }
         
-
-
             temp.push_back(root->val);
             sum -= root->val;
             helper(root->left,sum);
