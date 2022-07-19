@@ -38,6 +38,6 @@ public:
     
     int deepestLeavesSum(TreeNode* root) {
         
-        return helper(root,0);
+        return helper(root,1);
     }
 };
