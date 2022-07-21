@@ -15,7 +15,7 @@ public:
             if(arr[mid] <= arr[prev] && arr[mid] <= arr[next])
                 return arr[mid];
             
-            else if(arr[mid] <= arr[high])
+            else if(arr[mid] < arr[high])
                 high = mid-1;
             else
                 low = mid+1;
