@@ -8,15 +8,15 @@ public:
         {
             int mid = i + (j-i)/2;
             
-            int next = (mid+1)%n;
+//             int next = (mid+1)%n;
             
-            if(target == letters[mid]){
-                if(letters[mid] != letters[next])
-                    return letters[next];
-                i = mid+1;
-            }
+//             if(target == letters[mid]){
+//                 if(letters[mid] != letters[next])
+//                     return letters[next];
+//                 i = mid+1;
+//             }
             
-            else if(letters[mid] < target)
+           if(letters[mid] <= target)
                 i = mid+1;
             else
                 j = mid-1;
