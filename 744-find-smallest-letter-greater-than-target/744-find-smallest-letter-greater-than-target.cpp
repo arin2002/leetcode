@@ -13,7 +13,6 @@ public:
             if(target == letters[mid]){
                 if(letters[mid] != letters[next])
                     return letters[next];
-                
                 i = mid+1;
             }
             
@@ -24,9 +23,9 @@ public:
             
         }
         
-        if(i == n)
-        return letters[0];
+        // if(i == n)
+        // return letters[0];
 
-        return letters[i];
+        return letters[i%n];
     }
 };
