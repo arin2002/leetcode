@@ -5,24 +5,15 @@ public:
         
         int count = 0;
         
+        int temp = 0;
         for(int i = 0; i<n; i++)
         {
-            int temp = 0;
-            
-            // if(i == n-1){
-            //     if(nums[i]==1)
-            //         temp = 1;
-            // }
-            // else{
-            while(nums[i] == 1){
-                i++;
+            if(nums[i] == 0)
+                temp = 0;
+            else
                 temp++;
-                
-                if(i == n)
-                    break;
-            }
-            // }
-            count = max(count,temp);
+            
+            count = max(temp,count);
         }
         
         return count;
