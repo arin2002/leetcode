@@ -21,7 +21,7 @@ public:
         while(!q.empty()){
             int n = q.size();
             
-            long long temp = 0;
+            double temp = 0;
             for(int i = 0; i<n; i++){
                 TreeNode * node = q.front();
                 q.pop();
@@ -31,7 +31,7 @@ public:
                 temp += node->val;
             }
             
-            v.push_back((double)temp/n);
+            v.push_back(temp/n);
         }
         
         return v;
