@@ -26,7 +26,7 @@ public:
         f(root->left);
         f(root->right);
         
-                if(root->val == 0){
+        if(root->val == 0){
             if(root->left == NULL && root->right == NULL){
                 root = NULL;
                 return;
@@ -37,7 +37,6 @@ public:
     
     TreeNode* pruneTree(TreeNode* root) {
         f(root);
-        
         return root;
     }
 };
