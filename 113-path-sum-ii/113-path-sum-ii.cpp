@@ -12,42 +12,26 @@
 class Solution {
 public:
     vector<vector<int>> ans;
-    vector<int> temp;
     
-    
-    void helper(TreeNode *root, int sum)
-    {
+    void f(TreeNode *root, int k, vector<int> temp){
         if(!root)
-        {
-            // if(sum==0)
-            //     ans.push_back(temp);
+            return;
+        
+        temp.push_back(root->val);
+        k-=root->val;
+        if(root->left == NULL && root->right == NULL && k == 0){
+            ans.push_back(temp);
             return;
         }
-        if(root->left == NULL && root->right == NULL)
-        { 
-            if(sum - root->val == 0)
-            {
-                temp.push_back(root->val);
-                ans.push_back(temp);
-                temp.pop_back();
-            }
-                            return;
-
-        }
         
-            temp.push_back(root->val);
-            sum -= root->val;
-            helper(root->left,sum);
-            helper(root->right,sum);
-            temp.pop_back();
-        //sum += root->val;
+        f(root->left,k,temp);
+        f(root->right,k,temp);
     }
     
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
-        if (!root)
-            return ans;
+        vector<int> temp;
+        f(root,targetSum,temp);
         
-        helper(root,targetSum);
         return ans;
     }
 };
