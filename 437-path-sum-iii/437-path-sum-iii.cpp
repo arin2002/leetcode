@@ -13,36 +13,34 @@ class Solution {
 public:
     
     int count = 0;
+    unordered_map<long,int> ump;
     
     
-    void path(TreeNode *root, long long k){
+    
+    void f(TreeNode * root, long long runSum, int k){
         if(!root)
             return;
         
-        k-=root->val;
+        runSum += root->val;
         
-        if(k == 0)
+        if(runSum == k)
             count++;
         
-        path(root->left,k);
-        path(root->right,k);
-    }
-    
-    
-    void trav(TreeNode *root, int k){
-        if(!root)
-            return;
-    
-        path(root,k);
-        trav(root->left,k);
-        trav(root->right,k);
+        if(ump.find(runSum-k) != ump.end()){
+            count += ump[runSum - k];
+        }
         
+        ump[runSum]++;
+        f(root->left,runSum,k);
+        f(root->right,runSum,k);
+        
+        ump[runSum]--;
     }
     
     
     int pathSum(TreeNode* root, int targetSum) {
-        trav(root,targetSum);
         
+        f(root,0,targetSum);
         return count;
     }
 };
