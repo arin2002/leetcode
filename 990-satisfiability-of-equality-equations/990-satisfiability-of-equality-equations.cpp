@@ -1,20 +1,46 @@
 class Solution {
 public:
-    int uf[26];
-    bool equationsPossible(vector<string>& equations) {
-        for (int i = 0; i < 26; ++i) uf[i] = i;
-        for (string e : equations)
-            if (e[1] == '=')
-                uf[find(e[0] - 'a')] = find(e[3] - 'a');
-        for (string e : equations)
-            if (e[1] == '!' && find(e[0] - 'a') == find(e[3] - 'a'))
-                return false;
+    vector<int> parent;
+    vector<int> rank;
+    int findParent(int node){
+        if(parent[node]==node){
+            return node;
+        }
+        return findParent(parent[node]);
+    }
+    void unionn(int a,int b){
+        int u=findParent(a);
+        int v=findParent(b);
+        if(rank[u]>rank[v]){
+            parent[v]=u;
+        }
+        else if(rank[u]<rank[v]){
+            parent[u]=v;
+        }
+        else{
+            parent[u]=v;
+            rank[v]++;
+        }
+    }
+    bool equationsPossible(vector<string>& e) {
+        parent.resize(26);
+        rank.resize(26);
+        for(int i=0;i<26;i++){
+            parent[i]=i;
+            rank[i]=0;
+        }
+        for(auto it:e){
+            int a=it[0]-'a', b=it[3]-'a';char sign=it[1];
+            if(sign=='='){
+                unionn(a,b);
+            }
+        }
+        for(auto it:e){
+            int a=it[0]-'a', b=it[3]-'a';char sign=it[1];
+            if(sign=='!' && (findParent(a)==findParent(b))){
+                return false;   
+            }
+        }
         return true;
     }
-
-    int find(int x) {
-        if (x != uf[x]) uf[x] = find(uf[x]);
-        return uf[x];
-    }
-
 };
