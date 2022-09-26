@@ -6,7 +6,7 @@ public:
         if(parent[node]==node){
             return node;
         }
-        return findParent(parent[node]);
+        return parent[node] = findParent(parent[node]);
     }
     void unionn(int a,int b){
         int u=findParent(a);
