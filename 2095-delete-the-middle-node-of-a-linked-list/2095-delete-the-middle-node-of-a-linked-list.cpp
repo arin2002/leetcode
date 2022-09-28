@@ -11,30 +11,17 @@
 class Solution {
 public:
     ListNode* deleteMiddle(ListNode* head) {
-        ListNode* p = head, *q = head;
-        
-        vector<int> v;      
-        while(p){
-            v.push_back(p->val);
-            p = p->next;
-        }
-        
-        int n = v.size();
-        v[n/2] = 0;
-        
-        p = head;
-        
-        if(n==1)
+                if(head->next == NULL)
             return NULL;
         
-        for(auto i: v){
-            if(i == 0)
-                continue;
-            q = p;
-            p->val = i;
-            p = p->next;
+        ListNode* p = head->next->next, *q = head;
+        while(p && p->next){
+            p = p->next->next;
+            q = q->next;
         }
-        q->next = NULL;
+        
+        cout<<q->val;
+        q->next = q->next->next;
         return head;
     }
 };
