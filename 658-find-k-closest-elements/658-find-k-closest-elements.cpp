@@ -1,14 +1,14 @@
 class Solution {
 public:
-    vector<int> findClosestElements(vector<int>& arr, int k, int x) {    
-        int l = 0, r = arr.size()-1;
-        
-        while(r-l>=k){
-            if(abs(x-arr[l]) <= abs(arr[r]-x))
-                r--;
-            else
-                l++;
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int l,r;
+        r = lower_bound(arr.begin(),arr.end(),x)-arr.begin();
+        l = r-1;
+        while(k--){
+            if(r >= arr.size() || (l>=0 && x-arr[l] <= arr[r]-x))
+                l--;
+            else r++;
         }
-        return vector<int>(begin(arr) + l, begin(arr) + r + 1);
+        return {arr.begin()+l+1,arr.begin()+r};
     }
 };
