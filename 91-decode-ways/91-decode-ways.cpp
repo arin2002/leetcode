@@ -13,9 +13,12 @@ public:
             return dp[i];
         
         int count = 0;
+        
+        // 1 ke pair
         if(s[i-1] != '0')
             count = f(i-1,s,dp);
         
+        // 2 ke pair
         if(s[i - 2] == '1'|| (s[i - 2] == '2' && s[i-1] < '7'))
             count  += f(i-2,s,dp);
         
