@@ -1,31 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
-    void addNode(TreeNode * root,TreeNode * par, int val , int depth, int child){
-        if(depth<1)return;
-        if(depth == 1){
-            TreeNode * n = new TreeNode(val);
-            if(child){
-                n->right = par->right;
-                par->right = n;
+public:
+    
+    void add(TreeNode *root,TreeNode *prev, int f, int val, int k){
+        if(root == NULL){
+            if(k == 1){
+                TreeNode *temp = new TreeNode(val);
+                if(f){
+                    prev->right = temp;
+                }
+                else
+                    prev->left = temp;
+            }
+            
+            return;
+        }
+        
+        k--;
+        cout<<k;
+        if(k == 0){
+            cout<<1;
+            TreeNode *temp = new TreeNode(val);
+            if(f == 0){
+                temp->left = root;
+                prev->left = temp;
             }
             else{
-                n->left = par->left;
-                par->left = n;
+                temp->right = root;
+                prev->right = temp;
             }
             return;
         }
-        else{
-            if(root)addNode(root->left,root,val,depth-1,0);
-            if(root)addNode(root->right,root,val,depth-1,1);
-        }
+        
+        add(root->left,root,0,val,k);
+        add(root->right,root,1,val,k);
     }
-public:
+    
     TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+        
         if(depth == 1){
-            TreeNode * n = new TreeNode(val);
-            n->left = root;
-            return n;
+            TreeNode *temp = new TreeNode(val);
+            temp->left = root;
+            return temp;
         }
-        addNode(root,root,val,depth,0);
+        
+        
+        add(root,root,-1,val,depth);
         return root;
     }
 };
