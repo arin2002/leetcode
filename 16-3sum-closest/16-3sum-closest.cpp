@@ -12,15 +12,17 @@ public:
             while(l<r){
                 int temp = nums[i]+nums[l]+nums[r];
                 
-                if(abs(temp-target) < abs(closet-target))
+                
+                if(temp == target)
+                    return target;
+                
+                else if(abs(temp-target) < abs(closet-target))
                     closet = temp;
                 
                 if(temp<target)
                     l++;
-                else if(temp>target)
-                    r--;
                 else
-                    break;
+                    r--;
             }
         }
         
