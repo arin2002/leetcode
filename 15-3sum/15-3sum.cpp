@@ -10,6 +10,10 @@ public:
             int r = n-1;
             int target = 0-nums[i];
             
+            
+            if(target<0)
+                break;
+            
             while(l<r){
                 int sum = nums[l] + nums[r];
                 
