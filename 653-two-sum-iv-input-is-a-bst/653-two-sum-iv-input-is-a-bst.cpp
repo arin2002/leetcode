@@ -11,31 +11,31 @@
  */
 class Solution {
 public:
+    vector<int> nums;
     
-    vector<int> v;
-    void helper(TreeNode *root)
-    {
-        if(root == NULL)
+    void Traverse(TreeNode *root){
+        if(!root)
             return;
         
-        helper(root->left);
-        v.push_back(root->val);
-        helper(root->right);
+        Traverse(root->left);
+        nums.push_back(root->val);
+        Traverse(root->right);
     }
+    
     bool findTarget(TreeNode* root, int k) {
-        helper(root);
+        Traverse(root);
         
-        int i = 0, j = v.size()-1;
+        int i = 0, j = nums.size()-1;
         
-        while(i<j)
-        {
-            if(v[i] + v[j] == k)
-                return true;
+        while(i<j){
+            int s = nums[i]+nums[j];
             
-            else if(v[i] +v[j] > k)
-                j--;
-            else
+            if(s==k)
+                return true;
+            else if(s<k)
                 i++;
+            else
+                j--;
         }
         
         return false;
