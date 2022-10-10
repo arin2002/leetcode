@@ -1,34 +1,40 @@
 class Solution {
 public:
-    vector<int> findOriginalArray(vector<int>& changed) {
-        int n = changed.size();
+    vector<int> findOriginalArray(vector<int>& v) {
         vector<int> ans;
+        int n = v.size();
+        
         
         if(n%2 != 0)
             return ans;
         
-        sort(changed.begin(),changed.end());
+        sort(v.begin(),v.end());
         unordered_map<int,int> ump;
+        for(int i = 0; i<n; i++)
+            ump[v[i]]++;
         
         for(int i = 0; i<n; i++){
-            ump[changed[i]]++;
-        }
-        
-        for(int i = 0; i<n; i++){
-            if(ump[changed[i]] == 0)
-                    continue;
+            if(ans.size() == n/2)
+                return ans;
             
-            if(ump.find(changed[i]*2) != ump.end()){
-                if(ump[changed[i]*2] == 0)
-                    return{};
-                ans.push_back(changed[i]);
-                ump[changed[i]*2]--;
-                ump[changed[i]]--;
+            if(ump[v[i]] == 0)
+                continue;
+            
+            if(v[i]*2 == v[i]){
+                if(ump[v[i]*2] > 1){
+                    ans.push_back(v[i]);
+                    ump[v[i]]--;
+                    ump[v[i]]--;
+                }
             }
-            else{
-                return {};
+            
+            else if(ump[v[i]*2] !=0){
+                ans.push_back(v[i]);
+                ump[v[i]*2]--;
+                ump[v[i]]--;
             }
         }
-        return ans;
+        
+        return vector<int>();
     }
 };
