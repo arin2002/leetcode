@@ -5,10 +5,10 @@ public:
         int ans = 1, temp = 1;
         
         for(int i = 1; i<s.length(); i++){
-            int curr = s[i]-'a';
-            int prev = s[i-1] - 'a';
+            // int curr = s[i]-'a';
+            // int prev = s[i-1] - 'a';
             
-            if(curr-prev == 1){
+            if(s[i]-s[i-1] == 1){
                 temp++;
             }
             else
