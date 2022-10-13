@@ -9,16 +9,13 @@
 class Solution {
 public:
     void deleteNode(ListNode* node) {
-        ListNode *p = node->next, *q = node;
-        
-        while(p->next){
-            node->val = p->val;
-            node = node->next;
-            p = p->next;
-        }
-        
-        node->val = p->val;
-        node->next = p->next;
-        
+        // pointer to next node
+        ListNode* nextNode = node->next;
+        // copy that value
+        node->val = nextNode->val;
+        // link them
+        node->next = nextNode->next;
+        // delete next node
+        delete(nextNode);
     }
 };
