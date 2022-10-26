@@ -12,28 +12,27 @@
 class Solution {
 public:
     int ans = 0;
-    void f(TreeNode *root, TreeNode *prev){
+    void f(TreeNode *root, int val){
         if(root == NULL)
             return;
         
         if(root->left == NULL && root->right == NULL){
-            // cout<<root->val<<" ";
             
-            if(prev->right != root)
+            if(val == 0)
             ans += root->val;
             return;
         }
         
-        f(root->left,root);
-        f(root->right,root);
+        f(root->left,0);
+        f(root->right,1);
     }
     
     
     int sumOfLeftLeaves(TreeNode* root) {
-        if(root->left == NULL && root->right == NULL)
-            return 0;
+        // if(root->left == NULL && root->right == NULL)
+        //     return 0;
         
-        f(root,root);
+        f(root,-1);
         return ans;
     }
 };
