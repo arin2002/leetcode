@@ -14,16 +14,9 @@ public:
         return ans;
     }
     
-    int prime(int n){
-        if(n==1)
-            return 0;
-        
-        for(int i = 2; i<=sqrt(n); i++){
-            if(n%i == 0){
-                return 0;
-            }
-        }
-        return 1;
+    int prime(int x){
+        return (x == 2 || x == 3 || x == 5 || x == 7 ||
+                x == 11 || x == 13 || x == 17 || x == 19);
     }
     
     int countPrimeSetBits(int left, int right) {
