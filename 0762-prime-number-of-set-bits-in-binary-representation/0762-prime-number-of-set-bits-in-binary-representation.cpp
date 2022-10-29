@@ -18,20 +18,11 @@ public:
         if(n==1)
             return 0;
         
-//         if(n==2)
-//             return 1;
-        
-        int c = 0;
-        for(int i = 2; i<=n/2; i++){
+        for(int i = 2; i<=sqrt(n); i++){
             if(n%i == 0){
-                c++;
-                break;
+                return 0;
             }
         }
-        
-        if(c)
-            return 0;
-        
         return 1;
     }
     
