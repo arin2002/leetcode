@@ -17,7 +17,8 @@ public:
         
         int flag = 1;
         for(auto it : words){
-            string s = rev(it);
+            string s = it;
+            reverse(s.begin(),s.end());
             
             auto i = ump.find(s);
             if(it[0] == it[1]){
