@@ -1,51 +1,25 @@
 class Solution {
 public:
-    
-    Solution(){
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-    }
-    
-    string rev (string &s){
-        string t = "";
-        t +=s[1];
-        t +=s[0];
-        
-        return t;
-    }
-    
     int longestPalindrome(vector<string>& words) {
-        int n = words.size();
-        int ans = 0;        
-        unordered_map<string,int> ump;
-        for(auto it : words)
-            ump[it]++;
+        vector<vector<int>> v(26,vector<int>(26,0));;
+        int ans = 0;
         
-        int flag = 1;
         for(auto it : words){
-            string s = rev(it);
-            
-            auto i = ump.find(s);
-            if(it[0] == it[1]){
-                if(i->second > 1){
-                    ans+=4;
-                    ump[it]--;
-                    ump[it]--;
-                }
-                else if(flag && ump[it]>0){
-                    cout<<"hi";
-                    ans+=2;
-                    flag = 0;
-                }
-                else
-                    continue;
+            int a = it[0]-'a';
+            int b = it[1]-'a';
+
+            if(v[b][a]){
+                ans+=4;
+                v[b][a]--;
             }
-            else if(i != ump.end() && i->second>0 && ump[it]>0){
-                ans +=4;
-                cout<<i->first<<" ";
-                cout<<ans<<" ";
-                ump[it]--;
-                ump[s]--;
+            else
+                v[a][b]++;
+        }
+        
+        for(int i = 0; i<26; i++){
+            if(v[i][i]){
+                ans+=2;
+                break;
             }
         }
         
