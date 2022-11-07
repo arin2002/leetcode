@@ -1,17 +1,22 @@
-class Solution {
-public:
-    int peakIndexInMountainArray(vector<int>& arr) {
-        int i = 0, j = arr.size()-1, mid = -1;
+class Solution:
+    def peakIndexInMountainArray(self, A):
+        def gold1(l, r):
+            return l + int(round((r - l) * 0.382))
+
+        def gold2(l, r):
+            return l + int(round((r - l) * 0.618))
+        l, r = 0, len(A) - 1
+        x1, x2 = gold1(l, r), gold2(l, r)
+        while x1 < x2:
+            if A[x1] < A[x2]:
+                l = x1
+                x1 = x2
+                x2 = gold1(x1, r)
+            else:
+                r = x2
+                x2 = x1
+                x1 = gold2(l, x2)
+        return A.index(max(A[l:r + 1]), l)
+
+
         
-        while(i<j){
-            mid = i + (j-i)/2;
-            
-            if(arr[mid]<arr[mid+1])
-                i = mid+1;
-            else
-                j = mid;
-        }
-        
-        return i;
-    }
-};
