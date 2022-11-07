@@ -10,8 +10,6 @@ public:
                 i = mid+1;
             else
                 j = mid;
-            
-            mid = i + (j-i)/2;
         }
         
         return i;
