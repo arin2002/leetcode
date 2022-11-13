@@ -1,8 +1,4 @@
 class Solution {
-private:
-    int lcm(int a, int b) {
-        return (a * b) / __gcd(a, b);
-    }
 public:
     int subarrayLCM(vector<int> &nums, int k) {
         int res = 0, n = nums.size();
@@ -13,7 +9,7 @@ public:
                 g = lcm(g, nums[j]);
                 if (g == k) res++;
                 else if (g < k) continue;
-                else break;
+               else break;
             }
         }
         return res;
