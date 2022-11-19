@@ -25,12 +25,6 @@ public:
         vector<int> v;
         
         solve(root,v);
-        
-        for(int i = 0; i<v.size();i++){
-            if(k == i+1)
-                return v[i];
-        }
-        
-        return 0;
+        return v[k-1];
     }
 };
