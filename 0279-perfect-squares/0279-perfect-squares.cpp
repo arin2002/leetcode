@@ -3,7 +3,7 @@ public:
     
     int f(int i, int k, vector<int> &v, vector<vector<int>> &dp){
         if(i<0 || k<0)
-            return 1e5;
+            return 1e7;
         
         if(k == 0)
             return 0;
@@ -11,7 +11,7 @@ public:
         if(dp[i][k] != -1)
             return dp[i][k];
         
-        int l = 1e8;
+        int l = INT_MAX;
         if(k-v[i] >=0)
             l = 1 + f(i,k-v[i],v,dp);
         
