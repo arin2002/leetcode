@@ -1,34 +1,38 @@
 class Solution {
 public:
-    
-    int f(int i, int k, vector<int> &v, vector<vector<int>> &dp){
-        if(i<0 || k<0)
-            return 1e7;
-        
-        if(k == 0)
-            return 0;
-        
-        if(dp[i][k] != -1)
-            return dp[i][k];
-        
-        int l = INT_MAX;
-        if(k-v[i] >=0)
-            l = 1 + f(i,k-v[i],v,dp);
-        
-        int r = f(i-1,k,v,dp);
-        
-        return dp[i][k] = min(l,r);
-    }
-    
-    
     int numSquares(int n) {
-        vector<int> v;
         
-        for(int i = 1; i*i<=n; i++)
-            v.push_back(i*i);
+        // because only one split is possible in this 1^2 like this
+        if(n<=3)
+            return n;
         
-        vector<vector<int>> dp(v.size(),vector<int>(n+1,-1));
+        // lagranges theorm says that ki any natural no can be represnted
+        // as sum of 4 integers n = a2+b2+c2+d2
         
-        return f(v.size()-1,n,v,dp);
+        // Legendre's theorem 3 square
+        
+        // for checking perfect square
+        if(ceil(sqrt(n)) == floor(sqrt(n)))
+            return 1;
+        
+        // 4^a term remove
+        while(n%4 == 0)
+            n/=4;
+        
+        // 4^a(8b+7)
+        if(n%8 == 7)
+            return 4;
+        
+        for(int i = 1; i*i<=n; i++){
+            int b = sqrt(n-i*i);
+            
+            // 2 partions are created
+            if(b*b == (n-i*i))
+                return 2;
+            
+        }
+        
+        
+        return 3;
     }
 };
