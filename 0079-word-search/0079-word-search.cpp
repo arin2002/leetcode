@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    bool f(vector<vector<char>>& board,string &word,int i,int j,int n,int m,int k){
+    bool f(vector<vector<char>>& board,string word,int i,int j,int n,int m,int k){
         if(k >= word.size())return true;
         if(i<0 || i>=n || j<0 || j>=m || board[i][j]=='.' || word[k]!=board[i][j]) return false;
         // if(word.size() == 1 && word[k]==board[i][j]) return true;
