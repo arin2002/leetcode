@@ -1,34 +1,26 @@
 class Solution {
 public:
     
-    bool solve(vector<int> &v, int ind){
-        int i = 0, j = ind ,sum1 = 0, sum2 = 0;
-        
-        for(; i<=ind; i++){
-            sum1+=v[i];
-        }
-        
-        for(; j<v.size(); j++)
-            sum2 += v[j];
-        
-        return sum1 == sum2;
+    int f(int x){
+        return (x*(x+1))/2;
     }
     
     int pivotInteger(int n) {
-        vector<int> v;
+        int i = 1, j = n;
         
-        if(n == 1)
-            return 1;
+        int total = (n*(n+1))/2;
         
-        for(int i = 1; i<=n; i++){
-            v.push_back(i);
+        while(i<=j){
+            int mid = (i+j)/2;
+            
+            if(f(mid) == total-f(mid-1))
+                return mid;
+            
+            if(f(mid)>total-f(mid-1))
+                j = mid-1;
+            else
+                i = mid+1;
         }
-        
-        for(int i = 1; i<n; i++){
-            if(solve(v,i))
-                return v[i];
-        }
-        
         
         return -1;
     }
