@@ -1,33 +1,32 @@
 class Solution {
 public:
     
-    int f(string &a){
-        int count = 0;
-        for(auto it : a){
-            if(it == 'a'||it == 'e'||it == 'i'||it == 'o'||it == 'u')
-                count++;
-            
-            else if(it == 'A'||it == 'E'||it == 'I'||it == 'O'||it == 'U')
-                count++;
-        }
+    bool vowel(char &it){
         
-        return count;
+        if(it == 'a'||it == 'e'||it == 'i'||it == 'o'||it == 'u')
+            return 1;
+        else if(it == 'A'||it == 'E'||it == 'I'||it == 'O'||it == 'U')
+            return 1;
+        
+        return 0;
     }
     
     
     bool halvesAreAlike(string s) {
-        string a,b;
         
-        int n = s.size();
-        for(int i = 0; i<n/2; i++){
-            a+=s[i];
+        int mid = s.size()/2;
+        
+        int count1 = 0, count2 = 0;
+        for(int i = 0; i<s.size()/2; i++){
+            if(vowel(s[i]))
+                count1++;
+            
+            if(vowel(s[i+mid]))
+                count2++;
+                
         }
-        
-        for(int i = n/2; i<n; i++){
-            b+=s[i];
-        }
-        
-        return f(a)==f(b);
+    
+        return count1 == count2;
             
     }
 };
