@@ -1,26 +1,25 @@
 class Solution {
 public:
+    
+    bool check(string &s){
+        for(auto it : s){
+            if(it >= 'a' && it <= 'z')
+                return 1;
+        }
+        
+        return 0;
+    }
+    
+    
     int maximumValue(vector<string>& strs) {
         
         int ans = 0;
         for(auto it : strs){
-            string temp;
+            if(check(it))
+                ans = max(ans,(int) it.size());
             
-            int flag = 0;
-            for(auto i : it){
-                if(i >= 'a' && i<= 'z'){
-                    flag = 1;
-                    int s = it.size();
-                    ans = max(ans,s);
-                    break;
-                }
-                temp += i;
-            }
-            
-            if(flag == 0){
-                int n = stoi(temp);
-                ans = max(ans,n);
-            }
+            else
+                ans = max(ans,stoi(it));
         }
         
         return ans;
