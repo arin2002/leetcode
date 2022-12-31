@@ -1,13 +1,28 @@
 class Solution {
 public:
     int arrayPairSum(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
         
         int sum = 0;
-        for(int i = nums.size()-1; i>=1; i-=2){
-            sum += nums[i-1];
+        
+        vector<int> v(20001,0);
+        
+        for(auto it : nums){
+            v[it+10000]++;
         }
         
+        int count = 0, i = 0;
+        
+        while(i<20001){
+            if(v[i] != 0){
+                if(count%2 == 0)
+                    sum += (i-10000);
+                
+                count++;
+                v[i]--;
+            }
+            else
+                i++;
+        }
         return sum;
     }
 };
