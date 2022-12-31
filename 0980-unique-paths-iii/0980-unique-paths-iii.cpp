@@ -11,7 +11,7 @@ public:
         return 0;
     }
     
-    int f(int i, int j, int count, vector<vector<int>>grid, vector<vector<vector<int>>> &dp){
+    int f(int i, int j, int count, vector<vector<int>>&grid, vector<vector<vector<int>>> &dp){
         if(check(i,j,grid))
             return 0;
         
@@ -32,7 +32,7 @@ public:
         int z = f(i,j-1,count,grid,dp);
         int p = f(i-1,j,count,grid,dp);
         
-        // grid[i][j] = 0;
+        grid[i][j] = 0;
         return dp[i][j][count] = l+r+z+p;
     }
     
