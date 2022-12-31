@@ -22,8 +22,8 @@ public:
             return 1;
         }
         
-        if(dp[i][j][count] != -1)
-            return dp[i][j][count];
+        // if(dp[i][j][count] != -1)
+        //     return dp[i][j][count];
         
         grid[i][j] = -2;
         count--;
