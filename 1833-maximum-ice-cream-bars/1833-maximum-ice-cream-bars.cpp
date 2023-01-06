@@ -1,33 +1,33 @@
 class Solution {
 public:
-    int maxIceCream(vector<int>& costs, long long coins) {        
-        // sort(costs.begin(),costs.end());
-        vector<long long> v(1e5+1,0);
-        
-        for(auto it: costs)
-            v[it]++;
-        
-        long long ans = 0, ind = 1;
-    
-        while(ind <= 1e5){
-            if(v[ind] != 0){
-                if(coins >= (ind*v[ind])){
-                    coins -= (ind*v[ind]);
-                    ans += v[ind];
-                    ind++;
-                }
-                else if (coins >= ind){
-                    coins -= ind;
-                    v[ind]--;
-                    ans++;
-                }
-                else
-                    break;
-            }
-            else
-                ind++;
+    int maxIceCream(vector<int>& costs, int coins) {
+        int n = costs.size();
+        int m = *max_element(costs.begin(), costs.end());
+        int icecreams = 0;
+
+        vector<int> costsFrequency(m + 1);
+        for (auto& cost : costs) {
+            costsFrequency[cost]++;
         }
-        
-        return ans;
+
+        for (int cost = 1; cost <= m; ++cost) {
+            // No ice cream is present costing 'cost'.
+            if (costsFrequency[cost] == 0) {
+                continue;
+            }
+            // We don't have enough 'coins' to even pick one ice cream.
+            if (coins < cost) {
+                break;
+            }
+            
+            // Count how many icecreams of 'cost' we can pick with our 'coins'.
+            // Either we can pick all ice creams of 'cost' or we will be limited by remaining 'coins'.
+            int count = min(costsFrequency[cost], coins / cost);
+            // We reduce price of picked ice creams from our coins.
+            coins -= cost * count;
+            icecreams += count;
+        }
+
+        return icecreams;
     }
 };
