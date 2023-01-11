@@ -21,9 +21,7 @@ public:
             long long n = it-'a'+1;
             
             if(n>=10){
-                num += n%10;
-                n/=10;
-                num += n%10;
+                num += n%10 + n/10;
             }
             else{
                 num += n;
