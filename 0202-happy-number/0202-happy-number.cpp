@@ -22,8 +22,9 @@ public:
             if(slow == fast)
                 return 0;
             
-            fast = solve(fast);
-            fast = solve(fast);
+            // fast = solve(fast);
+            // fast = solve(fast);
+            fast = solve(solve(fast));
             slow = solve(slow);
         }
         
