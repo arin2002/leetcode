@@ -1,24 +1,12 @@
 class Solution {
 public:
-    
-    int solve(int n){
-        
-        int sum = 0;
-        
-        while(n){
-            sum += n%10;
-            n/=10;
-        }
-        
-        return sum;
-    }
-    
     int addDigits(int num) {
+        if(num == 0)
+            return 0;
         
-        while(num>9){
-            num = solve(num);
-        }
+        if(num%9 == 0)
+            return 9;
         
-        return num;
+        return num%9;
     }
 };
