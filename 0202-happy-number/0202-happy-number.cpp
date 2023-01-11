@@ -15,14 +15,16 @@ public:
     bool isHappy(int n) {
         
         // cycle ban jayegi not happy walo mai 
-        unordered_set<long> ump;
+        // unordered_set<long> ump;
+        long fast = solve(n), slow = n;
         
-        while(n != 1){
-            if(ump.find(n) != ump.end())
+        while(fast != 1){
+            if(slow == fast)
                 return 0;
             
-            ump.insert(n);
-            n = solve(n);
+            fast = solve(fast);
+            fast = solve(fast);
+            slow = solve(slow);
         }
         
         return 1;
