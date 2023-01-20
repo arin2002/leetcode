@@ -1,40 +1,49 @@
 class Solution {
 public:
-    vector<int> findOriginalArray(vector<int>& v) {
+    vector<int> findOriginalArray(vector<int>& changed) {
         vector<int> ans;
-        int n = v.size();
+        int n = changed.size();
         
+        sort(changed.begin(),changed.end());
         
         if(n%2 != 0)
             return ans;
         
-        sort(v.begin(),v.end());
         unordered_map<int,int> ump;
-        for(int i = 0; i<n; i++)
-            ump[v[i]]++;
+        bool flag = false;
+        for(auto it : changed){
+            ump[it]++;
+            if(it == 0)
+                flag = true;
+        }
         
-        for(int i = 0; i<n; i++){
-            if(ans.size() == n/2)
+        if(flag){
+            if(ump[0]%2 != 0)
                 return ans;
-            
-            if(ump[v[i]] == 0)
+        }
+        
+        for(auto it : changed){
+            if(ump[it] == 0)
                 continue;
             
-            if(v[i]*2 == v[i]){
-                if(ump[v[i]*2] > 1){
-                    ans.push_back(v[i]);
-                    ump[v[i]]--;
-                    ump[v[i]]--;
-                }
-            }
+            auto i = ump.find(it*2);
             
-            else if(ump[v[i]*2] !=0){
-                ans.push_back(v[i]);
-                ump[v[i]*2]--;
-                ump[v[i]]--;
+            if(i!= ump.end()){
+                if(i->second != 0){
+                    ans.push_back(it);
+                    ump[it*2]--;
+                    ump[it]--;
+                }
             }
         }
         
-        return vector<int>();
+//         for(auto it: ans)
+//             cout<<it<<" ";
+        
+        // cout<<ans.size();
+        if(ans.size() != n/2)
+            return {};
+        
+        return ans;
     }
 };
