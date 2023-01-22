@@ -18,6 +18,7 @@ public:
             return;
         }
         
+        // ind -> start, i -> end
         for(int i = ind; i<s.size(); i++){
             if(check(ind,i,s)){
                 temp.push_back(s.substr(ind,i-ind+1));
