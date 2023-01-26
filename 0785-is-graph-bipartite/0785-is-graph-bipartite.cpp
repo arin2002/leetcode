@@ -1,27 +1,17 @@
 class Solution {
 public:
     
-    bool bfs(int node, vector<int> &color, vector<vector<int>>& graph){
-        queue<int> q;
-        q.push(node);
-        
-        color[node] = 0;
-        
-        while(!q.empty()){
-            int node = q.front();
-            q.pop();
-            
-            for(auto it : graph[node]){
-                // not colored
-                if(color[it] == -1){
-                    // give opposite color
-                    color[it] = !color[node];
-                    q.push(it);
-                }
-                // same color
-                else if(color[it] == color[node])
+    // odd length wali dega cycle
+    bool dfs(int node, vector<int> &color, vector<vector<int>>& graph,int col){        
+        for(auto it : graph[node]){
+            if(color[it] == -1){
+                color[it] = !col;
+                // for subtree
+                if(!dfs(it,color,graph,color[it]))
                     return 0;
             }
+            else if(color[it] == color[node])
+                return 0;
         }
         
         return 1;
@@ -35,9 +25,9 @@ public:
         
         for(int i = 0; i<n; i++){
             if(color[i] == -1){
-                if(!bfs(i,color,graph)){
+                color[i] = 0;
+                if(!dfs(i,color,graph,0))
                     return 0;
-                }
             }
         }
         
