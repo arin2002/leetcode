@@ -1,40 +1,35 @@
 class SummaryRanges {
 public:
     
-    vector<int> v , vis;
+    set<int> st;
     SummaryRanges() {
-        vis.resize(10004);
     }
     
     void addNum(int value) {
-        if(!vis[value]){
-            v.push_back(value);
-            vis[value]++;
-        }
+        st.insert(value);
     }
     
     vector<vector<int>> getIntervals() {
-        sort(v.begin(),v.end());
-        vector<vector<int>> ans;
-        int n = v.size();
+        if(!st.size())
+            return {};
         
-        for(int i = 0; i<n; i++){
-            int j = i;
-            
-            while(j+1<n && v[j]+1 == v[j+1]){
-                j++;
+        vector<vector<int>> ans;
+        
+        int left = -1, right = -1;
+        for(auto it : st){
+            if(left<0){
+                left = right = it;
             }
-            
-            if(j>i){
-                ans.push_back({v[i],v[j]});
+            else if(it == right+1){
+                right = it;
             }
             else{
-                ans.push_back({v[i],v[i]});
+                ans.push_back({left,right});
+                left = right = it;
             }
-            
-            i = j;
         }
         
+        ans.push_back({left, right});
         return ans;
     }
 };
