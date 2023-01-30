@@ -17,10 +17,10 @@ public:
             return 0;
         
         int l = solve(root->left);
-        if(l == -1)
-            return -1;
+        // if(l == -1)
+        //     return -1;
         int r = solve(root->right);
-        if(r == -1)
+        if(r == -1 || l == -1)
             return -1;
         
         if(abs(l-r)>1)
