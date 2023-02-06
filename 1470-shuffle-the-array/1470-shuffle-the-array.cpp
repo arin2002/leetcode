@@ -1,22 +1,19 @@
 class Solution {
 public:
     vector<int> shuffle(vector<int>& nums, int n) {
-        vector<int> v;
-        int m = nums.size();
+        vector<int> x1, y1, ans;
         
-        int i = 0, j = n;
-        bool flag = true;
-        while(i<=j && j<m){
-            if(flag){
-                flag = !flag;
-                v.push_back(nums[i++]);
-            }
+        int i = 0, y = n, z = 0;
+        while(i<n || y<2*n){
+            if(z%2 == 0)
+                ans.push_back(nums[i++]);
             else{
-                flag = !flag;
-                v.push_back(nums[j++]);
+                ans.push_back(nums[y++]);
             }
+            
+            z++;
         }
         
-        return v;
+        return ans;
     }
 };
