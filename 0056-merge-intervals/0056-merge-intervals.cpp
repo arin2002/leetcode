@@ -3,27 +3,19 @@ public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         vector<vector<int>> ans;
         
-        if(intervals.size() <= 1)
-            return intervals;
-        
-        // temp vector comapre vagera le liye
-        
         sort(intervals.begin(),intervals.end());
-        vector<int> temp = intervals[0];
         
+        int k = -1;
         for(auto it : intervals){
-            if(it[0] <= temp[1]){
-                temp[1] = max(temp[1],it[1]);
+            if(ans.size() == 0 || ans[k][1] < it[0]){
+                ans.push_back(it);
+                k++;
             }
             else{
-                ans.push_back(temp);
-                temp = it;
+                ans[k][1] = max(it[1],ans[k][1]);
             }
-            
-            // cout<<temp[0]<<" "<<temp[1]<<endl;
         }
         
-        ans.push_back(temp);
         return ans;
     }
 };
