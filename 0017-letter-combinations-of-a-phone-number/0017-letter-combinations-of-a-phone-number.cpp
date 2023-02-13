@@ -1,33 +1,30 @@
 class Solution {
 public:
     
-    vector<string> ans;
+    vector<string> ans,map;
     
-    void solve(int ind, string map[], string &temp, string &digits){
+    void solve(int ind, string temp,string &digits){
         if(ind >= digits.size()){
-            
             if(temp.size() != 0)
-            ans.push_back(temp);
+                ans.push_back(temp);
+            
             return;
         }
         
-        int num = digits[ind]-'0';
+        int n = digits[ind]-'0';
+        string s = map[n];
         
-        string s = map[num];
         for(int i = 0; i<s.size(); i++){
             temp.push_back(s[i]);
-            solve(ind+1,map,temp,digits);
+            solve(ind+1,temp,digits);
             temp.pop_back();
         }
-    } 
+    }
     
     vector<string> letterCombinations(string &digits) {
+        map = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
         
-        string map[10] = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
-        
-        string temp = "";
-        solve(0,map,temp,digits);
-        
+        solve(0,"",digits);
         return ans;
     }
 };
