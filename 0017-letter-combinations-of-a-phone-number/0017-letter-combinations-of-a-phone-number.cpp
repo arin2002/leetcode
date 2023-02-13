@@ -3,7 +3,7 @@ public:
     
     vector<string> ans;
     
-    void solve(int ind, string map[], string temp, string &digits){
+    void solve(int ind, string map[], string &temp, string &digits){
         if(ind >= digits.size()){
             
             if(temp.size() != 0)
@@ -25,7 +25,8 @@ public:
         
         string map[10] = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
         
-        solve(0,map,"",digits);
+        string temp = "";
+        solve(0,map,temp,digits);
         
         return ans;
     }
