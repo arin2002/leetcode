@@ -3,30 +3,21 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         vector<int> ans;
         
-        vector<pair<int,int>> vp;
+        unordered_map<int,int> ump;
         
-        int i = 0, j = nums.size()-1;
+        int i = 0, j = nums.size();
         for(auto it : nums){
-            vp.push_back({it,i++});
+            ump[it] = i++;
         }
         
-        sort(vp.begin(),vp.end());
-        
-        i = 0;
-        while(i<j){
-            int val = vp[i].first + vp[j].first;
+        for(i = 0; i<j; i++){
+            int val = target-nums[i];
+            auto it = ump.find(val);
             
-            if(val == target){
-                return {vp[i].second,vp[j].second};
+            if(it != ump.end() && i!= it->second){
+                return {i,it->second};
             }
-            
-            else if(val < target)
-                i++;
-            
-            else
-                j--;
         }
-        
         
         return ans;
     }
