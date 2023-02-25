@@ -6,11 +6,23 @@ public:
         int j = 0;
         for(auto it : mat){
             int count = 0;
-            for(auto i : it){
-                if(i == 1)
-                    count++;
+            // for(auto i : it){
+            //     if(i == 1)
+            //         count++;
+            // }
+            int l = 0, r = it.size()-1;
+            
+            while(l<=r){
+                int mid = (l+r)/2;
+                
+                if(it[mid] == 1)
+                    l = mid+1;
+                
+                else
+                    r = mid-1;
             }
-            pq.push({count,j++});
+            
+            pq.push({l,j++});
         }
         
         while(pq.size()>k)
