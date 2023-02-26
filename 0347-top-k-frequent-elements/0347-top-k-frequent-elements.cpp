@@ -4,15 +4,13 @@ public:
         vector<int> ans;
         
         unordered_map<int,int> ump;
-        unordered_set<int> s;
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
         for(auto it : nums){
-            s.insert(it);
             ump[it]++;
         }
         
-        for(auto it : s){
-            pq.push({ump[it],it});
+        for(auto it: ump){
+            pq.push({it.second,it.first});
             
             if(pq.size()>k)
                 pq.pop();
