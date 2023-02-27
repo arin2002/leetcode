@@ -1,34 +1,30 @@
 class Solution {
 public:
     string sortSentence(string s) {
-        vector<string>v(10,"0");
-        int n = s.length(), j =0;
-        string ans="";
+        string temp;
         
-        for(int i =0; i<n; i++)
-        {
-            if(s[i]>='1' && s[i]<='9')
-            {
-                int a = s[i]-'0';
-                j = max(a,j);
-                v[a] = ans;
-                ans="";
-            }
-            else if(s[i]>='A' && s[i]<='Z'|| s[i]>='a' && s[i]<='z')
-                ans+=s[i];
-        }
-        ans="";
-        for(int i =1; i<=j;i++)
-        {
-            if(v[i] != "0")
-            {
-                cout<<v[i];
-                ans+=v[i];
+        map<int,string>mp;
+        
+        int i = 0;
+        while(i<s.size()){
+            while(i<s.size()){
+                if(s[i] >= '1' && s[i] <='9')
+                    break;
                 
-                if(i!=j)
-                ans+=" ";
+                temp += s[i++];
             }
+            
+            mp[s[i]-'0'] = temp;
+            i+=2;
+            temp = "";
         }
+        
+        string ans;
+        for(auto it : mp){
+            cout<<it.second<<endl;
+            ans += it.second+" ";
+        }
+        ans.pop_back();
         return ans;
     }
 };
