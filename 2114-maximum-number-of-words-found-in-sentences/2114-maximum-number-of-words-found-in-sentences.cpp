@@ -3,15 +3,9 @@ public:
     int mostWordsFound(vector<string>& nums) {
         int ans = 1;
         
-        for(auto it : nums){
-            string s = it;
-            int count = 1;
-            for(auto i :s){
-                if(i == ' ')
-                    count++;
-            }
-            
-            ans = max(count,ans);
+        for(auto &it : nums){
+            int counts = count(it.begin(),it.end(),' ');
+            ans = max(counts+1,ans);
         }
         
         return ans;
