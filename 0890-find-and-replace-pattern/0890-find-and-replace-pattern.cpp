@@ -15,7 +15,7 @@ public:
                     ump1[it] = pattern[i++];
                 }
                 else{
-                    if(ump[pattern[i]] != it && ump1[it] != pattern[i]){
+                    if(ump[pattern[i]] != it || ump1[it] != pattern[i]){
                         j = 1;
                         break;
                     }
