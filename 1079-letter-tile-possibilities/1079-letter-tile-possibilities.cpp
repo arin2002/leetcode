@@ -4,7 +4,7 @@ public:
     unordered_set<string> st;
     vector<int> vis;
     
-    void solve(string &s, string temp){
+    void solve(int ind,string &s, string temp){
         
         st.insert(temp);
         // cout<<temp<<endl;
@@ -15,7 +15,7 @@ public:
             temp.push_back(s[i]);
             vis[i] = 1;
             // st.insert(temp);
-            solve(s,temp);
+            solve(i+1,s,temp);
             temp.pop_back();
             vis[i] = 0;
         }
@@ -23,7 +23,7 @@ public:
     
     int numTilePossibilities(string tiles) {
         vis.resize(28);
-        solve(tiles,"");
+        solve(0,tiles,"");
         return st.size()-1;
     }
 };
