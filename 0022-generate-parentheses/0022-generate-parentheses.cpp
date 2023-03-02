@@ -3,21 +3,26 @@ public:
     
     vector<string> ans;
     
-    void f(string curr,int n,int open, int close, vector<string> &ans){
-        if(curr.length() == n*2)
+    void solve(string curr,int op, int clo, int n){
+        
+        if(curr.length() == 2*n)
             ans.push_back(curr);
         
-        if(open<n)
-            f(curr+"(",n,open+1,close,ans);
+        if(op<n){
+            // curr.push_back('(');
+            solve(curr+"(",op+1,clo,n);
+        }
         
+        if(clo<op){
+            // curr.push_back(')');
+            solve(curr+")",op,clo+1,n);
+        }
         
-        if(close < open)
-            f(curr+")",n,open,close+1,ans);
     }
     
+    
     vector<string> generateParenthesis(int n) {
-        f("(",n,1,0,ans);
-        
+        solve("(",1,0,n);
         return ans;
     }
 };
