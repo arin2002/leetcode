@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<string>ans;
-    void solve(string curr,string s, int i){
+    void solve(string curr,string &s, int i){
         // if end of the string is reached
         if(i==s.length()){
             ans.push_back(curr); // push the current "curr" string to ans
@@ -25,7 +25,7 @@ public:
         }
     }
     
-    vector<string> letterCasePermutation(string S) {
+    vector<string> letterCasePermutation(string &S) {
         ans.clear();
         solve("",S,0);
         return ans;
