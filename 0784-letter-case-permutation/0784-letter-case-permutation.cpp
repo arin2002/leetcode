@@ -14,14 +14,15 @@ public:
         }
         else{ // case 2
             //sub case 1, considering lower case
-            string c1=curr;
-            c1.push_back(tolower(s[i]));
-            solve(c1,s,i+1);
+            // string c1=curr;
+            // c1.push_back(tolower(s[i]));
+            char c = tolower(s[i]);
+            solve(curr+c,s,i+1);
             
             //sub case 2, considering upper case
-            string c2=curr;
-            c2.push_back(toupper(s[i]));
-            solve(c2,s,i+1);
+            c = toupper(s[i]);
+            // c2.push_back(toupper(s[i]));
+            solve(curr+c,s,i+1);
         }
     }
     
