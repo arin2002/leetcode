@@ -1,26 +1,26 @@
 class Solution {
 public:
     string frequencySort(string s) {
-        unordered_map<char,int> ump;
+        unordered_map<char,int> freq;
+        vector<string> bucket(s.size()+1, "");
+        string res;
         
-        for(auto it : s){
-            ump[it]++;
+        //count frequency of each character
+        for(char c:s) freq[c]++;
+        //put character into frequency bucket
+        for(auto& it:freq) {
+            int n = it.second;
+            char c = it.first;
+            bucket[n].append(n, c);
         }
         
-        vector<pair<int,char>> vp;
-        
-        for(auto it : ump){
-            vp.push_back({it.second,it.first});
+        //form descending sorted string
+        for(int i=s.size(); i>0; i--) {
+            cout<<bucket[i]<<endl;
+            if(!bucket[i].empty()){
+                res.append(bucket[i]);
+            }
         }
-        
-        sort(vp.begin(),vp.end(),greater<pair<int,char>>());
-        
-        string ans;
-        for(auto it : vp){
-            string temp(it.first,it.second);
-            ans+=temp;
-        }
-        
-        return ans;
+        return res;
     }
 };
