@@ -1,28 +1,26 @@
 class Solution {
 public:
     string frequencySort(string s) {
-        vector<pair<int,int>> v;
         unordered_map<char,int> ump;
         
         for(auto it : s){
             ump[it]++;
         }
         
-        for(auto [i,j] : ump){
-            v.push_back({j,i});
+        vector<pair<int,char>> vp;
+        
+        for(auto it : ump){
+            vp.push_back({it.second,it.first});
         }
         
-        sort(v.begin(),v.end());
-        reverse(v.begin(),v.end());
+        sort(vp.begin(),vp.end(),greater<pair<int,char>>());
         
         string ans;
-        for(auto [i,j] : v){
-            while(i){
-                ans+=j;
-                i--;
-            }
+        for(auto it : vp){
+            string temp(it.first,it.second);
+            ans+=temp;
         }
         
-        return  ans;
+        return ans;
     }
 };
