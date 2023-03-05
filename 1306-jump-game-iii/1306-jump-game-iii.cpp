@@ -1,12 +1,15 @@
 class Solution {
 public:
     
-//     bool solve(int ind,vector<int>& arr,vector<int> vis){
-//         if(ind >= arr.size())
-//             return false;
+    bool solve(int ind,vector<int>& arr,vector<int> &vis){
+        if(ind >= arr.size() || ind<0)
+            return false;
         
-//         if(arr[ind] == 0)
-//             return true;
+        if(arr[ind] == 0)
+            return true;
+        
+        if(vis[ind] == 1)
+            return false;
         
 //         bool l = false, r = false;
 //         if(!vis[ind]){
@@ -23,40 +26,45 @@ public:
 //             vis[ind] = 0;
 //         }
         
-//         return l|r;
-//     }
+        vis[ind] = 1;
+        
+        bool l = solve(arr[ind]+ind,arr,vis);
+        bool r = solve(ind-arr[ind],arr,vis);
+        
+        return l|r;
+    }
     
     bool canReach(vector<int>& arr, int start) {
         vector<int> vis(arr.size());
-        // return solve(start,arr,vis);
-        queue<int> q;
-        q.push(start);
+        return solve(start,arr,vis);
+//         queue<int> q;
+//         q.push(start);
         
-        while(!q.empty()){
-            int ind = q.front();
-            q.pop();
+//         while(!q.empty()){
+//             int ind = q.front();
+//             q.pop();
             
-            int left = ind - arr[ind], right = arr[ind]+ind;
-            if(left >= 0){
-                if(arr[left] == 0)
-                    return true;
+//             int left = ind - arr[ind], right = arr[ind]+ind;
+//             if(left >= 0){
+//                 if(arr[left] == 0)
+//                     return true;
                 
-                else if(!vis[left])
-                    q.push(left); 
-            }
+//                 else if(!vis[left])
+//                     q.push(left); 
+//             }
             
-            if(right<arr.size()){
-                if(arr[right] == 0)
-                    return true;
+//             if(right<arr.size()){
+//                 if(arr[right] == 0)
+//                     return true;
                 
-                else if(!vis[right])
-                    q.push(right);
-            }
+//                 else if(!vis[right])
+//                     q.push(right);
+//             }
             
-            // mark it visited
-            vis[ind] = 1;
-        }
+//             // mark it visited
+//             vis[ind] = 1;
+//         }
         
-        return false;
+//         return false;
     }
 };
