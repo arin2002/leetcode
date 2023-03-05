@@ -4,7 +4,7 @@ public:
         
         int ans = 0;
         
-        for(auto it : s){
+        for(auto &it : s){
             if(ans == 9)
                 return ans;
             
