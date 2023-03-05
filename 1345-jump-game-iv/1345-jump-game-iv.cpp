@@ -1,48 +1,55 @@
 class Solution {
 public:
-    int minJumps(vector<int>& arr) 
-    {
+    int minJumps(vector<int>& arr) {
         int n = arr.size();
-        unordered_map<int, vector<int>>mp;
-        for (int i = 0; i < n; i++) mp[arr[i]].push_back(i);
         
-        queue<int>q;
-        vector<bool>visited(n, false);
+        unordered_map<int,vector<int>> ump;
+        for(int i = 0; i<n; i++){
+            ump[arr[i]].push_back(i);
+        }
+        
+        vector<int> vis(n);
+        queue<int> q;
         q.push(0);
-        int steps = 0;
-        while(!q.empty())
-        {
-            int size = q.size();
-            while(size--)
-            {
-                int currIdx = q.front();
+        
+        int count = 0;
+        
+        while(!q.empty()){
+            int m  = q.size();
+            
+            while(m--){
+                int ind = q.front();
                 q.pop();
-                if (currIdx == n - 1) return steps;
-                //================================================================
-                //EXPLORE ALL POSSIBLE OPTIONS
-                if (currIdx + 1 < n && !visited[currIdx + 1])  //OPTION-1 (Move Forward)
-                {
-                    visited[currIdx + 1] = true;
-                    q.push(currIdx + 1);
+                
+                if(ind == n-1)
+                    return count;
+            
+                int l = ind+1;
+                int r = ind-1;
+            
+                if(l<n && !vis[l]){
+                    vis[l] = 1;
+                    q.push(l);
                 }
-                if (currIdx - 1 >= 0 && !visited[currIdx - 1]) //OPTION-2 (Move Backward)
-                {
-                    visited[currIdx - 1] = true;
-                    q.push(currIdx - 1);
+            
+                if(r>=0 && !vis[r]){
+                    vis[r] = 1;
+                    q.push(r);
                 }
-                for (int newIdx : mp[arr[currIdx]])  //OPTION-3 (Move to same valued idx)
-                {                                 //newIdx coud be before currIdx or after currIdx
-                    if (!visited[newIdx] && newIdx != currIdx) 
-                    {
-                        visited[newIdx] = true;
-                        q.push(newIdx);
+            
+                for(auto it : ump[arr[ind]]){
+                    if(!vis[it] && it != ind){
+                        vis[it] = 1;
+                        q.push(it);
                     }
                 }
-                //===================================================================
-                mp[arr[currIdx]].clear();    //EXPLAINED BELOW :)
+                
+                ump[arr[ind]].clear();
             }
-            steps++;
+            
+            count++;
         }
+        
         return -1;
     }
 };
