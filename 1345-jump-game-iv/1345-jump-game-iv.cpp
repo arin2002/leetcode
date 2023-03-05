@@ -32,7 +32,7 @@ public:
                 }
                 for (int newIdx : mp[arr[currIdx]])  //OPTION-3 (Move to same valued idx)
                 {                                 //newIdx coud be before currIdx or after currIdx
-                    if (!visited[newIdx]) 
+                    if (!visited[newIdx] && newIdx != currIdx) 
                     {
                         visited[newIdx] = true;
                         q.push(newIdx);
