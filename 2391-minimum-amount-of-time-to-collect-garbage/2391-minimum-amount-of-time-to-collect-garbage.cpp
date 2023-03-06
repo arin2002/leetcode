@@ -1,38 +1,31 @@
 class Solution {
 public:
     int garbageCollection(vector<string>& garbage, vector<int>& travel) {
-        
-        vector<int>prefix(travel.size());
+        int n = travel.size();
+        vector<int> prefix(n);
         prefix[0] = travel[0];
         
-        for(int i=1;i<prefix.size();i++)
-        {
-            prefix[i] = prefix[i-1] + travel[i];
-        }
+        for(int i = 1; i<n; i++)
+            prefix[i] = travel[i]+prefix[i-1];
         
-        int ans = 0;
-        int g = 0;
-        int m = 0;
-        int p = 0;
-        //["g". "p", "gm", "mp", "m"]
-        //travel = [ 1,2,3,4]
-        
-        //prefix = [1,3,6,10 ]
-        for(int i=0;i<garbage.size();i++)
-        {
-            string current = garbage[i]; //["m"]
-            for(char x:current)
-            {
-                if(x =='M')m = i; //m=4
-                if(x == 'P')p = i; //p =3
-                if(x =='G')g = i; //g =2
+        int ans = 0, g = 0, p = 0, m = 0;
+        for(int i = 0; i<=n; i++){
+            string s = garbage[i];
+            // kaha tak max jayega vo truck apna
+            for(auto &it : s){
+                if(it == 'G') g = i;
+                if(it == 'P') p = i;
+                if(it == 'M') m = i;
             }
-            ans+= current.size(); //ans+= 7 
+            
+            // 1 sec wala time idhar
+            ans += s.size();
         }
         
-        if(g>=1)ans+=prefix[g-1]; //ans+=3 //travel time for glass
-        if(p>=1)ans+=prefix[p-1]; //ans+=6 // travel time for plastic
-        if(m>=1)ans+=prefix[m-1]; //ans+=10 //travel time for metal
+        if(g >= 1) ans += prefix[g-1];
+        if(p >= 1) ans += prefix[p-1];
+        if(m >= 1) ans += prefix[m-1];
+        
         return ans;
     }
 };
