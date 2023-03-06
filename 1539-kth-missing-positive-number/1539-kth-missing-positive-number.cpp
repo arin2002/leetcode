@@ -4,6 +4,8 @@ public:
         for(auto &it : arr){
             if(it <= k)
                 k++;
+            else
+                break;
         }
         
         return k;
