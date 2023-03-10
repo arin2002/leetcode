@@ -1,65 +1,38 @@
 class Solution {
 public:
-    vector<vector<string>> displayTable(vector<vector<string>>& orders) 
-    {
-        // 'ans' will be the final answer
-        vector<vector<string>>ans;
+    vector<vector<string>> displayTable(vector<vector<string>>& orders) {
+        vector<vector<string>> ans;
+        set<string> s;
+        map<int,unordered_map<string,int>> mp;
         
-        // In map 'm' the key is the table no. and value is another map where key food name and the value is it's quantity on that table
-        map<int,unordered_map<string,int>>m;
-        
-        // 'food' is for storing unique food names
-        set<string>food;
-        
-        // 'first' is the first row of our answer
-        vector<string>first;
-        
-        // now iterate over the foods and fill the map as well as set
-        for(int i=0;i<orders.size();i++)
-        {
-            food.insert(orders[i][2]);
-            m[stoi(orders[i][1])][orders[i][2]]++;
+        for(auto it : orders){
+            s.insert(it[2]);
+            mp[stoi(it[1])][it[2]]++;
         }
         
+        vector<string> first;
         first.push_back("Table");
-        for(auto it:food)
-        {
+        for(auto it : s)
             first.push_back(it);
-        }
         
-        // Append the 'first' row in the answer
         ans.push_back(first);
         
-        // Now fill the rest rows
-        for(auto it:m)
-        {
-            // tmp stores the i'th row
-            vector<string>tmp;
+        for(auto &it : mp){
+            vector<string> temp;
+            temp.push_back(to_string(it.first));
             
-            // first append the table no.
-            tmp.push_back(to_string(it.first));
-            
-            // then append the food quantity of each food on that table
-            for(auto item:food)
-            {
-                // if a particular food is ordered on that table, append it's quantity
-                if(it.second.find(item)!=it.second.end())
-                {
-                    tmp.push_back(to_string(it.second[item]));
-                }
+            for(auto &i: s){
+                if(it.second.find(i) == it.second.end())
+                    temp.push_back("0");
                 
-                // if a particular food is not ordered on that table, append "0"
-                else
-                {
-                    tmp.push_back("0");
+                else{
+                    temp.push_back(to_string(it.second[i]));
                 }
             }
             
-            // append the data of the table 
-            ans.push_back(tmp);
+            ans.push_back(temp);
         }
         
-        // finally return the answer
         return ans;
     }
 };
