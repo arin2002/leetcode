@@ -11,28 +11,17 @@
 class Solution {
 public:
     
-    ListNode* curr;
+    vector<int> nums;
     Solution(ListNode* head) {
-        curr = head;
+        while(head){
+            nums.push_back(head->val);
+            head = head->next;
+        }
     }
     
     int getRandom() {
-        int res, len = 1;
-        ListNode* x = curr;
-        while(x){
-            if(rand() % len == 0){
-                res = x->val;
-            }
-            len++;
-            x = x->next;
-        }
+        int ind = rand()%nums.size();
         
-        return res;
+        return nums[ind];
     }
 };
-
-/**
- * Your Solution object will be instantiated and called as such:
- * Solution* obj = new Solution(head);
- * int param_1 = obj->getRandom();
- */
