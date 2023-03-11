@@ -1,23 +1,22 @@
 class Solution {
 public:
-    
-    int ans = 0;
     int numOfPairs(vector<string>& nums, string target) {
-        int n = nums.size();
+        unordered_map<string, int> freq;
+        for (auto num : nums) if (num.size() < target.size()) freq[num]++;
         
-        int count = 0;
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j<n; j++){
-                if(i == j)
-                    continue;
+        int res = 0;
+        for (auto [s, frq] : freq) {
+            
+            if (target.find(s) == 0) {
                 
-                if((nums[i] + nums[j]) == target){
-                    // cout<<i<<" "<<j<<endl;
-                    count++;
-                }
+                if (s + s == target) 
+                    res += frq*(frq-1);
+                
+                else 
+                    res += frq * freq[target.substr(s.size())];
             }
         }
         
-        return count;
+        return res;
     }
 };
