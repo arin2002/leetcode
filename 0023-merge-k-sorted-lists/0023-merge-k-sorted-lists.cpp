@@ -1,55 +1,34 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+
+class cmp {
+    public:
+       bool operator()(ListNode *a, ListNode* b){
+           return a->val > b->val;
+      }
+};
+
+
 class Solution {
 public:
-    
-    ListNode* merge(ListNode *p, ListNode *q){
-        ListNode *temp;
-        ListNode *dummy = new ListNode();
-        temp = dummy;
-        
-        while(p && q){
-            if(p->val <= q->val){
-                temp->next = p;
-                p = p->next;
-            }
-            else{
-                temp->next = q;
-                q = q->next;
-            }
-            
-            temp = temp->next;
-        }
-        
-        if(p) temp->next = p;
-        if(q) temp->next = q;
-        return dummy->next;
-    }
-    
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        int n = lists.size();
+        priority_queue<ListNode*,vector<ListNode*>,cmp> pq;
+        ListNode *dummy = new ListNode();
+        ListNode *tail = dummy;
         
-        if(n == 1)
-            return lists[0];
-        
-        ListNode *root = NULL;
-        for(int i = 1; i<n; i++){
-            if(root == NULL){
-                root = merge(lists[i-1],lists[i]);
-            }
-            else{
-                root = merge(root,lists[i]);
-            }
+        for(auto it : lists){
+            if(it != NULL)
+                pq.push(it);
         }
         
-        return root;
+        while(pq.size()){
+            ListNode *node = pq.top();
+            pq.pop();
+            
+            tail->next = node;
+            tail = node;
+            if(node->next)
+                pq.push(node->next);
+        }
+        
+        return dummy->next;
     }
 };
