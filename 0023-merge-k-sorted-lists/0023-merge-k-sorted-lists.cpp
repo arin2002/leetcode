@@ -34,24 +34,22 @@ public:
         return dummy->next;
     }
     
-    
-    ListNode* sort(int l, int r,vector<ListNode*>& lists){
-        if(l>r)
-            return NULL;
-        
-        if(l == r)
-            return lists[r];
-                    
-        int mid = (l+r)/2;
-        ListNode *lower = sort(l,mid,lists);
-        ListNode *upper = sort(mid+1,r,lists);
-        
-        return merge(lower,upper);
-    }
-    
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         int n = lists.size();
         
-        return sort(0,n-1,lists);
+        if(n == 1)
+            return lists[0];
+        
+        ListNode *root = NULL;
+        for(int i = 1; i<n; i++){
+            if(root == NULL){
+                root = merge(lists[i-1],lists[i]);
+            }
+            else{
+                root = merge(root,lists[i]);
+            }
+        }
+        
+        return root;
     }
 };
