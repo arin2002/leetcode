@@ -10,33 +10,43 @@
  */
 class Solution {
 public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        vector<int> ans;
+    
+    ListNode* merge(ListNode *p, ListNode *q){
+        ListNode *temp;
+        ListNode *dummy = new ListNode();
+        temp = dummy;
         
-        // if(lists.size() == 0)
-        //     return NULL;
-        
-        for(auto it : lists){
-            while(it){
-                ans.push_back(it->val);
-                it = it->next;
-            }
-        }
-        
-        sort(ans.begin(),ans.end());
-        int i = 0;
-        ListNode *root = NULL, *prev;
-        for(auto it : ans){
-            ListNode *temp = new ListNode(it);
-            
-            if(i == 0){
-                i = 1;
-                root = temp;
-                prev = root;
+        while(p && q){
+            if(p->val <= q->val){
+                temp->next = p;
+                p = p->next;
             }
             else{
-                prev ->next = temp;
-                prev = temp;
+                temp->next = q;
+                q = q->next;
+            }
+            
+            temp = temp->next;
+        }
+        
+        if(p) temp->next = p;
+        if(q) temp->next = q;
+        return dummy->next;
+    }
+    
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int n = lists.size();
+        
+        if(n == 1)
+            return lists[0];
+        
+        ListNode *root = NULL;
+        for(int i = 1; i<n; i++){
+            if(root == NULL){
+                root = merge(lists[i-1],lists[i]);
+            }
+            else{
+                root = merge(root,lists[i]);
             }
         }
         
