@@ -9,8 +9,7 @@ public:
         
         for(auto &it : order){
             if(ump.find(it) != ump.end()){
-                int n = ump[it];
-                string temp(n,it);
+                string temp(ump[it],it);
                 ans += temp;
                 ump.erase(it);
             }
