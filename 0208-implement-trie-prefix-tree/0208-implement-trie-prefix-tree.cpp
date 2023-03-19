@@ -1,37 +1,77 @@
+class Node{
+    Node* links[26];
+    bool flag = false;
+    
+    public:
+    bool containsKey(char ch){
+        return links[ch-'a'] != NULL;
+    }
+    
+    void put(Node *root,char ch){
+        links[ch-'a'] = root;
+    }
+    
+    Node* next(char ch){
+        return links[ch-'a'];
+    }
+    
+    void setEnd(){
+        flag = true;
+    }
+    
+    // for word completeness
+    bool isEnd() {
+		return flag;
+	}
+};
+
+
 class Trie {
 public:
     
-    unordered_map<string,int> ump;
+    Node* root;
     
     Trie() {
-        
+        root = new Node();
     }
     
     void insert(string word) {
-        ump[word] = 1;
+        Node *node = root;
+        for(auto &it: word){
+            if(!node->containsKey(it)){
+                node->put(new Node(),it);
+            }
+            
+            // move to next
+            node = node->next(it);
+        }
+        
+        node->setEnd();
     }
     
     bool search(string word) {
-        auto it = ump.find(word);
+        Node *node = root;
+        for(auto &it: word){
+            if(!node->containsKey(it))
+                return false;
+            
+            node = node->next(it);
+        }
         
-        if(it == ump.end())
-            return false;
-        
-        return true;
+        return node->isEnd();
     }
     
     bool startsWith(string prefix) {
-        for(auto [s,t] : ump){
-            int i = 0, n = s.size(), m = prefix.size();
+        Node *node = root;
+        
+        for(auto &it: prefix){
+            if(!node->containsKey(it))
+                return false;
             
-            while(i<n && i<m && s[i] == prefix[i])
-                i++;
-            
-            if(i == m)
-                return true;
+            node = node->next(it);
         }
         
-        return false;
+        return true;
     }
 };
 
