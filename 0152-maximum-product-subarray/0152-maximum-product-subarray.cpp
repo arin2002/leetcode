@@ -1,35 +1,19 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
+        int ans = nums[0], maxi = ans, mini = ans;
         
-        int n = nums.size(), prod = 1;
-        vector<int> pre(n),suff(n);
-        
-        for(int i = 0; i<n; i++){
-            if(nums[i] == 0){
-                prod = 1;
-                continue;
-            }
+        for(int i = 1; i<nums.size(); i++){
+            // swap isliye kyuki max rakhna h max mai 
+            // but aagr -ve aaya to vo min ban jayega isliye
             
-            prod *= nums[i];
-            pre[i] = prod;
+            if(nums[i]<0)
+                swap(maxi,mini);
+            
+            maxi = max(nums[i],maxi*nums[i]);
+            mini = min(nums[i],mini*nums[i]);
+            ans = max(maxi,ans);
         }
-        
-        prod = 1;
-        
-        int ans = INT_MIN,  flag = 0;
-        for(int j = n-1; j >=0 ; j--){
-            if(nums[j] == 0){
-                flag = 1;
-                prod = 1;
-                continue;
-            }
-            prod *= nums[j];
-            ans = max(ans,max(prod,pre[j]));
-        }
-        
-        if(flag)
-            return max(ans,0);
         
         return ans;
     }
