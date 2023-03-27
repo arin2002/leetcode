@@ -11,21 +11,20 @@
  */
 class Solution {
 public:
-    
     bool isCompleteTree(TreeNode* root) {
         queue<TreeNode*> q;
         q.push(root);
-        bool prev = true;
         
+        bool flag = false;
         while(!q.empty()){
             TreeNode *node = q.front();
             q.pop();
             
-            if(node == NULL)
-                prev = false;
-            
+            if(node == NULL){
+                flag = true;
+            }
             else{
-                if(prev == false)
+                if(flag)
                     return false;
                 
                 q.push(node->left);
@@ -33,6 +32,6 @@ public:
             }
         }
         
-        return true;
+        return 1;
     }
 };
