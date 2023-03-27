@@ -1,22 +1,19 @@
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
-        vector<int> lastInd(27);
+        vector<int> ans, freq(26);
+        int n = s.size(), max_seen = 0; 
         
-        int i = 0;
-        for(auto it : s)
-            lastInd[it-'a'] = i++;
+        for(int i = 0; i<n; i++)
+            freq[s[i]-'a'] = i;
         
-        
-        int start = 0, end = 0;
-        vector<int> ans;
-        
-        for(i = 0; i<s.size(); i++){
-            end = max(end, lastInd[s[i]-'a']);
+        int j = 0;
+        for(int i = 0; i<n; i++){
+            max_seen = max(max_seen,freq[s[i]-'a']);
             
-            if(i == end){
-                ans.push_back(end-start+1);
-                start = i+1;
+            if(max_seen <= i){
+                ans.push_back(i-j+1);
+                j = i+1;
             }
         }
         
