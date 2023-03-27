@@ -1,25 +1,27 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
-        int i = nums.size()-2;
+        // find smallest first
+        // 5 4 3 2 1
+        // 5>4>3>2>1 ye sequence chalna chaiye
         
-        while(i>=0 && nums[i]>=nums[i+1])
-            i--;
+        int j = nums.size()-2;
         
-        if(i<0){
+        while(j >= 0 && nums[j]>=nums[j+1])
+            j--;
+        
+        if(j<0){
             reverse(nums.begin(),nums.end());
             return;
         }
         
-        int num = nums[i];
-        int j = nums.size()-1;
-        while(j>=0 && nums[j] <= num)
-            j--;
-        
-        // found
+        int i = nums.size()-1;
+        while(i>=0 && nums[j]>=nums[i])
+            i--;
         
         
         swap(nums[i],nums[j]);
-        reverse(nums.begin()+i+1,nums.end());
+        reverse(nums.begin()+j+1,nums.end());
+        
     }
 };
