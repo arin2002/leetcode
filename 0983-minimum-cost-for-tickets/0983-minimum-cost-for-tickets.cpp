@@ -24,7 +24,7 @@ public:
     }
     
     int mincostTickets(vector<int>& days, vector<int>& costs) {
-        dp.resize(days.size(),vector<int>(1000,-1));
+        dp.resize(days.size(),vector<int>(396,-1));
         return solve(0,0,days,costs);
     }
 };
