@@ -1,25 +1,31 @@
 class Solution {
 public:
-    
-    vector<vector<int>> dp;
-    
-    int solve(int ind, int time, vector<int> &nums){
-        if(ind >= nums.size())
-            return 0;
+    int maxSatisfaction(vector<int>& satisfaction) {
+        sort(satisfaction.begin(), satisfaction.end());
         
-        if(dp[ind][time] != -1)
-            return dp[ind][time];
+        int n = satisfaction.size(), ans = 0;
+        int suffixSum = 0;
         
-        int l = nums[ind]*time + solve(ind+1,time+1,nums);
-        int r = 0 + solve(ind+1,time,nums);
+        int start = n-1, time = 1;
         
-        return dp[ind][time] = max(l,r);
-    }
-    
-    int maxSatisfaction(vector<int>& nums) {
-        int n = nums.size();
-        sort(nums.begin(),nums.end());
-        dp.resize(n,vector<int>(n+1,-1));
-        return solve(0,1,nums);
+        // find the point till we get sum >= 0
+        // uske baad he apna aayea max
+        // kyuki uske baad to min ho jayega
+        for(int i = n-1; i>=0; i--){
+            suffixSum += satisfaction[i];
+            
+            if(suffixSum<0)
+                break;
+            
+            start--;
+        }
+        
+        start++;
+        
+        for(int i = start; i<n; i++){
+            ans += satisfaction[i]*time;
+            time++;
+        }
+        return ans;
     }
 };
