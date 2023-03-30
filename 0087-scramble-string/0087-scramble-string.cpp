@@ -1,86 +1,52 @@
 class Solution {
 public:
-//for storing already solved problems
-    unordered_map<string,bool> mp;
     
+    unordered_map<string,bool> ump;
     
     bool isScramble(string s1, string s2) {
-        //base cases
+        int n = s1.size(), m = s2.size();
         
-        int n = s1.size();
-        
-        //if both string are not equal in size
-        if(s2.size()!=n)
+        if(n!=m)
             return false;
         
-        //if both string are equal
-        if(s1==s2)
-         return true;   
+        if(s1 == s2)
+            return true;
         
-            
-        
-        //if code is reached to this condition then following this are sure:
-        //1. size of both string is equal
-        //2.  string are not equal
-        //so size is equal (where size==1) and they are not equal then obviously false
-        //example 'a' and 'b' size is equal ,string are not equal
-        if(n==1)
+        if(n == 1)
             return false;
         
-        string key = s1+" "+s2;
+        string s = s1 + "." + s2;
         
-		//check if this problem has already been solved
-        if(mp.find(key)!=mp.end())
-            return mp[key];
+        if(ump.find(s) != ump.end())
+            return ump[s];
         
-        //for every iteration it can two condition 
-        //1.we should proceed without swapping
-        //2.we should swap before looking next
-        for(int i=1;i<n;i++)
-        {
-
-            //ex of without swap: gr|eat and rg|eat
-            bool withoutswap = (
-                //left part of first and second string
-                isScramble(s1.substr(0,i),s2.substr(0,i)) 
-                
-                &&
-                
-                //right part of first and second string;
-                isScramble(s1.substr(i),s2.substr(i))
-                );
+        for(int i = 1; i<n; i++){
+            // swaps
+            string left1 = s1.substr(0,i);
+            string left2 = s2.substr(n-i);
+            
+            string right1 = s1.substr(i);
+            string right2 = s2.substr(0,n-i);
+            
+            bool swaps = isScramble(left1,left2) && isScramble(right1,right2);
             
             
+            if(swaps)
+                return ump[s] = true;
             
-            //if without swap give us right answer then we do not need 
-            //to call the recursion withswap
-            if(withoutswap)
-                return true;
+            //no swaps;
+            left1 = s1.substr(0,i);
+            left2 = s2.substr(0,i);
             
-            //ex of withswap: gr|eat  rge|at
-			//here we compare "gr" with "at" and "eat" with "rge"
-            bool withswap = (
-                //left part of first and right part of second 
-                isScramble(s1.substr(0,i),s2.substr(n-i)) 
-                
-                &&
-                
-                //right part of first and left part of second
-                isScramble(s1.substr(i),s2.substr(0,n-i)) 
-                );
+            right1 = s1.substr(i);
+            right2 = s2.substr(i);
             
+            bool no_swaps = isScramble(left1,left2) && isScramble(right1, right2);
             
-            
-            //if withswap give us right answer then we return true
-            //otherwise the for loop do it work
-            if(withswap)
-                return true;
-            //we are not returning false in else case 
-            //because we want to check further cases with the for loop
+            if(no_swaps)
+                return ump[s] = true;
         }
         
-        
-        return mp[key] = false;
-        
+        return ump[s] = false;
     }
 };
