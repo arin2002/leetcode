@@ -1,20 +1,20 @@
 class Solution {
 public:
     int partitionString(string s) {
-        unordered_map<char,int> ump;
+        vector<int> v(26,-1);
+        int n = s.size();
         
-        int ans = 0;
-        for(auto it : s){
-            if(ump.find(it) != ump.end()){
+        int ans = 1, start = 0;
+        
+        // 1 is taken bcz 1st string is taken in consideration
+        for(int i = 0; i<n; i++){
+            if(v[s[i]-'a'] >= start){
                 ans++;
-                ump.clear();
+                start = i;
             }
-            ump[it]++;
+            v[s[i]-'a'] = i;
         }
-        
-        if(ump.size())
-            ans++;
-        
+                
         return ans;
     }
 };
