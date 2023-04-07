@@ -1,40 +1,40 @@
 class Solution {
 public:
-    vector<vector<int>> directions{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
-        int m = maze.size();
-        int n = maze[0].size();
+        int n = maze.size(), m = maze[0].size();
+        int a = entrance[0], b = entrance[1];
         
-        queue<pair<int, int>> que;
-        que.push({entrance[0], entrance[1]});
-        maze[entrance[0]][entrance[1]] = '+'; //marking it visited
-        int steps = 0;
+        int drs[5] = {-1,0,1,0,-1};
         
-        while(!que.empty()) {
-            int size = que.size();
+        queue<pair<pair<int,int>,int>> q;
+        q.push({{a,b},0});
+        
+        int ans = -1; // Initialize answer to -1
+        while(!q.empty()){
+            int i = q.front().first.first;
+            int j = q.front().first.second;
+            int d = q.front().second;
+            q.pop();
+            maze[i][j] = '+'; // Mark current cell as visited
             
-            while(size--) {
-                pair<int, int> temp = que.front();
-                que.pop();
-                
-                if(temp != make_pair(entrance[0], entrance[1]) && 
-                   (temp.first == 0 || temp.first == m-1 || temp.second == 0 || temp.second == n-1))
-                    return steps;
-                
-                for(auto &dir : directions) {
-                    int i = temp.first  + dir[0];
-                    int j = temp.second + dir[1];
-
-                    if(i >= 0 && i < m && j >= 0 && j < n && maze[i][j] != '+') {
-                        que.push({i, j});
-                        maze[i][j] = '+'; //marking it as visited
-                    }
-                }
-                
+            // Check if current cell is an exit and not the entrance
+            if(i == a && j == b) {
+                // Skip if current cell is entrance
+            } else if((i == n-1 || j == m-1 || i == 0 || j == 0)) {
+                // Break if current cell is an exit and not visited
+                ans = d;
+                break;
             }
-            steps++;
+            
+            for(int k = 0; k<4; k++){
+                int x = i+drs[k], y = j+drs[k+1];
+                if(x>=0 && x<n && y>=0 && y<m && maze[x][y] == '.'){
+                    q.push({{x,y},d+1}); // Increment distance by 1
+                    maze[x][y] = '+'; // Mark next cell as visited
+                }
+            }
         }
         
-        return -1;
+        return ans;
     }
 };
