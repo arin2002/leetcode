@@ -1,19 +1,38 @@
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
-        int n = board.size();
-        unordered_map<char, int> rows[9];
-        unordered_map<char, int> cols[9];
-        unordered_map<char, int> group[9];
+        // formula for box is (row/3)*3 + col/3
         
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(board[i][j] == '.')continue;
-                char ch = board[i][j];
-                if(rows[i][ch]++ > 0 || cols[j][ch]++ > 0 || group[(i/3) * 3 + j/3][ch]++ >0)return false; 
+        unordered_set<string> st;
+        for(int i = 0; i<9; i++){
+            for(int j = 0; j<9; j++){
+                // har ke liye add karna ha
+                // row, col, box
+                
+                if(board[i][j] == '.')
+                    continue;
+                
+                // encoded in this form
+                // check ho jayega aaise
+                int box_number = (i/3)*3 + j/3;
+                string row = "row" + to_string(i) + board[i][j];
+                string col = "col" + to_string(j) + board[i][j];
+                string box = "box" + to_string(box_number) + board[i][j];
+                
+                if(st.find(row) != st.end() || st.find(col) != st.end()){
+                    return false;
+                }
+                
+                if(st.find(box) != st.end())
+                    return false;
+                
+                // add in set
+                st.insert(row);
+                st.insert(col);
+                st.insert(box);
             }
         }
-        return true;
         
+        return true;
     }
 };
