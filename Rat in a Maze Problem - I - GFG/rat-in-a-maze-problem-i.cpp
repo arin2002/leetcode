@@ -12,7 +12,7 @@ class Solution{
     public:
     vector<string> ans;
     int n;
-    void solve(int i, int j, string temp, vector<vector<int>> nums){
+    void solve(int i, int j, string temp, vector<vector<int>> &nums){
         if(i<0 || i>=n || j<0 || j>=n || nums[i][j] == 0)
             return;
             
@@ -26,6 +26,7 @@ class Solution{
         solve(i,j+1,temp+"R",nums);
         solve(i-1,j,temp+"U",nums);
         solve(i,j-1,temp+"L",nums);
+        nums[i][j] = 1;
     }
     
     vector<string> findPath(vector<vector<int>> nums, int n) {
