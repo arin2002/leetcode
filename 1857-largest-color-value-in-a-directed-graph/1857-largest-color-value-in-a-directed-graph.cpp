@@ -1,42 +1,53 @@
 class Solution {
 public:
     int largestPathValue(string colors, vector<vector<int>>& edges) {
-        int n = colors.size(), ans = 0;
-        vector<int> inDegree(n), adj[n];
+        // bfs kar rahe h ek tare se ham
+        // bas ye scene h ki value store kara rahe har node pe
+        // uske color ki
+        // aur ye bfs basically topo sort jaisa ha aur kuch nhi
+        // dp jaisa h as we are storing values
         
-        for(auto &it: edges){
-            adj[it[0]].push_back(it[1]);
-            inDegree[it[1]]++;
+        // no of nodes
+        int n = colors.size(), total = 0, ans = 0;
+        vector<int> adj[n], indegree(n);
+        queue<int> q;
+        // this is for carrying information of max from each node
+        // there can be 26 colors so thats why
+        vector<vector<int>> count(n,vector<int>(27));
+        
+        for(auto &edge : edges){
+            adj[edge[0]].push_back(edge[1]);
+            indegree[edge[1]]++;
         }
         
-        vector<vector<int>> count(n, vector<int>(26));
-        queue<int> q;
-        
+        // now push 0 wale kyuki vahi se to bfs hoga
         for(int i = 0; i<n; i++){
-            if(inDegree[i] == 0)
+            if(indegree[i] == 0)
                 q.push(i);
         }
         
-        int nodeSeen = 0;
+        // start bfs
         while(!q.empty()){
             int node = q.front();
             q.pop();
-            nodeSeen++;
+            // update that color
+            total++;
+            count[node][colors[node]-'a']++;
+            ans = max(ans,count[node][colors[node]-'a']);
             
-            ans = max(ans, ++count[node][colors[node]-'a']);
-            
-            for(auto &it: adj[node]){
-                for(int i = 0; i<26; i++){
-                    count[it][i] = max(count[it][i], count[node][i]);
+            for(auto &edge: adj[node]){
+                // before doing anything update the colors for that node
+                // till the max we have seen as it can contribute later on
+                for(int i = 0; i<27; i++){
+                    count[edge][i] = max(count[edge][i],count[node][i]);
                 }
                 
-                inDegree[it]--;
-                
-                if(inDegree[it] == 0)
-                    q.push(it);
+                indegree[edge]--;
+                if(indegree[edge] == 0)
+                    q.push(edge);
             }
         }
         
-        return nodeSeen < n ? -1 : ans;
+        return total == n ? ans : -1;
     }
 };
