@@ -14,7 +14,7 @@ public:
                     continue;
                 }
                 
-                ans.push_back(s[i]);
+                ans+=s[i];
             }
         }
         
