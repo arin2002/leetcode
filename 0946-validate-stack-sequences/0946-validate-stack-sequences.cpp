@@ -4,23 +4,13 @@ public:
         int start = 0, n = popped.size(), i = 0;
         
         stack<int> st;
-        while(i<n){
-            if(!st.empty() && start<n && st.top() == popped[start]){
-                st.pop();
+        for(auto &it : pushed){
+            st.push(it);
+            
+            while(!st.empty() && start<n && st.top() == popped[start]){
                 start++;
+                st.pop();
             }
-            else{
-                st.push(pushed[i]);
-                i++;
-            }
-        }
-        
-        if(st.empty())
-            return true;
-        
-        while(!st.empty() && start<n && st.top() == popped[start]){
-            start++;
-            st.pop();
         }
         
         return st.empty();
