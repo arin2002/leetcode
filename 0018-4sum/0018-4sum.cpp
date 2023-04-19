@@ -30,8 +30,8 @@ public:
                 }
                 
                 while(j+1<n && nums[j] == nums[j+1]) j++;
-                while(i+1<n && nums[i] == nums[i+1]) i++;
             }
+            while(i+1<n && nums[i] == nums[i+1]) i++;
         }
         
         return ans;
