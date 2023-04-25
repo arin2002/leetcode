@@ -4,7 +4,7 @@ public:
     vector<int> vis;
     SmallestInfiniteSet() {
         vis.resize(5001);
-        for(int i = 1; i<=2000; i++){
+        for(int i = 1; i<=1001; i++){
             pq.push(i);
             vis[i] = 1;
         }
