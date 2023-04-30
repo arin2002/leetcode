@@ -27,7 +27,7 @@ public:
         temp += to_string(root->val)+"->";
         solve(root->left,temp);
         solve(root->right,temp);
-        temp.pop_back();
+        // temp.pop_back();
     }
     
     vector<string> binaryTreePaths(TreeNode* root) {
