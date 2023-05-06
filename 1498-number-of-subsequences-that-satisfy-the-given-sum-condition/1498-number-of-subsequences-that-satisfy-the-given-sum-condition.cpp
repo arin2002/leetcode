@@ -25,19 +25,22 @@ public:
         int n = nums.size(), ans = 0;
         
         // precalculate power
+        // most imp step
         int power[n];
         power[0] = 1;
         for (int i = 1; i < n; ++i) {
             power[i] = (power[i - 1] * 2) % mod;
         }
         
-        for(int i = 0; i<n; i++){
-            int ind = bs(i,target,nums);
-            
-            if(ind == -1)
-                continue;
-            
-            ans = (ans%mod +power[ind-i]%mod %mod)%mod;
+        //  2 pointer can be used more intiutive
+        int i = 0, j = n-1;
+        while(i<=j){
+            if(nums[i]+nums[j] <= target){
+                ans = ((ans%mod)+power[j-i]%mod)%mod;
+                i++;
+            }
+            else
+                j--;
         }
         
         return ans;
