@@ -1,28 +1,22 @@
 class Solution {
 public:
-    
-    int dp[2505][2505];
-    
-    int solve(int ind, int prev, vector<int>& nums){
-        if(ind >= nums.size())
-            return 0;
-        
-        if(dp[ind][prev+1] != -1)
-            return dp[ind][prev+1];
-        
-        int l = 0, r = 0;
-        if(prev == -1 || nums[ind] > nums[prev])
-            l = 1 + solve(ind+1,ind,nums);
-        
-        r = solve(ind+1,prev,nums);
-        
-        return dp[ind][prev+1] = max(l,r);
-    }
-    
     int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
+        vector<int> temp;
+        temp.push_back(nums[0]);
         
-        memset(dp,-1,sizeof(dp));
-        return solve(0,-1,nums);
+        for(int i = 1; i<nums.size(); i++){
+            if(temp.back()<nums[i]){
+                temp.push_back(nums[i]);
+            }
+            else{
+                //this is bs here now to replace from array
+                // as we need only lrngth
+                // like [10] is there in temp now we need to add 9
+                int ind = lower_bound(temp.begin(),temp.end(),nums[i])-temp.begin();
+                temp[ind] = nums[i];
+            }
+        }
+        
+        return temp.size();
     }
 };
