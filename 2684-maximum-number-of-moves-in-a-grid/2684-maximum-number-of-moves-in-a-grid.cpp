@@ -13,7 +13,7 @@ public:
         int r = 1 + solve(i,j+1,grid[i][j],grid);
         int z = 1 + solve(i+1,j+1,grid[i][j],grid);
         
-        return dp[i][j] = max({l,r,z});
+        return dp[i][j] = max(l,max(r,z));
     }
     
     int maxMoves(vector<vector<int>>& grid) {
