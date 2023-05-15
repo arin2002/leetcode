@@ -1,27 +1,42 @@
 class Solution {
 public:
-    
-    // try both again
-    int floorMod(int x, int y) {
-        return ((x % y) + y) % y;
-    }
-
     vector<vector<int>> generateMatrix(int n) {
-        vector<vector<int>> result (n, vector<int>(n));
-        int cnt = 1;
-        int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-       int d = 0;
-        int row = 0;
-        int col = 0;
-        while (cnt <= n * n) {
-            result[row][col] = cnt++;
-            int r = floorMod(row + dir[d][0], n);
-            int c = floorMod(col + dir[d][1], n);
-            // change direction if next cell is non zero
-            if (result[r][c] != 0) d = (d + 1) % 4;
-            row += dir[d][0];
-            col += dir[d][1];
+        vector<vector<int>> ans(n,vector<int>(n));
+        int total = n*n;
+        
+        int left = 0, right = n-1, top = 0, bottom = n-1, count = 0;
+        
+        while(count<total){
+            for(int i = left; count<total && i <= right; i++){
+                ans[top][i] = count+1;
+                count++;
+            }
+            
+            top++;
+            
+            for(int i = top; count<total && i <= bottom; i++){
+                ans[i][right] = count+1;
+                count++;
+            }
+            
+            right--;
+            
+            for(int i = right; count<total && i >= left ; i--){
+                ans[bottom][i] = count+1;
+                count++;
+            }
+            
+            bottom--;
+            
+            for(int i = bottom; count<total && i >= top ; i--){
+                ans[i][left] = count+1;
+                count++;
+            }
+            
+            left++;
+            
         }
-        return result;
+        
+        return ans;
     }
 };
