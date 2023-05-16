@@ -11,42 +11,28 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        if(!head || !head->next)
-            return head;
+        ListNode* dummy = new ListNode();
         
-        ListNode* fast = head->next, *slow = head;
-        ListNode* newHead = fast, *tail = head;
+        ListNode *p = head;
+        dummy->next = head;
+        ListNode *prev = dummy;
         
-        while(fast){
-            ListNode *temp = fast;
-            fast = fast->next;
+        while(p && p->next){
+            ListNode *first = p;
+            ListNode *second = p->next;
             
-            temp->next = slow;
-            slow->next = NULL;
-            if(temp != head)
-                tail->next = temp;
+            //swap and attach
+            prev->next = second;
+            // rest jitna baccha h jod do first se
+            first->next = second->next;
+            //reverse
+            second->next = first;
             
-            tail = slow;
-            
-            slow = fast;
-            if(fast)
-            fast =fast->next;
+            //attach
+            prev = first;
+            p = first->next;
         }
         
-        if(slow){
-            tail->next = slow;
-            tail = slow;
-        }
-        
-        tail->next = NULL;
-        
-        // cout<<tail->val;
-        // cout<<1;
-        
-        // while(newHead){
-        //     cout<<newHead->val << " ";
-        //     newHead = newHead->next;
-        // }
-        return newHead;
+        return dummy->next;
     }
 };
