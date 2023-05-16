@@ -15,15 +15,38 @@ public:
             return head;
         
         ListNode* fast = head->next, *slow = head;
+        ListNode* newHead = fast, *tail = head;
         
-        while(fast && fast->next){
-            swap(slow->val,fast->val);
-            fast = fast->next->next;
-            slow = slow->next->next;
+        while(fast){
+            ListNode *temp = fast;
+            fast = fast->next;
+            
+            temp->next = slow;
+            slow->next = NULL;
+            if(temp != head)
+                tail->next = temp;
+            
+            tail = slow;
+            
+            slow = fast;
+            if(fast)
+            fast =fast->next;
         }
-        if(fast)
-        swap(slow->val,fast->val);
-        return head;
         
+        if(slow){
+            tail->next = slow;
+            tail = slow;
+        }
+        
+        tail->next = NULL;
+        
+        // cout<<tail->val;
+        // cout<<1;
+        
+        // while(newHead){
+        //     cout<<newHead->val << " ";
+        //     newHead = newHead->next;
+        // }
+        return newHead;
     }
 };
