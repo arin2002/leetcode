@@ -11,18 +11,39 @@
 class Solution {
 public:
     int pairSum(ListNode* head) {
-        vector<int> nums;
+        ListNode* fast = head, *slow = head;
+        int ans = 0;
         
-        while(head){
-            nums.push_back(head->val);
-            head = head->next;
+        while(fast && fast->next){
+            fast = fast->next->next;
+            slow = slow->next;
         }
         
-        int i = 0, j = nums.size()-1, ans = 0; 
-        while(i<j){
-            ans = max(ans,nums[i++]+nums[j--]);
+        // slow is pointing at middle
+        // cout<<slow->val<<" ";
+        
+        // now apply reverse concept of linked list
+        ListNode *prev = NULL, *next = slow->next, *curr = slow;
+        
+        while(next){
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            next = next->next;
         }
         
+        curr->next = prev;
+        
+        fast = curr;
+        while(fast){
+            cout<<fast->val<<" ";
+            fast = fast->next;
+        }
+        
+        while(curr){
+            ans= max(ans,head->val+curr->val);
+            head = head->next; curr = curr->next;
+        }
         return ans;
     }
 };
