@@ -1,36 +1,36 @@
 class Solution {
 public:
+    vector<int> col;
     
-    // odd length wali nhi hogai bipartite
-    bool dfs(int node, vector<int> &color, vector<vector<int>>& graph,int col){        
-        for(auto it : graph[node]){
-            if(color[it] == -1){
-                color[it] = !col;
-                // for subtree
-                if(!dfs(it,color,graph,color[it]))
-                    return 0;
+    bool dfs(int node,int color, vector<vector<int>>& adj){
+        
+        for(auto &it: adj[node]){
+            if(col[it] == -1){
+                col[it] = !color;
+                if(dfs(it,col[it],adj)){
+                    return true;
+                }
             }
-            else if(color[it] == color[node])
-                return 0;
+            else if(col[node] == col[it]){
+                return true;
+            }
         }
         
-        return 1;
+        return false;
     }
-    
     
     bool isBipartite(vector<vector<int>>& graph) {
         int n = graph.size();
-        // color array -1 means not colored
-        vector<int> color(n,-1);
+        col.resize(n,-1);
         
         for(int i = 0; i<n; i++){
-            if(color[i] == -1){
-                color[i] = 0;
-                if(!dfs(i,color,graph,0))
-                    return 0;
+            if(col[i] == -1){
+                col[i] = 0;
+                if(dfs(i,0,graph))
+                    return false;
             }
         }
         
-        return 1;
+        return true;
     }
 };
