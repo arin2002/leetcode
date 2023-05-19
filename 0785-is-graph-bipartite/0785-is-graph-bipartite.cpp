@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    // odd length wali dega cycle
+    // odd length wali nhi hogai bipartite
     bool dfs(int node, vector<int> &color, vector<vector<int>>& graph,int col){        
         for(auto it : graph[node]){
             if(color[it] == -1){
