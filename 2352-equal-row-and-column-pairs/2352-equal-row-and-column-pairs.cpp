@@ -1,24 +1,32 @@
 class Solution {
 public:
     
-    bool check(int i,vector<int> nums, vector<vector<int>>& grid){
-        int k = 0;
+    int check(int i,vector<vector<int>>& grid, map<vector<int>,int> &ump){
+        vector<int> nums;
         for(int j = 0; j<grid.size(); j++){
-            if(grid[j][i] != nums[k++])
-                return false;
+            nums.push_back(grid[j][i]);
         }
         
-        return true;
+        if(ump.find(nums) == ump.end())
+            return 0;
+        
+//         for(auto it: nums)
+//             cout<<it<<" ";
+        
+//         cout<<endl;
+        return ump[nums];
     }
     
     int equalPairs(vector<vector<int>>& grid) {
         int ans = 0, n = grid.size();
+        map<vector<int>,int> ump;
         
         for(auto &it: grid){
-            for(int i = 0; i<n; i++){
-                if(check(i,it,grid))
-                    ans++;
-            }
+            ump[it]++;
+        }
+        
+        for(int i = 0; i<n; i++){
+            ans += check(i,grid,ump);
         }
         
         return ans;
