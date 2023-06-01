@@ -1,7 +1,7 @@
 class Solution {
 public:
     int n;
-    vector<int> drs = {-1,0,1,0,-1};
+    vector<int> drs = {-1,0,1,0,-1,-1,1,1,-1};
     
     int solve(int i, int j, vector<vector<int>>& grid){
         if(i<0 || i>=n || j<0 || j>=n || grid[i][j] == 1)
@@ -30,7 +30,7 @@ public:
             if(x == n-1 && y == n-1)
                 return temp;
             
-            for(int k = 0; k<4; k++){
+            for(int k = 0; k<8; k++){
                 int nx = x+drs[k];
                 int ny = y+drs[k+1];
                 if(nx>=0 && nx<n && ny>=0 && ny<n && grid[nx][ny] == 0){
@@ -39,26 +39,26 @@ public:
                 }
             }
             
-            if(solve(x+1,y+1,grid)){
-                q.push({temp+1,{x+1,y+1}});
-                grid[x+1][y+1] = 1;
-            }
+//             if(solve(x+1,y+1,grid)){
+//                 q.push({temp+1,{x+1,y+1}});
+//                 grid[x+1][y+1] = 1;
+//             }
             
-            if(solve(x-1,y-1,grid)){
-                q.push({temp+1,{x-1,y-1}});
-                grid[x-1][y-1] = 1;
-            }
+//             if(solve(x-1,y-1,grid)){
+//                 q.push({temp+1,{x-1,y-1}});
+//                 grid[x-1][y-1] = 1;
+//             }
             
             
-            if(solve(x-1,y+1,grid)){
-                q.push({temp+1,{x-1,y+1}});
-                grid[x-1][y+1] = 1;
-            }
+//             if(solve(x-1,y+1,grid)){
+//                 q.push({temp+1,{x-1,y+1}});
+//                 grid[x-1][y+1] = 1;
+//             }
             
-            if(solve(x+1,y-1,grid)){
-                q.push({temp+1,{x+1,y-1}});
-                grid[x+1][y-1] = 1;
-            }
+//             if(solve(x+1,y-1,grid)){
+//                 q.push({temp+1,{x+1,y-1}});
+//                 grid[x+1][y-1] = 1;
+//             }
         }
         
         // return ans == INT_MAX ? -1: ans;
