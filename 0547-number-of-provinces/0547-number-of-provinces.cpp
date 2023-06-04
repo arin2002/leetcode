@@ -1,27 +1,27 @@
 class Solution {
 public:
     
-    int vis[300] = {0};
+    vector<int> vis;
     
-    
-    void dfs(int i, vector<vector<int>> &nums, int n){
-        vis[i] = 1;
+    void dfs(int node, vector<vector<int>>& nums){
+        vis[node] = 1;
         
-        for(int j = 0; j<n; j++){
-            if(!vis[j] && nums[i][j]==1)
-                dfs(j,nums,n);
+        for(int i = 0; i<nums.size(); i++){
+            if(!vis[i]){
+                if(nums[node][i] == 1){
+                    dfs(i,nums);
+                }
+            }
         }
     }
     
-    
     int findCircleNum(vector<vector<int>>& nums) {
-        int n = nums.size(),  ans = 0;
-        
-        // check for all nodes
-        for(int i = 0; i<n; i++){
-            if(!vis[i]){
-                dfs(i,nums,n);
+        int n = nums.size(), ans = 0;
+        vis.resize(n+1);
+        for(int i = 0; i<nums.size(); i++){
+            if(vis[i] == 0){
                 ans++;
+                dfs(i,nums);
             }
         }
         
