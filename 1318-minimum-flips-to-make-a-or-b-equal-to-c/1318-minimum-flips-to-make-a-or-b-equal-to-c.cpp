@@ -1,31 +1,15 @@
 class Solution {
 public:
     int minFlips(int a, int b, int c) {
-        int ans = 0;
-        while(a || b || c){
-            int p = (a&1);
-            int q = (b&1);
-            int r = (c&1);
-            
-            int t = p|q;
-            
-            // cout<<p<<" "<<q<<" "<<r<<" "<<t<<endl;
-            if(t != r){
-                if(t == 0){
-                    // if(a == 1 || b == 1)
-                    ans++;
-                }
-                else{
-                    ans +=2;
-                    if(p == 0 || q == 0)
-                        ans--;
-                }
-            }
-            cout<<p<<" "<<q<<" "<<r<<" "<<t<<" "<<ans<<endl;
-            a>>=1;
-            b>>=1;
-            c>>=1;
-        }
+        // this will tell us kaha kaha differnt bits aayi h
+        int result1 = (a|b)^c;
+        
+        // ab ye jrrui to nhi h ki dono diff ho
+        // same bit pe 1,1 ha to ans ko +2 karna padhega
+        // par isme ye miss ho jayega isliye uske liye and operayion se
+        // vo jagye nikal lenge jaha same bits ha
+        int result2 = (result1)&(a&b);
+        int ans = __builtin_popcount(result1)+ __builtin_popcount(result2);
         
         return ans;
     }
