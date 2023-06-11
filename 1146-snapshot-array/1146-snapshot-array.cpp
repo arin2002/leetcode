@@ -8,35 +8,35 @@ public:
     }
     
     void set(int index, int val) {
-        // vp[index].push_back({snaps,val});
+        vp[index].push_back({snaps,val});
         // vector<pair<int,int>> v = vp[index];
-        int n = vp[index].size();
-        int last = vp[index][n-1].first;
+//         int n = vp[index].size();
+//         int last = vp[index][n-1].first;
         
-        if(last < snaps){
-            vp[index].push_back({snaps,val});
-            return;
-        }
+//         if(last < snaps){
+//             vp[index].push_back({snaps,val});
+//             return;
+//         }
         
-        int l = 0, r = n-1;
-        while(l<=r){
-            int mid = (l+r)/2;
-            // cout<<mid<<" ";
-            int snp = vp[index][mid].first;
-            // int val = v[mid].second;
-            if(snp == snaps){
-                cout<<1;
-                vp[index][mid] = {snaps,val}; 
-                break;
-            }
+//         int l = 0, r = n-1;
+//         while(l<=r){
+//             int mid = (l+r)/2;
+//             // cout<<mid<<" ";
+//             int snp = vp[index][mid].first;
+//             // int val = v[mid].second;
+//             if(snp == snaps){
+//                 cout<<1;
+//                 vp[index][mid] = {snaps,val}; 
+//                 break;
+//             }
             
-            else if(snp < snaps){
-                l = mid+1;
-            }
-            else{
-                r = mid-1;
-            }
-        }
+//             else if(snp < snaps){
+//                 l = mid+1;
+//             }
+//             else{
+//                 r = mid-1;
+//             }
+//         }
     }
     
     int snap() {
