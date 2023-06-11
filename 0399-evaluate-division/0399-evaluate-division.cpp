@@ -1,63 +1,54 @@
 class Solution {
 public:
-    // DFS function for storing all the same connected nodes and saving the values in the visited 
-    void DFS(unordered_map< string , unordered_map<string, double>>& adj , unordered_map<string, pair<double,int>>& visited ,int type , string s  )
-    {
-
-        for(auto it : adj[s])
-        {
-            if(visited.count(it.first)==0)
-            {
-                visited[it.first] = {(double)visited[s].first/it.second ,type} ;
-                DFS(adj , visited , type , it.first);
+    vector<double> ans;
+    unordered_map<string, vector<pair<string, double>>> adj;
+    
+    bool dfs(string& source, string& destin, unordered_set<string>& st, double& ans, double temp) {
+        st.insert(source);
+        
+        if (adj.find(source) == adj.end() || adj.find(destin) == adj.end())
+            return false;
+        
+        if (source == destin) {
+            ans = temp;
+            return true;
+        }
+        
+        for (auto& it : adj[source]) {
+            string i = it.first;
+            double val = it.second;
+            
+            if (st.find(i) == st.end()) {
+                if (dfs(i, destin, st, ans, temp * val)) {
+                    return true;
+                }
             }
         }
+        
+        return false;
     }
-
+    
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-        unordered_map< string, pair<double,int>> store ;// pair will show the type whether it can resonates or not 
-        unordered_map< string , unordered_map<string, double>> adj  ;
-        // I have stored the values so taht at dfs we can directly take 
-        for( int i =0 ;i<equations.size() ;i++)
-        {
-            adj[equations[i][0]][equations[i][1]] = values[i];
-            double inverse = (double)1/values[i] ;
-            adj[equations[i][1]][equations[i][0]] = inverse ;
-        } 
-        // Count varibale for distincting between different components 
-        int count =0;
-        for(auto it :adj)
-        {
-            if(store.count(it.first)==0)
-            {
-            // Giving the first value as 1 as they are ratios 
-                store[it.first] = {1.0 , count};
-                DFS(adj , store ,count , it.first );
-                count ++;
-            }
+        int i = 0;
+        for (auto& it : equations) {
+            double val = values[i++];
+            string a = it[0];
+            string b = it[1];
+            
+            adj[a].push_back({b, val});
+            adj[b].push_back({a, 1.0 / val});
         }
-
-        // At this point our store(visited ) is having all the necessary calculations which are valid 
-        vector<double> ans  ;
-        for( int i =0 ;i<queries.size() ;i++)
-        {
-            if(store.count(queries[i][0])==0 || store.count(queries[i][1])==0)
-            {
-                ans.push_back(-1);
-                continue ;
-            }
-        // Checking the type of both string from queries 
-            int type_1 = store[queries[i][0]].second ;
-            int type_2 = store[queries[i][1]].second ;
-            if(type_1!=type_2)
-            {
-                ans.push_back(-1);
-                continue ;
-            }
-        // If type are same 
-            double val = (double)(store[queries[i][0]].first)/store[queries[i][1]].first;
-            ans.push_back(val);
+        
+        for (auto& it : queries) {
+            double anss = 0;
+            unordered_set<string> st;
+            
+            if (dfs(it[0], it[1], st, anss, 1.0) == false)
+                anss = -1;
+            
+            ans.push_back(anss);
         }
-        return ans ;
+        
+        return ans;
     }
 };
