@@ -1,29 +1,35 @@
 class Solution {
 public:
+    int dp[101][101][2];
+    
+    int solve(int ind, int m, int person, vector<int>& piles){
+        if(ind >= piles.size())
+            return 0;
+        
+        if(dp[ind][m][person] != -1)
+            return dp[ind][m][person];
+        
+        int temp = 0, ans = 0;
+        if(person == 1)
+            ans = INT_MAX;
+        
+        for(int i = ind; i<piles.size(); i++){
+            if(i-ind+1 > 2*m)
+                break;
+            
+            temp += piles[i];
+            if(person == 1)
+                ans = min(ans,solve(i+1,max(m,i-ind+1),0,piles));
+            
+            else
+                ans = max(ans,temp+solve(i+1,max(m,i-ind+1),1,piles));
+        }
+        
+        return dp[ind][m][person] = ans;
+    }
+    
     int stoneGameII(vector<int>& piles) {
-        int n = piles.size();
-        vector dp(2, vector(n + 1, vector<int>(n + 1, -1)));
-        
-        function<int(int, int, int)> f = [&](int p, int i, int m) -> int {
-            if (i == n) {
-                return 0;
-            }
-            if (dp[p][i][m] != -1) {
-                return dp[p][i][m];
-            }
-            int res = p == 1 ? 1000000 : -1, s = 0;
-            for (int x = 1; x <= min(2 * m, n - i); x++) {
-                s += piles[i + x - 1];
-                if (p == 0) {
-                    res = max(res, s + f(1, i + x, max(m, x)));
-                }
-                else {
-                    res = min(res, f(0, i + x, max(m, x)));
-                }
-            }
-            return dp[p][i][m] = res;
-        };
-        
-        return f(0, 0, 1);
+        memset(dp,-1,sizeof(dp));
+        return solve(0,1,0,piles);
     }
 };
