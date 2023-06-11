@@ -46,24 +46,26 @@ public:
     
     int get(int index, int snap_id) {
         // vector<pair<int,int>> v = vp[index];
-        int l = 0, r = vp[index].size()-1;
-        int ans = -1;
+        // int l = 0, r = vp[index].size()-1;
+        // int ans = -1;
         
-        while(l<=r){
-            int mid = (l+r)/2;
-            int snp = vp[index][mid].first;
-            int val = vp[index][mid].second;
+//         while(l<=r){
+//             int mid = (l+r)/2;
+//             int snp = vp[index][mid].first;
+//             int val = vp[index][mid].second;
                 
-            if(snp <= snap_id){
-                ans = val;
-                l = mid+1;
-            }
-            else{
-                r = mid-1;
-            }
-        }
+//             if(snp <= snap_id){
+//                 ans = val;
+//                 l = mid+1;
+//             }
+//             else{
+//                 r = mid-1;
+//             }
+//         }
         
-        return ans;
+        auto it = upper_bound(vp[index].begin(),vp[index].end(),make_pair(snap_id,INT_MAX));
+        
+        return prev(it)->second;
     }
 };
 
