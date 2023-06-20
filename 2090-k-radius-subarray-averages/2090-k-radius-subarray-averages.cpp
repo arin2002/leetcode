@@ -12,7 +12,7 @@ public:
         int K = k, j = 0;
         for(int i = 2*k; i<n; i++){
             sum += (long long)nums[i];
-            cout<<sum<<" ";
+            // cout<<sum<<" ";
             ans[K++] = sum/(2*k+1);
             sum-=nums[j++];
         }
