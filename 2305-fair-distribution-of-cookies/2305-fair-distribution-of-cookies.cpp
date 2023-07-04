@@ -18,6 +18,8 @@ public:
             nums[j] += cookies[i];
             ans = min(ans,solve(i+1,cookies));
             nums[j] -= cookies[i];
+            if(nums[j] == 0)
+                break;
         }
         
         return ans;
