@@ -1,41 +1,39 @@
 class Solution {
 public:
-    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+    vector<int> spiralOrder(vector<vector<int>>& a) {
         vector<int> ans;
-        int n = matrix.size(), m = matrix[0].size();
-        int total = n*m;
+        int n = a.size(), m = a[0].size();
+        int left = 0, up = 0;
+        int right = m-1, down = n-1;
+        int count = 0, total = m*n;
         
-        int top = 0, bottom = n-1, left = 0, right = m-1, count = 0;
-        
-        while(count <total){
-            for(int i = left; count<total && i<=right; i++){
-                ans.push_back(matrix[top][i]);
+        while(count<total){
+            for(int i = left; i<=right && count<total; i++){
+                ans.push_back(a[up][i]);
                 count++;
             }
-            top++;
+            up++;
             
-            for(int i = top; count<total && i<=bottom; i++){
-                ans.push_back(matrix[i][right]);
+            for(int i = up; i<=down && count<total; i++){
+                ans.push_back(a[i][right]);
                 count++;
             }
-            
             right--;
             
-            for(int i = right; count<total && i>=left; i--){
-                ans.push_back(matrix[bottom][i]);
+            for(int i = right; i>=left && count<total; i--){
+                ans.push_back(a[down][i]);
                 count++;
             }
+            down--;
             
-            bottom--;
-            
-            for(int i = bottom; count<total && i>=top; i--){
-                ans.push_back(matrix[i][left]);
+            for(int i = down; i>=up && count<total; i--){
+                ans.push_back(a[i][left]);
                 count++;
             }
             left++;
-            cout<<count<<" ";
         }
         
         return ans;
+        
     }
 };
