@@ -34,6 +34,31 @@ public:
     }
     
     int minDepth(TreeNode* root) {
-        return solve(root);
+        // return solve(root);
+        
+        if(root == NULL)
+            return 0;
+        
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,1});
+        
+        while(!q.empty()){
+            TreeNode* node = q.front().first;
+            int t = q.front().second;
+            q.pop();
+            
+            if(node->left != NULL){
+                q.push({node->left,t+1});
+            }
+            
+            if(node->right != NULL){
+                q.push({node->right,t+1});
+            }
+            
+            if(!node->left && !node->right)
+                ans = min(ans,t);
+        }
+        
+        return ans;
     }
 };
