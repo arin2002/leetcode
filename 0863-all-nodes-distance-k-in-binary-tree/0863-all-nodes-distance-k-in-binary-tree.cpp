@@ -9,57 +9,58 @@
  */
 class Solution {
 public:
-    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        vector<int> ans;
+    unordered_map<int,vector<int>> ump;
+    void bfs(TreeNode* root){
         queue<TreeNode*> q;
         q.push(root);
         
-        // make it graph
-        vector<int> adj[502];
         while(!q.empty()){
             TreeNode* node = q.front();
             q.pop();
             
             if(node->left){
-                adj[node->val].push_back(node->left->val);
-                adj[node->left->val].push_back(node->val);
+                ump[node->val].push_back(node->left->val); 
+                ump[node->left->val].push_back(node->val); 
                 q.push(node->left);
             }
             
             if(node->right){
-                adj[node->val].push_back(node->right->val);
-                adj[node->right->val].push_back(node->val);
+                ump[node->val].push_back(node->right->val);
+                ump[node->right->val].push_back(node->val); 
                 q.push(node->right);
             }
         }
+    }
+    
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        bfs(root);
+        vector<int> vis(501);
+        queue<pair<int,int>> q;
+        vector<int> ans;
         
+        q.push({target->val,0});
         
-        // do bfs now
-        queue<int>que;
-        que.push(target->val);
-        vector<int> vis(502);
-        
-        int count = 0;
-        while(!que.empty()){
-            if(count > k)
+        while(!q.empty()){
+            int node = q.front().first;
+            int temp = q.front().second;
+            vis[node] = 1;
+            q.pop();
+            cout<<temp<<" ";
+            if(temp>k)
                 break;
-            
-            int n = que.size();
-            for(int i = 0; i<n; i++){
-                int node = que.front();
-                que.pop();
-                vis[node] = 1;
-                for(auto it : adj[node]){
-                    if(!vis[it])
-                        que.push(it);
-                }
-                
-                if(count == k)
-                    ans.push_back(node);
+            if(temp == k){
+                ans.push_back(node);
             }
             
-            count++;
+            for(auto &it: ump[node]){
+                if(!vis[it]){
+                    vis[it] = 1;
+                    q.push({it,temp+1});
+                }
+            }
+            
         }
+        
         return ans;
     }
 };
