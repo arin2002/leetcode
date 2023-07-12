@@ -1,43 +1,46 @@
 class Solution {
 public:
+    vector<int> ans;
+    int n;
+    vector<int> vis, inRecursion;
     
-    vector<int> vis,path, ans;
-    
-    
-    bool dfs(int node,vector<vector<int>>& graph){
+    bool solve(int node, vector<vector<int>>& graph){
         vis[node] = 1;
-        path[node] = 1;
-         
-        for(auto it : graph[node]){
-            if(vis[it] == 0){
-                if(dfs(it,graph) == true)
+        inRecursion[node] = 1;
+        
+        for(auto &it: graph[node]){
+            if(!vis[it]){
+                if(solve(it,graph)){
                     return true;
+                }
             }
-            else if(path[it])
+            else if(inRecursion[it]){
                 return true;
+            }
         }
         
-        path[node] = 0;
+        inRecursion[node] = 0;
         return false;
     }
     
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        int n = graph.size();
-        
-        vis.resize(n);
-        path.resize(n);
-        
+    void dfs(vector<vector<int>>& graph){        
         for(int i = 0; i<n; i++){
             if(!vis[i]){
-                dfs(i,graph);
+                solve(i,graph);
             }
         }
         
         for(int i = 0; i<n; i++){
-            if(path[i] == 0)
+            if(!inRecursion[i]){
                 ans.push_back(i);
+            }
         }
-        
+    }
+    
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        n = graph.size();
+        vis.resize(n); inRecursion.resize(n);
+        dfs(graph);
         return ans;
     }
 };
