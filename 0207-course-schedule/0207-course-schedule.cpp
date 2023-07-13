@@ -1,42 +1,38 @@
 class Solution {
 public:
-    bool canFinish(int n, vector<vector<int>>& edges) {
+    bool canFinish(int n, vector<vector<int>>& nums) {
+        vector<int> inDegree(n);
         vector<int> adj[n];
-        
-        for(auto &it: edges){
+    
+        for(auto &it: nums){
             adj[it[0]].push_back(it[1]);
-        }
-        
-        // kahns algo
-        
-        //find indegree
-        vector<int> indegree(n,0);
-        
-        for(int i = 0; i<n; i++){
-            for(auto &it: adj[i])
-                indegree[it]++;
+            inDegree[it[1]]++;
         }
         
         queue<int> q;
         for(int i = 0; i<n; i++){
-            if(indegree[i] == 0)
+            if(!inDegree[i]){
                 q.push(i);
+            }
         }
         
-        vector<int> ans;
         while(!q.empty()){
             int node = q.front();
             q.pop();
-            ans.push_back(node);
             
             for(auto &it: adj[node]){
-                indegree[it]--;
+                inDegree[it]--;
                 
-                if(indegree[it] == 0)
+                if(inDegree[it] == 0)
                     q.push(it);
             }
         }
         
-        return ans.size() == n;
+        for(int i = 0; i<n; i++){
+            if(inDegree[i])
+                return false;
+        }
+        
+        return true;
     }
 };
