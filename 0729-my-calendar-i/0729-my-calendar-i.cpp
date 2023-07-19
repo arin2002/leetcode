@@ -6,19 +6,11 @@ public:
     }
     
     bool book(int start, int end) {
-        mp[start]++;
-        mp[end]--;
+        auto it = mp.upper_bound(start);
+        if(it != mp.end() && (it)->second < end)
+            return false;
         
-        int t = 0;
-        for(auto &[a,b]: mp){
-            t += b;
-            if(t>1){
-                mp[start]--;
-                mp[end]++;
-                return false;
-            }
-        }
-        
+        mp[end] =  start;
         return true;
     }
 };
