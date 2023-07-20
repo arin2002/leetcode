@@ -1,33 +1,29 @@
 class Solution {
 public:
-    vector<int> nums;
+    vector<int> ans;
     int k;
     
-    int solve(int i, vector<int>& cookies){
-        if(i == cookies.size()){
-            int maxi = INT_MIN;
-            for(auto &it: nums){
-                maxi = max(maxi,it);
-            }
+    int solve(int ind, vector<int>& nums){
+        if(ind == nums.size()){
+            return *max_element(ans.begin(),ans.end());
+        }
+        
+        int t = INT_MAX;
+        for(int i = 0; i<k; i++){
+            ans[i] += nums[ind];
+            t = min(t,solve(ind+1,nums));
+            ans[i] -= nums[ind];
             
-            return maxi;
+            if(ans[i] <= 0)
+                return t;
         }
         
-        int ans = INT_MAX;
-        for(int j = 0; j<k; j++){
-            nums[j] += cookies[i];
-            ans = min(ans,solve(i+1,cookies));
-            nums[j] -= cookies[i];
-            if(nums[j] == 0)
-                break;
-        }
-        
-        return ans;
+        return t;
     }
     
     int distributeCookies(vector<int>& cookies, int k) {
-        nums.resize(k);
         this->k = k;
+        ans.resize(k);
         return solve(0,cookies);
     }
 };
