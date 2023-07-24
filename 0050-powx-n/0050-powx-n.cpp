@@ -10,9 +10,12 @@ public:
         while(n>0){
             if(n&1){
                 res *= x;
+                n--;
             }
-            x = x*x;
-            n >>= 1;
+            else{
+                x = x*x;
+                n >>= 1;
+            }
         }
         
         return res;
