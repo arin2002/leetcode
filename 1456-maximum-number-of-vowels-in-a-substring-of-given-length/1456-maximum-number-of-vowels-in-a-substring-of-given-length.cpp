@@ -1,25 +1,33 @@
 class Solution {
 public:
+    
+    bool isVowel(char s){
+        return (s=='a' || s== 'e' || s== 'i' || s== 'o' || s== 'u');
+    }
+    
+    
     int maxVowels(string s, int k) {
-        int n = s.size();
-        int maxi = 0, count = 0, ans = 0;
-        for(int i = 0; i<k; i++){            
-            if(s[i] == 'a'||s[i] == 'e'||s[i] == 'i'||s[i] == 'o'||s[i] == 'u')
-                count++;
-            
-            ans = max(ans,count);
+        int ans = 0, n = s.size();
+        // unordered_map<char,int> ump;
+        for(int i = 0; i<k; i++){
+            if(isVowel(s[i])){
+                // ump[s[i]]++;
+                ans++;
+            }
         }
         
-        int i = 0;
-        for(int j = k; j<n; j++){
-            if(s[j] == 'a'||s[j] == 'e'||s[j] == 'i'||s[j] == 'o'||s[j] == 'u')
-                count++;
+        int temp = ans, start = 0;
+        for(int i = k; i<n; i++){
+            if(isVowel(s[start++])){
+                // ump[s[i]]--;
+                temp--;
+            }
             
-            if(s[i] == 'a'||s[i] == 'e'||s[i] == 'i'||s[i] == 'o'||s[i] == 'u')
-                count--;
+            if(isVowel(s[i])){
+                temp++;
+            }
             
-            i++;
-            ans = max(ans,count);
+            ans = max(ans,temp);
         }
         
         return ans;
