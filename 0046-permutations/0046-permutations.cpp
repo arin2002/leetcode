@@ -7,7 +7,7 @@ public:
         vector<int> vis(n);
         
         // syntax is function<return type (operands type) function name = [&]()-> return type)
-        function<void(int)> solve = [&](int ind) -> void{
+        function<void()> solve = [&]() -> void{
             if(temp.size() == n){
                 ans.push_back(temp);
                 return;
@@ -17,14 +17,14 @@ public:
                 if(!vis[i]){
                     vis[i] = 1;
                     temp.push_back(nums[i]);
-                    solve(i+1);
+                    solve();
                     temp.pop_back();
                     vis[i] = 0;
                 }
             }
         };
         
-        solve(0);
+        solve();
         return ans;
     }
 };
