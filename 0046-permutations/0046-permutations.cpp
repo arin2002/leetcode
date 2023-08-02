@@ -1,25 +1,29 @@
 class Solution {
 public:
-    vector<int> temp;
-    vector<vector<int>> ans;
-    
-    void solve(int ind, vector<int>& nums){
-        if(ind == nums.size()){
-            ans.push_back(nums);
-            return;
-        }
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> ans;
+        vector<int> temp;
+        vector<int> vis(n);
         
-        for(int i = ind; i<nums.size(); i++){
-            // swaping
-            swap(nums[i],nums[ind]);
-            solve(ind+1,nums);
-            // agian swapping
-            swap(nums[i],nums[ind]);
-        }
-    }
-    
-    vector<vector<int>> permute(vector<int>& nums) {        
-        solve(0,nums);
+        // syntax is function<return type (operands type) function name = [&]()-> return type)
+        function<void(int)> solve = [&](int ind) -> void{
+            if(temp.size() == n){
+                ans.push_back(temp);
+            }
+            
+            for(int i = 0; i<n; i++){
+                if(!vis[i]){
+                    vis[i] = 1;
+                    temp.push_back(nums[i]);
+                    solve(i+1);
+                    temp.pop_back();
+                    vis[i] = 0;
+                }
+            }
+        };
+        
+        solve(0);
         return ans;
     }
 };
