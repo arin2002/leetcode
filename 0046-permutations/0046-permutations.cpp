@@ -10,6 +10,7 @@ public:
         function<void(int)> solve = [&](int ind) -> void{
             if(temp.size() == n){
                 ans.push_back(temp);
+                return;
             }
             
             for(int i = 0; i<n; i++){
