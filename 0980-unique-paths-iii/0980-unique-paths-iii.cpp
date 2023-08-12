@@ -1,57 +1,43 @@
 class Solution {
 public:
-    
-    bool check(int i, int j, vector<vector<int>>& grid){
-        if(i>=grid.size() || i<0 || j>=grid[0].size() || j<0)
-            return 1;
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size(), count = 0;
+        int x = 0, y = 0;
+        vector<int> drs{-1,0,1,0,-1};
         
-        if(grid[i][j] == -1 || grid[i][j] == -2)
-            return 1;
-        
-        return 0;
-    }
-    
-    int f(int i, int j, int count, vector<vector<int>>&grid, vector<vector<vector<int>>> &dp){
-        if(check(i,j,grid))
-            return 0;
-        
-        if(grid[i][j] == 2){
-            if(count != 0)
+        function<int(int,int,int)>solve = [&](int r, int c, int count){
+            if(r<0 || c<0 || r == n || c == m || grid[r][c] == -1)
                 return 0;
             
-            return 1;
-        }
+            // cout<<grid[r][c]<<" "<<count<<endl;
+            if(grid[r][c] == 2 && count == -1){
+                return 1;
+            }
+            
+            int l = 0, t = 0;
+            t = grid[r][c];
+            grid[r][c] = -1;
+            
+            for(int i = 0; i<4; i++){
+                int nx = r+drs[i];
+                int ny = c+drs[i+1];
+                l += solve(nx,ny,count-1);
+            }
+            
+            grid[r][c] = t;
+            return l;
+        };
         
-        if(dp[i][j][count] != -1)
-            return dp[i][j][count];
-        
-        grid[i][j] = -2;
-        count--;
-        int l = f(i+1,j,count,grid,dp);
-        int r = f(i,j+1,count,grid,dp);
-        int z = f(i,j-1,count,grid,dp);
-        int p = f(i-1,j,count,grid,dp);
-        
-        grid[i][j] = 0;
-        return dp[i][j][count] = l+r+z+p;
-    }
-    
-    
-    int uniquePathsIII(vector<vector<int>>& grid) {
-        int p = 0, q = 0, count = 1;
-        
-        for(int i = 0; i<grid.size(); i++){
-            for(int j = 0; j<grid[0].size(); j++){
-                if(grid[i][j] == 0)
-                    count++;
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
                 if(grid[i][j] == 1){
-                    p = i;
-                    q = j;
+                    x = i; y = j;
                 }
+                else if(grid[i][j] == 0)
+                    count++;
             }
         }
         
-        vector<vector<vector<int> > > dp(grid.size(), vector<vector<int> >(grid[0].size(), vector<int>(count+1,-1)));
-        return f(p,q,count,grid,dp);
+        return solve(x,y,count);
     }
 };
