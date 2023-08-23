@@ -1,33 +1,26 @@
 class Solution {
 public:
     
-    long solve(long n){        
-        long sum = 0;
-        while(n != 0){
-            long t = n%10;
-            sum += (t*t);
-            n /= 10;
+    int find(int n){
+        int sum = 0;
+        while(n){
+            sum += (n%10)*(n%10);
+            n/=10;
         }
         
         return sum;
     }
     
     bool isHappy(int n) {
-        
-        // cycle ban jayegi not happy walo mai 
-        // unordered_set<long> ump;
-        long fast = solve(n), slow = n;
-        
-        while(fast != 1){
-            if(slow == fast)
+        unordered_set<int> st;
+        while(n!= 1){
+            if(st.find(n) != st.end())
                 return 0;
+            st.insert(n);
             
-            // fast = solve(fast);
-            // fast = solve(fast);
-            fast = solve(solve(fast));
-            slow = solve(slow);
+            n = find(n);
         }
         
-        return 1;
+        return true;
     }
 };
