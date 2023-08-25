@@ -1,0 +1,35 @@
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        int n = s1.size(), m = s2.size(), mn = s3.size();
+
+        if (n + m != mn)
+            return false;
+
+        vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(m + 1, vector<int>(mn + 1, -1)));
+
+        function<int(int, int, int)> solve = [&](int i, int j, int k) {
+            if (i == n && j == m && k == mn) {
+                return 1;
+            }
+
+            if (k == mn)
+                return 0;
+
+            if (dp[i][j][k] != -1)
+                return dp[i][j][k];
+
+            bool l = false, r = false;
+
+            if (i < n && s1[i] == s3[k])
+                l = solve(i + 1, j, k + 1);
+
+            if (j < m && s2[j] == s3[k])
+                r = solve(i, j + 1, k + 1);
+
+            return dp[i][j][k] = l | r;
+        };
+
+        return solve(0, 0, 0);
+    }
+};
