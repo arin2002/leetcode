@@ -12,13 +12,14 @@ public:
             if(dp[ind][prev+1] != -1)
                 return dp[ind][prev+1];
             
-            int l = solve(ind+1,prev);
+            // int l = solve(ind+1,prev);
+            int l = 0;
             if(prev == -1 || pairs[prev][1] < pairs[ind][0]){
                  l = max(l,1+solve(ind+1,ind));
             }
             
+            l = max(l,solve(ind+1,prev));
             return dp[ind][prev+1] = l;
-            return l;
         };
 //         vector<int> temp;
 //         temp.push_back(pairs[0][1]);
