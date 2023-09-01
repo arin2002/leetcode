@@ -1,21 +1,14 @@
 class Solution {
 public:
-    
-    int solve(int n){
-        int count = 0;
-        while(n){
-            int bit = n&1;
-            if(bit) count++;
-            n>>=1;
-        }
-        
-        return count;
-    }
-    
     vector<int> countBits(int n) {
-        vector<int>  ans;
-        for(int i = 0; i<=n; i++){
-            ans.push_back(solve(i));
+        vector<int> ans(n+1);
+        for(int i = 1; i<=n; i++){
+            if(i%2 == 0){
+                ans[i] = ans[i/2];
+            }
+            else{
+                ans[i] = ans[i/2]+1;
+            }
         }
         
         return ans;
