@@ -1,36 +1,33 @@
 class Solution {
 public:
-    unordered_set<string> st;
-    int n;
-    vector<int> dp;
-    int solve(int ind, string &s){
-        if(ind >= n){
-            return 0;
-        }
+    int minExtraChar(string s, vector<string>& d) {
+        unordered_set<string> st(d.begin(),d.end());
+        int n = s.size();
+        vector<int> dp(n+1,-1);
         
-        if(dp[ind] != -1)
-            return dp[ind];
-        
-        string t = "";
-        
-        int ans = 1e6;
-        for(int i = ind; i<n; i++){
-            t += s[i];
-            if(st.find(t) != st.end())
-                ans = min(ans,solve(i+1,s));
+        function<int(int)>solve = [&](int ind){
+            if(ind == n)
+                return 0;
             
-            ans = min(ans,(int)t.length()+solve(i+1,s));
-        }
+            if(dp[ind] != -1)
+                return dp[ind];
+            
+            string  t;
+            int l = INT_MAX;
+            for(int i = ind; i<n; i++){
+                t += s[i];
+                
+                if(st.find(t) != st.end()){
+                    l = min(l,solve(i+1));
+                }
+                
+                l = min(l,i-ind+1+solve(i+1));
+            }
+            
+            return dp[ind] = l;
+        };
         
-        return dp[ind] = ans;
-    }
-    
-    int minExtraChar(string s, vector<string>& dict) {
-        for(auto &it: dict)
-            st.insert(it);
         
-        n = s.size();
-        dp.resize(n,-1);
-        return solve(0,s);
+        return solve(0);
     }
 };
