@@ -12,15 +12,15 @@ class Solution {
 public:
     vector<ListNode*> splitListToParts(ListNode* head, int k) {
         vector<ListNode*> ans(k,NULL);
-        vector<int> nums;
+        int total = 0;
         ListNode *p = head;
         
         while(p){
-            nums.push_back(p->val);
+            total++;
             p = p->next;
         }
         
-        int total = nums.size(), ind  = 0;
+        int ind  = 0;
         p = head;
         
         while(p){
