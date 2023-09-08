@@ -3,19 +3,14 @@ public:
     vector<vector<int>> generate(int n) {
         vector<vector<int>> ans;
         
-        for(int i = 1; i<=n; i++){
-            int val = 1;
-            vector<int> temp;
-            for(int j = 0; j<i; j++){
-                if(j == 0 || j == i){
-                    temp.push_back(1);
-                    continue;
-                }
-                val *= (i-j);
-                val /= j;
-                temp.push_back(val);
+        for(int size = 1; size<=n; size++){
+            vector<int> v(size,1);
+            
+            for(int i = 1; i<size-1; i++){
+                v[i] = ans[size-2][i-1]+ans[size-2][i];
             }
-            ans.push_back(temp);
+            
+            ans.push_back(v);
         }
         
         return ans;
