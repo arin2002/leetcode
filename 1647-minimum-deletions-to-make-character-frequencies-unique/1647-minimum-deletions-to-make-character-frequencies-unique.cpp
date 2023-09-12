@@ -20,7 +20,6 @@ public:
             int a = pq.top();
             pq.pop();
             int b = pq.top();
-            pq.pop();
             
             // cout<<a<<" "<<b<<endl;
             if(a == b){
@@ -29,7 +28,6 @@ public:
                 if(a > 0)
                     pq.push(a);
             }
-            pq.push(b);
         }
         
         return ans;
