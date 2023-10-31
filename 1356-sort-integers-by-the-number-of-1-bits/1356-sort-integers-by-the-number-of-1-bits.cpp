@@ -2,8 +2,6 @@ class Solution {
 public:
     vector<int> sortByBits(vector<int>& arr) {
         vector<int> ans;
-        vector<pair<int,int>> vp;
-        int n = arr.size();
         
         function<int(int)>solve = [&](int n){
             int t = 0;
@@ -19,23 +17,13 @@ public:
             return t;
         };
         
-        
-        for(int i = 0; i<n; i++){
-            vp.push_back({solve(arr[i]),arr[i]});
-        }
-        
-        sort(vp.begin(),vp.end(),[&](auto a, auto b){
-            if(a.first == b.first){
-                return a.second<b.second;
-            }
+        sort(arr.begin(),arr.end(),[&](auto a, auto b){
+           if(solve(a) == solve(b))
+               return a < b;
             
-            return a.first < b.first;
+            return solve(a)<solve(b);
         });
-        
-        for(auto it: vp){
-            ans.push_back(it.second);
-        }
-        
-        return ans;
+
+        return arr;
     }
 };
