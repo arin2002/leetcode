@@ -1,31 +1,24 @@
 class Solution {
 public:
     int getWinner(vector<int>& arr, int k) {
-        queue<int> q;
-        int count = 0, ans = 1, prev = -1;
+        int count = 0, prev = -1, maxi = arr[0];
         int n = arr.size();
         
-        if(k >= n){
-            return *max_element(arr.begin(),arr.end());
+        // main logic
+        // if(k >= n){
+        //     return *max_element(arr.begin(),arr.end());
+        // }
+        
+        for(int i = 1; i<n; i++){
+            maxi = max(maxi,arr[i]);
         }
         
         for(int i = 1; i<n; i++){
-            q.push(arr[i]);
-        }
-        
-        while(count != k){
             
-            // cout<<arr[0]<<" "<<q.front()<<"\n";
-            if(arr[0]<q.front()){
-                q.push(arr[0]);
-                arr[0] = q.front();
+            if(arr[0]<arr[i]){
+                arr[0] = arr[i];
             }
-            else{
-                q.push(q.front());
-            }
-            
-            q.pop();
-            
+                        
             if(prev == arr[0]){
                 count++;
             }
@@ -34,9 +27,11 @@ public:
                 count = 1;
             }
             
-            // cout<<arr[0]<<" ";
+            if(arr[0] == maxi || count == k){
+                return arr[0];
+            }
         }
         
-        return arr[0];
+        return -1;
     }
 };
