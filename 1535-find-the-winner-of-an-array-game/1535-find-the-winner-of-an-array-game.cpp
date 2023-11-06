@@ -1,17 +1,13 @@
 class Solution {
 public:
     int getWinner(vector<int>& arr, int k) {
-        int count = 0, prev = -1, maxi = arr[0];
+        int count = 0, prev = -1;
         int n = arr.size();
         
         // main logic
         // if(k >= n){
         //     return *max_element(arr.begin(),arr.end());
         // }
-        
-        for(int i = 1; i<n; i++){
-            maxi = max(maxi,arr[i]);
-        }
         
         for(int i = 1; i<n; i++){
             
@@ -27,11 +23,11 @@ public:
                 count = 1;
             }
             
-            if(arr[0] == maxi || count == k){
+            if(count == k){
                 return arr[0];
             }
         }
         
-        return -1;
+        return arr[0];
     }
 };
