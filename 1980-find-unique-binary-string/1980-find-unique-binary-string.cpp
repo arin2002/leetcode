@@ -1,15 +1,25 @@
 class Solution {
 public:
-    int n;
-    string ans;
-    
     string findDifferentBinaryString(vector<string>& nums) {
-        n = nums[0].size();
+        unordered_set<string> st(nums.begin(),nums.end());
+        int n = nums[0].size();
+        string ans;
         
-        int i = 0;
-        for(auto &it : nums){
-            ans += it[i++] == '0' ? '1':'0';
-        }
+        function<void(string)> solve = [&](string s){
+            if(s.size() == n){
+                if(st.find(s) == st.end()){
+                    ans = s;
+                    return;
+                }
+                return;
+            }
+            
+            solve(s+'0');
+            solve(s+'1');
+            
+        };
+        
+        solve("");
         return ans;
     }
 };
