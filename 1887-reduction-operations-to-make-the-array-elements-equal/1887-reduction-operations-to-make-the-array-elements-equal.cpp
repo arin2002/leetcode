@@ -1,23 +1,21 @@
 class Solution {
 public:
     int reductionOperations(vector<int>& nums) {
-        map<int,int> memo;
-        for(int i=0;i<nums.size();i++){
-            memo[nums[i] * -1]++;
-        }
-
-        int result = 0;
-        int lastCount = 0;
-        for(auto m:memo){
-            if(m.first == memo.begin()->first){
-                lastCount = m.second;
+        int ans = 0, n = nums.size();
+        sort(nums.begin(),nums.end());
+        
+        if(n == 1)
+            return 0;
+        
+        for(int i = n-1; i>=0; i--){
+            if(nums[i+1] == nums[i]){
+                continue;
             }
-            else {
-                result += lastCount;
-                lastCount += m.second;
+            else{
+                ans += n-i-1;
             }
         }
-
-        return result;
+        
+        return ans;
     }
 };
