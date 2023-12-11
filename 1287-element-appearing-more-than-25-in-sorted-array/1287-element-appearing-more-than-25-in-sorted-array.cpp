@@ -2,20 +2,11 @@ class Solution {
 public:
     int findSpecialInteger(vector<int>& arr) {
         int count = 1, n = arr.size(), prev = arr[0];
+        int size = n/4;
         
-        for(int i = 1; i<n; i++){
-            if(prev != arr[i]){
-                double percen = ((double)count/(double)n)*100;
-                
-                cout<<prev<<" "<<count<<" "<<percen<<" "<<endl;
-                if(percen > 25.0){
-                    return prev;
-                }
-                count = 1;
-                prev = arr[i];
-            }
-            else{
-                count++;
+        for(int i = 0; i<n && (i+size)<n; i++){
+            if(arr[i] == arr[i+size]){
+                return arr[i];
             }
         }
         
