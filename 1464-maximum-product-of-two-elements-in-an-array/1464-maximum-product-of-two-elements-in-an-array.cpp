@@ -1,27 +1,9 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        // sort(nums.begin(),nums.end());
-//         priority_queue<int> pq(nums.begin(),nums.end());
+        sort(nums.begin(),nums.end());
+        int n = nums.size();
         
-//         int a = pq.top()-1;
-//         pq.pop();
-//         int b = pq.top()-1;
-//         pq.pop();
-        
-        int a = INT_MIN, b = INT_MIN;
-        for(auto it : nums){
-            if(a < it){
-                b = a;
-                a = it;
-            }
-            else if(b < it)
-                b = it;
-        }
-        cout<<a<<" "<<b<<endl;
-        a--;
-        b--;
-        
-        return a*b;
+        return max((nums[0]-1)*(nums[1]-1),(nums[n-2]-1)*(nums[n-1]-1));
     }
 };
