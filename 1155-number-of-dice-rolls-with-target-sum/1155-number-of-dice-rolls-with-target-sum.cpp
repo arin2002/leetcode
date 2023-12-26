@@ -1,34 +1,20 @@
-class Solution
-{
-    public:
-    int dp[35][1002];
-    const int mod = 1e9 + 7;
-    int solve(int dices, int k, int target)
-    { 
-        if (dices==0 &&target == 0) return 1;
-		
-		 
-        if (dices == 0 || target<0) return 0;
-		
-		
-        
-		if (dp[dices][target] != -1) return dp[dices][target];
-        
-		int countWays = 0;
-        
-		for (int faceVal = 1; faceVal <= k; faceVal++)
-        {
-		
-           countWays%=mod;
-		   
-          countWays+=solve(dices-1,k,target-faceVal)%mod;
+class Solution {
+public:
+    int numRollsToTarget(int n, int k, int target) {
+        vector<vector<int> > arr(n+1, vector<int> (target+1, 0));
+        for(int i = 1; i <= k and i <= target; i++)
+            arr[1][i] = 1;
+
+        int sum;
+        for(int i = 2; i <= n; i++){
+            for(int j = i; j <= target; j++){
+                sum = 0;
+                for(int l = j-1; l >= j-k and l >= 0; l--)
+                    sum = (sum + arr[i-1][l])%1000000007;
+                arr[i][j] = sum;
+            }
         }
-        
-		return dp[dices][target] = countWays%mod;
-    }
-    int numRollsToTarget(int n, int k, int target)
-    {
-        memset(dp, -1, sizeof(dp));
-        return solve(n, k, target) % mod;
+
+        return arr[n][target];
     }
 };
