@@ -1,17 +1,17 @@
 class Solution {
 public:
     int numberOfBeams(vector<string>& bank) {
-        int ans = 0, prev = 0;
-        vector<int> v;
+        int n = bank.size(), ans = 0;
         
-        for(auto it : bank){
-            int c = count(it.begin(),it.end(),'1');
+        int prev = count(bank[0].begin(),bank[0].end(),'1');
+        
+        for(int i = 1; i<n; i++){
+            int curr = count(bank[i].begin(),bank[i].end(),'1');
+            // cout<<curr<<" "<<prev<<endl;
+            ans += curr*prev;
             
-            cout<<prev<<" "<<ans<<endl;
-            ans += c*prev;
-            
-            if(c)
-                prev = c;
+            if(curr != 0)
+                prev = curr;
         }
         
         return ans;
