@@ -1,4 +1,3 @@
-
 #define LL long long
 class Solution {
 public:
