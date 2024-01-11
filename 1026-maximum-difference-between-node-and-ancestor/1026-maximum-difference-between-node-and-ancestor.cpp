@@ -7,6 +7,7 @@ public:
         
         if(root == NULL) return;
        
+        
         mx = max(mx, root->val);
         mi = min(mi, root->val);
         
