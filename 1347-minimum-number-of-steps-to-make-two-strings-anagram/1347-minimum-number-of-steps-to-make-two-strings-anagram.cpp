@@ -2,6 +2,9 @@ class Solution {
 public:
     int minSteps(string s, string t) {
         
+        // if(s.size() != t.size())
+        //     return
+        
         int arr[26] = {0};
         
         for(auto it : s)
