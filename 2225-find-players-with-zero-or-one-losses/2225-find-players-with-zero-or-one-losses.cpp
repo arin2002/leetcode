@@ -1,30 +1,29 @@
 class Solution {
 public:
     vector<vector<int>> findWinners(vector<vector<int>>& matches) {
-        vector<vector<int>> ans(2,vector<int>());    
+        vector<vector<int>> ans(2);
+        unordered_map<int,int> ump;
+        unordered_set<int> st;
         
-        vector<int> losser(100001,-1);
-        
-        for(auto &it : matches){
-            int win = it[0], loss = it[1];
-            
-            if(losser[win] == -1)
-                losser[win] = 0;
-            
-            if(losser[loss] == -1)
-                losser[loss] = 1;
-            
-            else
-                losser[loss]++;
+        for(auto &it: matches){
+            ump[it[1]]++;
         }
         
-        for(int i = 1; i<100001; i++){
-            if(losser[i] == 0)
-                ans[0].push_back(i);
+        for(auto &it: matches){
+            if(ump.find(it[0]) == ump.end() && st.find(it[0]) == st.end()){
+                ans[0].push_back(it[0]);
+                st.insert(it[0]);
+            }
             
-            else if(losser[i] == 1)
-                ans[1].push_back(i);
+            if(ump[it[1]] == 1 && st.find(it[1]) == st.end()){
+                ans[1].push_back(it[1]);
+                st.insert(it[1]);
+            }
         }
+        
+        sort(ans[0].begin(),ans[0].end());
+        sort(ans[1].begin(),ans[1].end());
+        
         return ans;
     }
 };
