@@ -1,34 +1,26 @@
 class Solution {
 public:
-    
-    int solve(int i, int j, vector<vector<int>>& mat, vector<vector<int>> &dp){
-        if(i<0 || j<0 || i>=mat.size() || j>= mat[0].size())
-            return 1e6;
-        
-        if(dp[i][j] != -1)
-            return dp[i][j];
-        
-        if(i == 0){
-            return dp[i][j] = mat[0][j];
-        }
-        
-        int l = mat[i][j] + solve(i-1,j-1,mat,dp);
-        int r = mat[i][j] + solve(i-1,j,mat,dp);
-        int x = mat[i][j] + solve(i-1,j+1,mat,dp);
-        
-        return dp[i][j] = min(l,min(r,x));
-    }
-    
-    
     int minFallingPathSum(vector<vector<int>>& matrix) {
-        int ans = INT_MAX;
-        
-        int n = matrix.size(), m = matrix[0].size();
-        vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
-        for(int i = 0; i<m; i++){
-            ans = min(ans,solve(n-1,i,matrix,dp));
-        }
-        
-        return ans;
+       int n = matrix.size();
+         
+       int mini = INT_MAX;
+       vector<vector<int>> dp(n, vector<int>(n,INT_MAX));
+       for (int i = 0; i < n; i++) {
+           mini = min(mini, solve(0, i, matrix, n, dp));
+       }
+       return mini;
+    }
+
+    int solve(int row, int col, vector<vector<int>>& matrix, int n, vector<vector<int>>& dp) {
+        if (row == n) return 0; // Change condition to row == n
+        if (col < 0 || col >= n) return INT_MAX; // Change col > n-1 to col >= n
+        if (dp[row][col] != INT_MAX) return dp[row][col]; 
+      
+        dp[row][col] = matrix[row][col] + min(
+            solve(row + 1, col, matrix, n, dp),
+            min(solve(row + 1, col + 1, matrix, n, dp), solve(row + 1, col - 1, matrix, n, dp))
+        );
+
+        return dp[row][col];
     }
 };
