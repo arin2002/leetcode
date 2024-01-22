@@ -19,7 +19,7 @@ public:
         }
         
         int sum = (n*(n+1))/2;
-        // cout<<sum<<" "<<prev<<" ";
+        cout<<sum<<" "<<prev<<" ";
         ans[1] = sum-prev+ans[0];
         return ans;
     }
