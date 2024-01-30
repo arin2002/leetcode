@@ -30,7 +30,7 @@ public:
             st.push(stoi(it));
         }
         
-        cout<<st.size();
+        //cout<<st.size();
         return st.top();
     }
 };
