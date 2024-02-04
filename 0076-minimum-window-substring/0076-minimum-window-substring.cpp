@@ -1,28 +1,34 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        if (s.size() == 0 || t.size() == 0) return "";
-        vector<int> remaining(128, 0);
-        int required = t.size();
-        for (int i = 0; i < required; i++) remaining[t[i]]++;
-        // left is the start index of the min-length substring ever found
-        int min = INT_MAX, start = 0, left = 0, i = 0;
-        while(i <= s.size() && start < s.size()) {
-            if(required) {
-                if (i == s.size()) break;
-                remaining[s[i]]--;
-                if (remaining[s[i]] >= 0) required--;
-                i++;
-            } else {
-                if (i - start < min) {
-                    min = i -start;
-                    left = start;
+        if(t.size()>s.size())
+        return "";
+        unordered_map<char,int> mp;
+        for(auto itr:t)
+        mp[itr]++;
+        int start=0,len=INT_MAX,l=0,r=0,c=t.size();
+        while(r<s.size()){
+            if(mp.find(s[r])!=mp.end()){  
+                if(mp[s[r]]>0){
+                    c--;
                 }
-                remaining[s[start]]++;
-                if (remaining[s[start]] > 0) required++;
-                start++;
+                mp[s[r]]--;
             }
+            while(l<s.size() && c==0){
+                if(len>r-l+1){
+                    len=r-l+1;
+                    start=l;
+                }
+                if(mp.find(s[l])!=mp.end()){
+                    mp[s[l]]++;
+                    if(mp[s[l]]>0){
+                       c++;
+                    }
+                }
+                l++;
+            }
+            r++;
         }
-        return min == INT_MAX? "" : s.substr(left, min);
+        return len==INT_MAX?"":s.substr(start,len);
     }
 };
