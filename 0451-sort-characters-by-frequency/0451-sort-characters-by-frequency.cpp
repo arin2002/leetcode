@@ -1,26 +1,21 @@
 class Solution {
 public:
     string frequencySort(string s) {
-        unordered_map<char,int> freq;
-        vector<string> bucket(s.size()+1, "");
-        string res;
+        // vector<int> v(26);
+        unordered_map<char,int> v;
         
-        //count frequency of each character
-        for(char c:s) freq[c]++;
-        //put character into frequency bucket
-        for(auto& it:freq) {
-            int n = it.second;
-            char c = it.first;
-            bucket[n].append(n, c);
+        for(auto &it: s){
+            v[it]++;
         }
         
-        //form descending sorted string
-        for(int i=s.size(); i>0; i--) {
-            cout<<bucket[i]<<endl;
-            if(!bucket[i].empty()){
-                res.append(bucket[i]);
+        sort(s.begin(),s.end(),[&](auto a, auto b){
+            if(v[a] == v[b]){
+                return a<b;
             }
-        }
-        return res;
+            
+            return v[a]>v[b];
+        });
+        
+        return s;
     }
 };
