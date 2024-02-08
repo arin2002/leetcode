@@ -1,38 +1,35 @@
 class Solution {
+    int targetSum(vector<int> &perfectSquares, int target, vector<int> &dp){
+        if(target == 0)
+            return 0;
+        
+        if(target < 0)
+            return INT_MAX;
+        
+        if(dp[target] != INT_MAX)
+            return dp[target];
+        int minPerfectSquares = INT_MAX;
+        for(int i = 0; i < perfectSquares.size(); i++){
+            int ans = targetSum(perfectSquares, target-perfectSquares[i],dp);
+            if(ans != INT_MAX)
+                minPerfectSquares = min(minPerfectSquares, ans+1);
+        }
+        return dp[target] = minPerfectSquares;
+    }
 public:
     int numSquares(int n) {
+        vector<int> perfectSquares;
         
-        // because only one split is possible in this 1^2 like this
-        if(n<=3)
-            return n;
-        
-        // lagranges theorm says that ki any natural no can be represnted
-        // as sum of 4 integers n = a2+b2+c2+d2
-        
-        // Legendre's theorem 3 square
-        
-        // for checking perfect square
-        if(ceil(sqrt(n)) == floor(sqrt(n)))
-            return 1;
-        
-        // 4^a term remove
-        while(n%4 == 0)
-            n/=4;
-        
-        // 4^a(8b+7)
-        if(n%8 == 7)
-            return 4;
-        
-        for(int i = 1; i*i<=n; i++){
-            int b = sqrt(n-i*i);
-            
-            // 2 partions are created
-            if(b*b == (n-i*i))
-                return 2;
-            
+        //perfectSquares that can be added to get the sum = n;
+        int i = 1;
+        while(i*i <= n){
+            cout<<i*i<<endl;
+            perfectSquares.push_back(i*i);
+            i++;
         }
-        
-        
-        return 3;
+        vector<int> dp(n+1, INT_MAX);
+        //now the question has been reduced to target sum question
+        int minPerfectSquare = targetSum(perfectSquares, n, dp);
+        return minPerfectSquare;
     }
 };
