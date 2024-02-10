@@ -1,27 +1,22 @@
 class Solution {
 public:
-    int solve(string &s){
-        int l = 0, r = s.size()-1;
-        
-        while(l<r){
-            if(s[l++] != s[r--])
-                return 0;
+    bool checkPalindrome(string s, int i, int j){
+        while(i<j){
+            if(s[i]!=s[j]) return false;
+            i++;
+            j--;
         }
-        
-        return 1;
+        return true;
     }
-    
+
     int countSubstrings(string s) {
-        int ans = 0;
-        for(int i = 0; i<s.size(); i++){
-            string t;
-            for(int j = i; j<s.size(); j++){
-                t += s[j];
-                if(solve(t))
-                    ans++;
+        int cnt=0;
+        for(int i=0;i<s.length();i++){
+            for(int j=i;j<s.length();j++){
+                if(checkPalindrome(s,i,j)) cnt++;
             }
         }
-        
-        return ans;
+
+        return cnt;
     }
 };
