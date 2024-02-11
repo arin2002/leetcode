@@ -1,51 +1,32 @@
 class Solution {
 public:
-    
-    
-    int helper(int i, int j1, int j2, int n, int m, vector<vector<int>>&t,vector<vector<vector<int>>>&dp){
-        if(j1<0 || j1>m || j2<0 || j2>m)
-            return -1e9;
-        
-        if(i==n){
-            if(j1==j2)
-                return t[i][j1];
-            
-            return t[i][j1] + t[i][j2];
-        }
-        
-        if(dp[i][j1][j2] != -1){
-            return dp[i][j1][j2];
-        }
-        int maxi = -1e9;
-        for(int d1 = -1; d1<=1; d1++){
-            for(int d2 = -1; d2<=1; d2++){
-                if(j1==j2)
-                    maxi = max(maxi, helper(i+1,j1+d1,j2+d2,n,m,t,dp));
-                else
-                    maxi = max(maxi, t[i][j1]+t[i][j2] +helper(i+1,j1+d1,j2+d2,n,m,t,dp));
+    int dy[3] = {0,-1,1};
+    int memo[71][71][71];
+
+    int dfs(vector<vector<int>>& grid, int i, int c1, int c2, int m, int n){
+
+        if(i==m)return 0;
+        if(c1<0 || c2<0 || c1>=n || c2>=n) return INT_MIN;
+        if(memo[i][c1][c2] != -1) return memo[i][c1][c2];
+
+        int ans = 0;
+
+        for(int k =0;k<3;k++){
+            for(int r = 0;r<3;r++){
+                ans = max(ans, dfs(grid, i+1, c1 + dy[k], c2 + dy[r] , m, n));
             }
         }
-        
-        return dp[i][j1][j2] = maxi;
+
+        ans += (c1==c2) ? grid[i][c1] : grid[i][c1] + grid[i][c2];
+        return memo[i][c1][c2] = ans;
+
     }
-    
-    
     int cherryPickup(vector<vector<int>>& grid) {
-        int n = grid.size();
-        int m = grid[0].size();
-        
-        vector<vector<vector<int>>> dp(n,vector<vector<int>>(m,vector<int>(m,-1)));
-        
-        int count = 0;
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j<m;j++){
-                if(grid[i][j]==0)
-                    count++;
-            }
-        }
-        if(count == n*m)
-            return 0;
-        
-        return helper(0,0,m-1,n-1,m-1,grid,dp);
+        int m = grid.size(); //rows
+        if(!m)return 0;
+        int n  = grid[0].size(); //cols
+        memset(memo,-1,sizeof memo);
+        return dfs(grid,0,0,n-1,m,n);
+
     }
 };
