@@ -1,24 +1,15 @@
 class Solution {
 public:
     int findJudge(int n, vector<vector<int>>& trust) {
+        vector<int> indegree(n+1);
         
-       vector<int> count(n+1);
-        
-        for(auto it : trust){
-            // because isko trust h kisi pe
-            count[it[0]] = -1;
-            
-            // now jispe bhe trust h usko increment maaro
-            count[it[1]]++;
+        for(auto &it: trust){
+            indegree[it[1]]++;
+            indegree[it[0]]--;
         }
         
-        
-        for(int i = 1; i<=n; i++){
-            if(count[i] == -1)
-                continue;
-            
-            // ye judge hoga hamar
-            if(count[i] == n-1)
+        for(int i = 1; i<indegree.size(); i++){
+            if(indegree[i] == n-1)
                 return i;
         }
         
