@@ -8,11 +8,7 @@
  */
 class Solution {
 public:
-    bool hasCycle(ListNode *head) {
-        
-        if(head == NULL)
-            return false;
-        
+    bool hasCycle(ListNode *head) {        
         ListNode *slow = head, *fast = head;
         
         while(fast && fast->next){
