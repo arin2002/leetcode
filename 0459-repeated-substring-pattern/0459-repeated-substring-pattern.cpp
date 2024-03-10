@@ -4,9 +4,9 @@ public:
         int n = s.size();
         string st;
         
-        for(int i = 0; i<n/2; i++){
-            st += s[i];
+        for(int i = n/2; i>=1; i--){
             
+            st = s.substr(0,i);
             string t;
             
             if(n%(st.size()) != 0)
