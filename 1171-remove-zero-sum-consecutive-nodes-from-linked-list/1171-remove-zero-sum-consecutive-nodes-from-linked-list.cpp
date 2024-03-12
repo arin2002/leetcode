@@ -11,37 +11,26 @@
 class Solution {
 public:
     ListNode* removeZeroSumSublists(ListNode* head) {
-        vector<int> v;
-        ListNode* p = head, *q = head, *prev = p;
+        ListNode* dummy = new ListNode(0,head);
+        ListNode* p = dummy;
         
         while(p){
+            ListNode*q = p->next;
             int sum = 0;
+            
             while(q){
                 sum += q->val;
                 q = q->next;
                 
                 if(sum == 0){
-                    if(p == head)
-                        head = q;
-                    else{
-                        prev->next = q;
-                    }
-                    break;
+                    p->next = q;
                 }
             }
             
-            cout<<sum<<endl;
-            if(sum == 0){
-                q = head;
-                p = head;
-            }
-            else{
-                prev = p;
-                p = p->next;
-                q = p;
-            }
+            p = p->next;
+            q = p;
         }
         
-        return head;
+        return dummy->next;
     }
 };
