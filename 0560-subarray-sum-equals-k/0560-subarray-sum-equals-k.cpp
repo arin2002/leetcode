@@ -2,25 +2,19 @@ class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
         unordered_map<int,int> ump;
-        
-        int sum = 0,  count = 0;
-        // for handling  i = 0 test case;
         ump[0] = 1;
+        int sum = 0, ans = 0;
         
-        for(auto it : nums){
-            sum += it;        
-            // for finding
-            auto i = ump.find(sum-k);
+        for(auto &it: nums){
+            sum += it;
+            int ele = sum - k;
             
-            if(i!= ump.end()){
-                count += i->second;
-            }
+            if(ump.find(ele) != ump.end())
+                ans += ump[ele];
             
-            // store now
-            // map for storing prefix sum
             ump[sum]++;
         }
         
-        return count;
+        return ans;
     }
 };
