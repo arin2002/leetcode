@@ -14,22 +14,22 @@ public:
             }
         }
         
-        if(mini == maxi){
-            if(mini-1 == 0)
-                return 2;
+//         if(mini == maxi){
+//             if(mini-1 == 0)
+//                 return 2;
             
-            return 1;
-        }
+//             return 1;
+//         }
         
-        if(mini == INT_MAX && maxi == INT_MIN){
-            return 1;
-        }
+//         if(mini == INT_MAX && maxi == INT_MIN){
+//             return 1;
+//         }
         
-        if(mini<maxi){
-            if(mini != 1){
-                return 1;
-            }
-        }
+        // if(mini<maxi){
+        //     if(mini != 1){
+        //         return 1;
+        //     }
+        // }
         
         for(int i = 0; i<n; i++){
             if(nums[i] == 0){
