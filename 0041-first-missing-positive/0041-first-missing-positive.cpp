@@ -1,32 +1,21 @@
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
-        bool flag1 = true;
         int n = nums.size();
-        
-        for(auto &it: nums){
-            if(it == 1){
-                flag1 = false;
-            }
-            else if (it <= 0){
-                it = 1;
-            }
-        }
-        
-        if(flag1){
-            return 1;
-        }
-        
+    
         for(int i = 0; i<n; i++){
-            int ele = abs(nums[i])-1;
             
-            if(ele < n && nums[ele] > 0){
-                nums[ele] *= -1;
+            // nums[i] != nums[nums[i]-1] this condn is for saving infinite loop
+            // nahi daali to infinite jayega ye
+            // while isliye kyuki ham lagatar aage ja rahe ha toh while se
+            // element ki sahi position jaye isliye kar rahe ha
+            while(nums[i] > 0 && nums[i] < n && nums[i] != nums[nums[i]-1]){
+                swap(nums[i],nums[nums[i]-1]);
             }
         }
         
         for(int i = 0; i<n; i++){
-            if(nums[i]>0){
+            if(nums[i] != i+1){
                 return i+1;
             }
         }
