@@ -17,7 +17,6 @@ public:
         for(int x = 0; x<4; x++){
             int nx = i+drs[x], ny = j+drs[x+1];
             
-            // prune 3
             if(solve(nx,ny,k+1,vis, board, word)){
                 return true;
             }
@@ -32,27 +31,9 @@ public:
         n = board.size(); m = board[0].size(), l = word.size();
         vector<vector<int>> vis(n,vector<int>(m));
         
-        // prune 1
         if(n*m < l){
             return false;
         }
-        
-        // prune 2
-        unordered_map<char,int> ump;
-        
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j<m; j++){
-                ump[board[i][j]]++;
-            }
-        }
-        
-        for(auto &it: word){
-            ump[it]--;
-            
-            if(ump[it]<0)
-                return false;
-        }
-        
         
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m; j++){
