@@ -1,33 +1,41 @@
 class Solution {
 public:
     
-    bool f(vector<vector<char>>& board,string word,int i,int j,int n,int m,int k){
-        if(k >= word.size())return true;
-        if(i<0 || i>=n || j<0 || j>=m || board[i][j]=='.' || word[k]!=board[i][j]) return false;
-        // if(word.size() == 1 && word[k]==board[i][j]) return true;
-        board[i][j] = '.';
-        bool temp = false;
-        int x[4] = {0,0,-1,1};
-        int y[4] = {-1,1,0,0};
-        for(int index=0;index<4;index++){
-            temp = temp || f(board,word,i+x[index],j+y[index],n,m,k+1);
+    vector<int> drs{-1,0,1,0,-1};
+    int n,m,l;
+    
+    bool solve(int i, int j, int k, vector<vector<int>> &vis, vector<vector<char>>& board, string &word){
+        if(k == l){
+            return true;
         }
-        board[i][j] = word[k];
-        return temp;
+        
+        if(i<0 || j<0 || i>=n || j>=m || vis[i][j] || board[i][j] != word[k])
+            return false;
+        
+        vis[i][j] = 1;
+        
+        for(int x = 0; x<4; x++){
+            int nx = i+drs[x], ny = j+drs[x+1];
+            
+            if(solve(nx,ny,k+1,vis, board, word)){
+                return true;
+            }
+        }
+        
+        vis[i][j] = 0;
+        
+        return false;
     }
     
-    
-    bool exist(vector<vector<char>>& b, string word) {
-        int n = b.size(), m = b[0].size();
+    bool exist(vector<vector<char>>& board, string word) {
+        n = board.size(); m = board[0].size(), l = word.size();
         
-        vector<vector<int>> vis(n,vector<int>(m,0));       
-        // sabh words ke liye check karenge ki sahi h ki nhi
-        // aagar matching ho rhaa tabhi call karenge recursion ko
+        vector<vector<int>> vis(n,vector<int>(m));
+        
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m; j++){
-                if(word[0] == b[i][j])
-                    if(f(b,word,i,j,n,m,0))
-                        return true;
+                if(solve(i,j,0,vis,board,word))
+                    return true;
             }
         }
         
