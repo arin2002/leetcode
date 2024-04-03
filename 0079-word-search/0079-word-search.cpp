@@ -17,6 +17,7 @@ public:
         for(int x = 0; x<4; x++){
             int nx = i+drs[x], ny = j+drs[x+1];
             
+            // prune 3
             if(solve(nx,ny,k+1,vis, board, word)){
                 return true;
             }
