@@ -29,8 +29,11 @@ public:
     
     bool exist(vector<vector<char>>& board, string word) {
         n = board.size(); m = board[0].size(), l = word.size();
-        
         vector<vector<int>> vis(n,vector<int>(m));
+        
+        if(n*m < l){
+            return false;
+        }
         
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m; j++){
