@@ -1,22 +1,31 @@
 class Solution {
 public:
-    string makeGood(string s) {        
-        int i = 0;
-        while(i<s.length()-1){
-            if(!s.length())
-                break;
-            
-            if(abs(s[i]-s[i+1]) == 32){
-                s.erase(i,2);
-                //cout<<s<<endl;
-                i = 0;
+    string makeGood(string s) {
+        stack<char> st;
+        string ans;
+        
+        for(auto &it: s){    
+            if(st.empty()){
+                st.push(it);
+                continue;
             }
-            else
-                i++;
-            cout<<i<<" ";
-            cout<<s<<endl;
+            
+            int a = abs(it-st.top());
+            
+            if(a == 32){
+                st.pop();
+            }
+            else{
+                st.push(it);
+            }
         }
         
-        return s;
+        while(!st.empty()){
+            ans += st.top();
+            st.pop();
+        }
+        
+        reverse(ans.begin(),ans.end());
+        return ans;
     }
 };
