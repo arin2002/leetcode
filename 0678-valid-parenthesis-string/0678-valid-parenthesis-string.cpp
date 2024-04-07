@@ -1,59 +1,40 @@
 class Solution {
 public:
     bool checkValidString(string s) {
-        int count = 0, star = 0, n = s.size(), cnt = 0;
+        int n = s.size();
+        vector<vector<int>> dp(n,vector<int>(101,-1));
         
-        for(auto &it: s){
-            if(it == '('){
-                count++;
-            }
-            else if(it == '*'){
-                star++;
-            }
-            else if(it == ')'){
-                if(count){
-                    count--;
-                }
-                else if(star){
-                    star--;
-                    cnt++;
-                }
-                else
-                    return false;
-            }
-        }
-        
-        if(count>0){
-            int i = 0;
-            while(cnt){
-                if(s[i] == '*'){
-                    s[i] = '.';
-                    cnt--;
-                }
-                i++;
+        function<bool(int,int)> solve = [&](int i, int open){
+            if(open<0)
+                return 0;
+            
+            if(i == n){
+                if(open == 0)
+                    return 1;
+                
+                return 0;
             }
             
-            count = 0, star = 0;
-            for(int i = n-1; i>=0; i--){
-                if(s[i] == ')'){
-                    count++;
-                }
-                else if(s[i] == '*'){
-                    star++;
-                }
-                else if(s[i] == '('){
-                    if(count){
-                        count--;
-                    }
-                    else if(star){
-                        star--;
-                    }
-                    else
-                        return false;
-                }
+            if(dp[i][open] != -1)
+                return dp[i][open];
+            
+            int l = 0,r = 0,z = 0;
+            if(s[i] == '('){
+                l = solve(i+1,open+1);
             }
-        }
+            
+            if(s[i] == ')'){
+                r = solve(i+1,open-1);
+            }
+            
+            if(s[i] == '*'){
+                z = solve(i+1,open+1) | solve(i+1,open-1) | solve(i+1,open);
+            }
+            
+            return dp[i][open] = l|r|z;
+            
+        };
         
-        return true;
+        return solve(0,0);
     }
 };
