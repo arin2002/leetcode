@@ -14,24 +14,24 @@ public:
     int sumNumbers(TreeNode* root) {
         int ans = 0;
         
-        function<void(TreeNode*,string)> solve = [&](TreeNode* node,string s){  
+        function<void(TreeNode*,int)> solve = [&](TreeNode* node,int temp){  
             if(node == NULL){
                 return;
             }
             
+            temp = temp*10 + node->val;
+            
+            cout<<temp<<" ";
             if(!node->left && !node->right){
-                s += to_string(node->val);
-                ans += stoi(s);
-                s.pop_back();
-                return;
+                ans += temp;
             }
             
-            solve(node->left,s+to_string(node->val));
-            solve(node->right,s+to_string(node->val));
+            solve(node->left,temp);
+            solve(node->right,temp);
             
         };
         
-        solve(root,"");
+        solve(root,0);
         return ans;
     }
 };
