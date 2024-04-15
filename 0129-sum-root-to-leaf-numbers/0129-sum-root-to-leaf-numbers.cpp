@@ -11,26 +11,27 @@
  */
 class Solution {
 public:
-    int ans = 0;
-    
-    void traverse(TreeNode *root, string temp){
-        if(!root)
-            return;
-        
-        if(root->left == NULL && root->right == NULL){
-            temp += to_string(root->val);
-            ans += stoi(temp);
-            return;
-        }
-        
-        temp += to_string(root->val);
-        traverse(root->left,temp);
-        traverse(root->right,temp);
-    }
-    
-    
     int sumNumbers(TreeNode* root) {
-        traverse(root,"");
+        int ans = 0;
+        
+        function<void(TreeNode*,string)> solve = [&](TreeNode* node,string s){  
+            if(node == NULL){
+                return;
+            }
+            
+            if(!node->left && !node->right){
+                s += to_string(node->val);
+                ans += stoi(s);
+                s.pop_back();
+                return;
+            }
+            
+            solve(node->left,s+to_string(node->val));
+            solve(node->right,s+to_string(node->val));
+            
+        };
+        
+        solve(root,"");
         return ans;
     }
 };
