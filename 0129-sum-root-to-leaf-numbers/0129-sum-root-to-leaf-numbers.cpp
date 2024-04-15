@@ -14,24 +14,21 @@ public:
     int sumNumbers(TreeNode* root) {
         int ans = 0;
         
-        function<void(TreeNode*,int)> solve = [&](TreeNode* node,int temp){  
+        function<int(TreeNode*,int)> solve = [&](TreeNode* node,int temp){  
             if(node == NULL){
-                return;
+                return 0;
             }
             
             temp = temp*10 + node->val;
             
             cout<<temp<<" ";
             if(!node->left && !node->right){
-                ans += temp;
+                return temp;
             }
             
-            solve(node->left,temp);
-            solve(node->right,temp);
-            
+            return solve(node->left,temp)+solve(node->right,temp);
         };
         
-        solve(root,0);
-        return ans;
+        return solve(root,0);
     }
 };
