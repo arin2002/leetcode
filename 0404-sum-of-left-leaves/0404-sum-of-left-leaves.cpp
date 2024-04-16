@@ -11,28 +11,21 @@
  */
 class Solution {
 public:
-    int ans = 0;
-    void f(TreeNode *root, int val){
-        if(root == NULL)
-            return;
-        
-        if(root->left == NULL && root->right == NULL){
-            
-            if(val == 0)
-            ans += root->val;
-            return;
-        }
-        
-        f(root->left,0);
-        f(root->right,1);
-    }
-    
-    
     int sumOfLeftLeaves(TreeNode* root) {
-        // if(root->left == NULL && root->right == NULL)
-        //     return 0;
         
-        f(root,-1);
-        return ans;
+        function<int(TreeNode*,int)> solve = [&](auto root, int cnt){
+            if(!root)
+                return 0;
+            
+            if(cnt == 0){
+                if(!root->left && !root->right){
+                    return root->val;
+                }
+            }
+            
+            return solve(root->left,0) + solve(root->right,1);
+        };
+        
+        return solve(root,-1);
     }
 };
