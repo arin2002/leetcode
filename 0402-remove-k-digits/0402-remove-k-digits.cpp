@@ -12,6 +12,10 @@ public:
                 k--;
             }
             
+            if(ans.empty() && it == '0'){
+                continue;
+            }
+            
             ans.push_back(it);
         }
         
@@ -31,18 +35,18 @@ public:
         //     }
         // }
         
-        int start = ans.size();
-        for(int i = 0; i<ans.size(); i++){
-            if(ans[i] != '0'){
-                start = i;
-                break;
-            }
-        }
+        // int start = ans.size();
+        // for(int i = 0; i<ans.size(); i++){
+        //     if(ans[i] != '0'){
+        //         start = i;
+        //         break;
+        //     }
+        // }
         
 //         ans = ans.substr(0,end+1);
 //         reverse(ans.begin(),ans.end());
         
-        ans = ans.substr(start);
+        // ans = ans.substr(start);
         
         if(ans == "")
             return "0";
