@@ -26,6 +26,9 @@ public:
         while(!q.empty()){
             int n = q.size();
             
+            if(d == depth)
+                break;
+            
             for(int i = 0; i<n; i++){
                 auto node = q.front();
                 q.pop();
