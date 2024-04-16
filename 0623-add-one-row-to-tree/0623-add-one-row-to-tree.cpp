@@ -19,27 +19,36 @@ public:
             return p;
         }
         
+        int d = 1;
+        queue<TreeNode*> q;
+        q.push(root);
         
-        function<TreeNode* (TreeNode*, int)> solve = [&](TreeNode* root, int d)->TreeNode*{
-            if(!root){
-                return NULL;
-            }
+        while(!q.empty()){
+            int n = q.size();
             
-            if(d == depth-1){
-                TreeNode *p = new TreeNode(val,root->left,NULL);
-                TreeNode *q = new TreeNode(val,NULL,root->right);
-                root->left = p;
-                root->right = q;
+            for(int i = 0; i<n; i++){
+                auto node = q.front();
+                q.pop();
                 
-                return root;
+                if(d == depth-1){
+                    TreeNode *p = new TreeNode(val,node->left,NULL);
+                    TreeNode *q = new TreeNode(val,NULL,node->right);
+                    
+                    node->left = p;
+                    node->right = q;
+                }
+                
+                if(node->left)
+                    q.push(node->left);
+                
+                if(node->right){
+                    q.push(node->right);
+                }
             }
             
-            root->left = solve(root->left,d+1);
-            root->right = solve(root->right,d+1);
-            
-            return root;
-        };
+            d++;
+        }
         
-        return solve(root,1);
+        return root;
     }
 };
