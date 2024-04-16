@@ -1,27 +1,30 @@
 class Solution {
 public:
-    int trap(vector<int>& heights) {
-        int i = 0, j = heights.size()-1, l_max = 0, r_max = 0;
+    int trap(vector<int>& height) {
+        int l = 0, n = height.size(), r = height.size()-1;
+        int lmax = 0, rmax = 0, ans = 0;
         
-        int ans = 0;
-        while(i<=j){
-            if(heights[i]<=heights[j]){
-                if(heights[i]<l_max)
-                    ans += (l_max-heights[i]);
+        // logic is main try to use diagram
+        while(l<=r){
+            if(height[l]<height[r]){
+                if(lmax>height[l]){
+                    ans += lmax-height[l];
+                }
+                else{
+                    lmax = height[l];
+                }
                 
-                else
-                    l_max = heights[i];
-                
-                i++;
+                l++;
             }
             else{
-                if(heights[j] <= r_max)
-                    ans += (r_max-heights[j]);
+                if(rmax>height[r]){
+                    ans += rmax-height[r];
+                }
+                else{
+                    rmax = height[r];
+                }
                 
-                else
-                    r_max = heights[j];
-                
-                j--;
+                r--;
             }
         }
         
