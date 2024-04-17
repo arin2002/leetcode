@@ -20,9 +20,12 @@ public:
                 return;
             }
             
-            t = (char)(root->val+'a') + t;
+            // t = (char)(root->val+'a') + t;
+            t += (char)(root->val+'a');
             
             if(!root->left && !root->right){
+                reverse(t.begin(),t.end());
+                
                 if(ans.size() == 0){
                     ans = t;
                 }
