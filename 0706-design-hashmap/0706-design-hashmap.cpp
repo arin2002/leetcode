@@ -6,7 +6,9 @@ public:
     
     // vector of linked list
     vector<list<pair<int,int>>> hashmap;
-    int size = 1000;
+    // If you use 10007(nearest prime of size of array) then your solution would more efficient because Using nearest prime of size of array the chances of collision would be minimum and there will be more chances of equally distribution of element of array.
+
+    int size = 10007;
 
     MyHashMap() {
         hashmap.resize(size);
