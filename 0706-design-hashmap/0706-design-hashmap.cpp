@@ -6,7 +6,7 @@ public:
     
     // vector of linked list
     vector<list<pair<int,int>>> hashmap;
-    int size = 1e2+1;
+    int size = 100;
 
     MyHashMap() {
         hashmap.resize(size);
