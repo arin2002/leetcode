@@ -1,18 +1,7 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
     string smallestFromLeaf(TreeNode* root) {
-        string ans;
+        string ans = "~";
         int num;
         
         function<void(TreeNode*,string)>solve = [&](auto root, string t){
@@ -20,18 +9,13 @@ public:
                 return;
             }
             
+            // this is not good instead reverse is work
             // t = (char)(root->val+'a') + t;
             t += (char)(root->val+'a');
             
             if(!root->left && !root->right){
                 reverse(t.begin(),t.end());
-                
-                if(ans.size() == 0){
-                    ans = t;
-                }
-                else if(ans > t){
-                    ans = t;
-                }
+                ans = min(ans,t);
             }
             
             solve(root->left,t);
@@ -40,14 +24,6 @@ public:
         
         
         solve(root,"");
-        
-//         cout<<num;
-//         while(num){
-//             ans.push_back((char)(num%10+'a'));
-//             num /= 10;
-//         }
-        
-//         reverse(ans.begin(),ans.end());
         return ans;
     }
 };
