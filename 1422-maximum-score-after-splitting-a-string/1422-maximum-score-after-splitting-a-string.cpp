@@ -2,24 +2,18 @@ class Solution {
 public:
     int maxScore(string s) {
         int n = s.size();
-        vector<int> suffix(n);
-        suffix[n-1] = (s[n-1] == '1' ? 1: 0);
-        int ans = 0;
+        int ones = count(s.begin(),s.end(),'1');
+        int zero = 0, one = 0, ans = 0;
         
-        for(int i = n-2; i>=0; i--){
-            suffix[i] = suffix[i+1];
-            
-            if(s[i] == '1'){
-                suffix[i]++;
-            }
-        }
-        
-        int curr = (s[0] == '0' ? 1: 0);
-        for(int i = 1; i<n; i++){
-            ans = max(ans,curr+suffix[i]);
-            
+        for(int i = 0; i<n-1; i++){
             if(s[i] == '0')
-                curr++;
+                zero++;
+            else
+                one++;
+            
+            int net_one = ones-one;
+            
+            ans = max(ans,zero+net_one);
         }
         
         return ans;
