@@ -1,19 +1,17 @@
 class Solution {
 public:
     string destCity(vector<vector<string>>& paths) {
-        map<string,string> ump;
+        unordered_set<string> st;
         
         for(auto &it: paths){
-            ump[it[0]] = it[1];
+            st.insert(it[0]);
         }
         
-        function<string(string)> dfs = [&](string city){
-            if(ump.find(city) == ump.end())
-                return city;
-              
-            return dfs(ump[city]);
-        };
+        for(auto &it: paths){
+            if(st.find(it[1]) == st.end())
+                return it[1];
+        }
         
-        return dfs(paths[0][0]);
+        return "";
     }
 };
