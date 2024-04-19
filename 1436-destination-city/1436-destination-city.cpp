@@ -1,19 +1,19 @@
 class Solution {
 public:
     string destCity(vector<vector<string>>& paths) {
-        for(int i=0; i<paths.size(); i++)
-        {
-            string dest=paths[i][1];
-            bool isdest=true;
-            for(int j=0; j<paths.size(); j++)
-                if(paths[j][0]==paths[i][1])
-                {
-                    isdest=false;
-                    break;
-                }
-            if(isdest)
-                return paths[i][1];
+        unordered_map<string,string> ump;
+        
+        for(auto &it: paths){
+            ump[it[0]] = it[1];
         }
-        return "";
+        
+        function<string(string)> dfs = [&](string city){
+            if(ump.find(city) == ump.end())
+                return city;
+              
+            return dfs(ump[city]);
+        };
+        
+        return dfs(paths[0][0]);
     }
 };
