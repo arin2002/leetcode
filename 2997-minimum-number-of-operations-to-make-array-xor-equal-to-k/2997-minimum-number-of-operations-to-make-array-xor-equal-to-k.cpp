@@ -1,26 +1,25 @@
 class Solution {
 public:
     int minOperations(vector<int>& nums, int k) {
-        vector<int> bits(32);
-        for(int i = 0;i < nums.size();i++){
-            for(int j = 0;j < 32;j++){
-                if(nums[i] & (1 << j)){
-                    bits[j]++;
-                }
-            }
+        int xored = nums[0], n = nums.size();
+        int ans = 0;
+        
+        for(int i = 1; i<n; i++){
+            xored ^= nums[i];
         }
-        int count = 0;
-        for(int i = 0;i < 32;i++){
-            if(k & (1 << i)){
-                if(bits[i] % 2 == 0){
-                    count++;
-                }
-            }else{
-                if(bits[i] % 2){
-                    count++;
-                }
+        
+        while(xored || k){
+            int b1 = xored&1;
+            int b2 = k&1;
+            
+            xored/=2;
+            k /= 2;
+            
+            if(b1^b2){
+                ans++;
             }
-        }
-        return count;
+        }   
+        
+        return ans;
     }
 };
