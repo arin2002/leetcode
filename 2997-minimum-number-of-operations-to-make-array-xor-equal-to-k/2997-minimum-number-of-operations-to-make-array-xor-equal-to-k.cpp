@@ -8,21 +8,22 @@ public:
             xored ^= nums[i];
         }
         
-        if(xored == k)
-            return ans;
+        // if(xored == k)
+        //     return ans;
         
-        while(xored || k){
-            int b1 = xored&1;
-            int b2 = k&1;
+//         while(xored || k){
+//             int b1 = xored&1;
+//             int b2 = k&1;
             
-            xored >>= 1;
-            k >>= 1;
+//             xored >>= 1;
+//             k >>= 1;
             
-            if(b1^b2){
-                ans++;
-            }
-        }   
+//             if(b1^b2){
+//                 ans++;
+//             }
+//         }   
         
-        return ans;
+        int diff = xored^k;
+        return __builtin_popcount(diff);
     }
 };
