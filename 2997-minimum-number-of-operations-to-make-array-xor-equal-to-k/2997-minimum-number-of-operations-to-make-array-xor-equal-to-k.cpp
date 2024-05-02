@@ -8,12 +8,15 @@ public:
             xored ^= nums[i];
         }
         
+        if(xored == k)
+            return ans;
+        
         while(xored || k){
             int b1 = xored&1;
             int b2 = k&1;
             
-            xored/=2;
-            k /= 2;
+            xored >>= 1;
+            k >>= 1;
             
             if(b1^b2){
                 ans++;
