@@ -4,15 +4,16 @@ public:
         int ans = -1;
         // unordered_set<int> st;
         // vector<int> v(2001);
-        bitset<2048> bs;
+        // bitset<2048> bs;
+        int arr[2001] = {0};
         
         for(auto &it: nums){
-            auto i = bs[1024-it];
+            auto i = arr[1000-it];
             
             if(i)
                 ans = max(ans,abs(it));
             
-            bs[it+1024] = true;
+            arr[it+1000]++;
         }
         
         return ans;
