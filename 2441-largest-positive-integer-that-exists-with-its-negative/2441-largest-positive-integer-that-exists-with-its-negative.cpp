@@ -3,15 +3,16 @@ public:
     int findMaxK(vector<int>& nums) {
         int ans = -1;
         // unordered_set<int> st;
-        vector<int> v(2001);
+        // vector<int> v(2001);
+        bitset<2048> bs;
         
         for(auto &it: nums){
-            auto i = v[1000-it];
+            auto i = bs[1024-it];
             
-            if(i > 0)
+            if(i)
                 ans = max(ans,abs(it));
             
-            v[it+1000]++;
+            bs[it+1024] = true;
         }
         
         return ans;
