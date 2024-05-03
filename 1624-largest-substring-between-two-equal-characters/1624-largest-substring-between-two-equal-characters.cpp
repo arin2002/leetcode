@@ -1,17 +1,19 @@
 class Solution {
 public:
     int maxLengthBetweenEqualCharacters(string s) {
-        unordered_map<char, int> mp;
-        int n = s.size();
-        int ans = -1;
-        for(int i = 0; i < n; ++i){
-            if(!mp.count(s[i])){
-                mp[s[i]] = i;
+        int n = s.size(),start = 0, ans = -1;
+        vector<int> freq(26,-1);
+        
+        for(int end = 0; end<n; end++){
+            
+            if(freq[s[end]-'a'] == -1){
+                freq[s[end]-'a'] = end;
             }
             else{
-                ans = max(ans, i - mp[s[i]] - 1);
+                ans = max(ans,end-freq[s[end]-'a']-1);
             }
         }
+        
         return ans;
     }
 };
