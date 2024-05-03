@@ -5,39 +5,28 @@ public:
         int i = 0, j = 0;
     
         while(i<n || j<m){
-            string a = "0", b = "0";
+            // string a = "0", b = "0";
+            int a = 0, b = 0;
             
             while(i<n && s[i] != '.'){   
-                a += s[i++];
+                a = a*10 + (s[i++]-'0');
             }
         
             while(j<m && t[j] != '.'){
-                b += t[j++];
+                b = b*10 + (t[j++]-'0');
             }
             
-            int c = stoi(a), d = stoi(b);
-            
-            if(c > d){
+            if(a > b){
                 return 1;
             }
-            else if(d > c){
+            else if(b > a){
                 return -1;
             }
             
             i++;
             j++;
         }
-        
-//         while(i<n){
-//             if(s[i++] > '0')
-//                 return 1;
-//         }
-        
-//         while(j<m){
-//             if(t[j++] > '0')
-//                 return -1;
-//         }
-                
+                        
         return 0;
     }
 };
