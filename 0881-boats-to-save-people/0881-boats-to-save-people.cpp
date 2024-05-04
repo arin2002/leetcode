@@ -9,12 +9,9 @@ public:
             
             if(a+b <= limit){
                 low++;
-                high--;
-            }
-            else{
-                high--;
             }
             
+            high--;
             ans++;
         }
         
