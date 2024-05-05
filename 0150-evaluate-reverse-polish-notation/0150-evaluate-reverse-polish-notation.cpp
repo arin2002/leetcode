@@ -1,36 +1,36 @@
 class Solution {
 public:
-    
-    void fun(stack<long long> &st, string ch){
-        long long b = st.top();
-        st.pop();
-        long long a = st.top();
-        st.pop();
-        
-        if(ch == "+"){
-            st.push(a+b);
-        }
-        else if(ch == "-")
-            st.push(a-b);
-        else if(ch == "/")
-            st.push(a/b);
-        else
-            st.push(a*b);
-    }
-    
     int evalRPN(vector<string>& tokens) {
-        stack<long long> st;
+        stack<int> st;
         
-        int a,b;
-        for(auto &it : tokens){
-            if(it == "+" || it == "/" || it == "-" || it == "*"){
-                fun(st,it);
+        for(auto &s: tokens){
+            
+            if(!(s == "*" || s == "+" || s == "-" || s == "/")){
+                st.push(stoi(s));
             }
-            else
-            st.push(stoi(it));
+            else{
+                int a = st.top();
+                st.pop();
+                int b = st.top();
+                st.pop();
+                
+                if(s == "*"){
+                    st.push(a*b);
+                }
+                else if(s == "+"){
+                    st.push(a+b);
+                }
+                else if(s == "-"){
+                    st.push(b-a);
+                }
+                else{
+                    st.push(b/a);
+                }
+            }
+            // cout<<st.top()<<" ";
         }
         
-        //cout<<st.size();
+        cout<<1;
         return st.top();
     }
 };
