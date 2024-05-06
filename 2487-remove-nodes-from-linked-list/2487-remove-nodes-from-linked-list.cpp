@@ -10,30 +10,47 @@
  */
 class Solution {
 public:
+    
+    ListNode* reverse(ListNode* head){
+        if(head == NULL)
+            return head;
+            
+        ListNode* prev = NULL, *curr = head, *next = head->next;
+        
+        while(next){
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            next = next->next;
+        }
+        
+        curr->next = prev;
+        return curr;
+    }
+    
     ListNode* removeNodes(ListNode* head) {
-        ListNode* curr = head;
-        stack<ListNode*> st;
+        ListNode* newHead, *curr, *start;
+        
+        newHead = reverse(head);
+        curr = newHead->next; start = newHead;
         
         while(curr){
-            while(!st.empty() && st.top()->val < curr->val){
-                st.pop();
+            int a = start->val;
+            
+            while(curr && a>curr->val){
+                curr = curr->next;
             }
             
-            if(st.empty()){
-                head = curr;
-            }
-            else{
-                auto p = st.top();
-                p->next = curr;
-            }
+            start->next = curr;
+            start = curr;
             
-            st.push(curr);
+            if(!curr)
+                break;
+            
             curr = curr->next;
         }
         
-        if(st.empty())
-            return NULL;
         
-        return head;
+        return reverse(newHead);
     }
 };
