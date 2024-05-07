@@ -1,35 +1,26 @@
 class Solution {
 public:
     int minOperations(string s) {
-        int v=0;
-            int v1=0;
+        int n = s.size(), ans = 0;
+        int ans1 = 0, ans2 = 0, f1 = 0;
+        // our answer can be in form 0101010101
+        // or 101010101010
         
-        for(int i=0;i<s.size();i++){
-                if(i%2==0){
-                    if(s[i]!='1'){
-                        v++;
-                    }
-                }
-                else{
-                    if(s[i]=='1'){
-                        v++;
-                    }
-                }
-            }
+        // so we will compare whichever will give minimum will be returneed
         
-            for(int i=0;i<s.size();i++){
-                if(i%2==0){
-                    if(s[i]!='0'){
-                        v1++;
-                    }
-                }
-                else{
-                    if(s[i]!='1'){
-                        v1++;
-                    }
-                }
-            }
+        for(auto &it: s){
+            int a = it-'0';
+            
+            if(a != f1)
+                ans1++;
+            else
+                ans2++;
+            
+            
+            // change flag
+            f1 = !f1;
+        }
         
-        return min(v,v1);
+        return min(ans1,ans2);
     }
 };
