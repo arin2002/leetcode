@@ -10,49 +10,30 @@
  */
 class Solution {
 public:
-    
-    ListNode* reverse(ListNode* head){
-        ListNode* prev = NULL, *curr = head, *next;
-        
-        while(curr){
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
-        }
-        
-        return prev;
-    }
-    
     ListNode* doubleIt(ListNode* head) {
-        ListNode* newHead, *p, *prev;
+        ListNode *curr = head, *prev = NULL;
         int carry = 0;
         
-        newHead = reverse(head);
-        p = newHead;
-        
-        while(p || carry){
-            int a = 0;
+        while(curr){
+            int prod = (curr->val*2+carry)%10;
+            carry = (curr->val*2+carry)/10;
             
-            if(p)
-                a = p->val;
+            curr->val = prod;
             
-            
-            int prod = (a*2+carry)%10;
-            carry = (a*2+carry)/10;
-            
-            if(p){
-                p->val = prod;
-                prev = p;
-                p = p->next;
+            if(carry){
+                if(prev == NULL){
+                    ListNode* temp = new ListNode(1,curr);
+                    head = temp;
+                }
+                else
+                    prev->val = prev->val+1;
             }
-            else{
-                ListNode *temp = new ListNode(prod);
-                prev->next = temp;
-                prev = temp;
-            }
+            
+            carry = 0;
+            prev = curr;
+            curr = curr->next;
         }
         
-        return reverse(newHead);
+        return head;
     }
 };
