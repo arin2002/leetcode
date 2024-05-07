@@ -11,26 +11,23 @@
 class Solution {
 public:
     ListNode* doubleIt(ListNode* head) {
-        ListNode *curr = head, *prev = NULL;
+        ListNode *curr = head;
         int carry = 0;
+        if (head->val > 4) {
+            head = new ListNode(1, head);
+        }
         
         while(curr){
-            int prod = (curr->val*2+carry)%10;
-            carry = (curr->val*2+carry)/10;
+            curr->val = (curr->val*2)%10;
             
-            curr->val = prod;
-            
-            if(carry){
-                if(prev == NULL){
-                    ListNode* temp = new ListNode(1,curr);
-                    head = temp;
+            if(curr && curr->next){
+                int carry = (curr->next->val*2)/10;
+                
+                if(carry){
+                    curr->val++;
                 }
-                else
-                    prev->val = prev->val+1;
             }
             
-            carry = 0;
-            prev = curr;
             curr = curr->next;
         }
         
