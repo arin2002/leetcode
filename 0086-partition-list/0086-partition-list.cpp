@@ -36,6 +36,13 @@ public:
         p->next = right->next;
         q->next = NULL;
         
-        return left->next;
+        auto ans = left->next;
+        
+        
+        // memory leak
+        delete left;
+        delete right;
+
+        return ans;
     }
 };
