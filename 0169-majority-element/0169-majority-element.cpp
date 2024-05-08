@@ -1,17 +1,23 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        int n = nums.size();
-        unordered_map<int,int> ump;
+        // Boyer-Moore voting algo
+        int candidate = -1, count = 0;
         
         for(auto &it: nums){
-            ump[it]++;
-            
-            if(ump[it] > n/2){
-                return it;
+            if(candidate == -1 || count == 0){
+                candidate = it;
+                count = 1;
+            }
+            else{
+                if(candidate == it)
+                    count++;
+                else
+                    count--;
             }
         }
         
-        return -1;
+        // verifaction step not needed in this
+        return candidate;
     }
 };
