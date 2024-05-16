@@ -13,43 +13,20 @@ class Solution {
 public:
     
     bool evaluateTree(TreeNode* root) { 
-        stack<int> st;
+        if(!root)
+            return 0;
         
-        function<void(TreeNode*)> solve = [&](TreeNode* root){
-            if(!root)
-                return;
-            
-            if((root->left == NULL) && (root->right == NULL)){
-                st.push(root->val);
-                return;
-            }
-            
-            solve(root->left);
-            solve(root->right);
-            
-            if(root->val == 2){
-                int a = st.top();
-                st.pop();
-                
-                int b = st.top();
-                st.pop();
-                
-                st.push(a|b);
-            }
-            else{
-                int a = st.top();
-                st.pop();
-                
-                int b = st.top();
-                st.pop();
-                
-                st.push(a&b);
-            }
-            
-        };
+        if(!root->left && !root->right){
+            return root->val;
+        }
         
+        int a = evaluateTree(root->left);
+        int b = evaluateTree(root->right);
         
-        solve(root);
-        return st.top();
+        if(root->val == 2){
+            return a|b;
+        }
+        
+        return a&b;
     }
 };
