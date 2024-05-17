@@ -12,18 +12,33 @@
 class Solution {
 public:
     TreeNode* removeLeafNodes(TreeNode* root, int target) {
-        if(!root)
-            return NULL;
         
-        root->left = removeLeafNodes(root->left,target);
-        root->right = removeLeafNodes(root->right,target);
-        
-        if(root){
-            if(root->val == target && !root->left && !root->right){
-                return NULL;
+        function<void(TreeNode*,TreeNode*,int)> solve = [&](TreeNode* curr, TreeNode* prev, int c){
+            if(!curr)
+                return;
+                        
+            solve(curr->left,curr,0);
+            solve(curr->right,curr,1);
+            
+            if(curr->val == target && !curr->left && !curr->right){
+                if(prev == NULL){
+                    root = prev;
+                    return;
+                }
+                
+                if(c == 0){
+                    prev->left = NULL;
+                }
+                else{
+                    prev->right = NULL;
+                }
+                
+                delete(curr);
+                return;
             }
-        }
+        };
         
+        solve(root,NULL,-1);
         return root;
     }
 };
