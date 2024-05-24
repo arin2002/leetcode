@@ -1,36 +1,41 @@
 class Solution {
 public:
-    
-    vector<vector<string>> ans;
-    vector<string> temp;
-    
-    bool check(int low, int high, string &s){
-        while(low<high){
-            if(s[low++] != s[high--])
-                return 0;
-        }
-        return 1;
-    }
-    
-    void solve(int ind, string &s){
-        if(ind >= s.size()){
-            ans.push_back(temp);
-            return;
-        }
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>> ans;
+        int n = s.size();
+        vector<string> temp;
         
-        // ind -> start, i -> end
-        for(int i = ind; i<s.size(); i++){
-            if(check(ind,i,s)){
-                temp.push_back(s.substr(ind,i-ind+1));
-                solve(i+1,s);
+        function<void(int)> solve = [&](int ind){
+            if(ind >= n){
+                int flag = 1, m = temp.size();
+                
+                for(auto &it: temp){
+                    string st = it;
+                    reverse(st.begin(),st.end());
+                    
+                    if(st != it){
+                        flag = 0;
+                        break;
+                    }
+                }
+                
+                if(flag == 0 ||  m == 0)
+                    return;
+                
+                ans.push_back(temp);
+                return;
+            }
+            
+            string t;
+            for(int i = ind; i<n; i++){
+                t += s[i];
+                temp.push_back(t);
+                solve(i+1);
                 temp.pop_back();
             }
-        }
-    }
-    
-    
-    vector<vector<string>> partition(string s) {
-        solve(0,s);
+        };
+        
+        solve(0);
         return ans;
     }
 };
