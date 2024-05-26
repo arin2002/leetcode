@@ -1,19 +1,23 @@
 class Solution {
 public:
     bool checkRecord(string s) {
+        int total = 0, temp = 0;
         
-        int count = 0, count1 = 0;
-        for(int j = 0; j<s.size(); j++){
-            if(s[j] == 'A')
-                count++;
+        for(auto &it: s){
+            if(it == 'A'){
+                total++;
+            }
             
-            if(j<s.size()-2 && s[j] == 'L' && s[j+1] == 'L' && s[j+2] == 'L')
-                count1++;
+            if(it == 'L'){
+                temp++;
+            }
+            else
+                temp = 0;
+            
+            if(total == 2 || temp == 3)
+                return false;
         }
         
-        if(count >= 2 || count1)
-            return 0;
-        
-        return 1;
+        return true;
     }
 };
