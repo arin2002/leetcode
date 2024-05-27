@@ -5,8 +5,8 @@ public:
         int n = nums.size();
         
         auto solve = [&](int x){
-            int it = lower_bound(nums.begin(),nums.end(),x)-nums.begin();
-            return x == (n-it);
+            int it = nums.end()-lower_bound(nums.begin(),nums.end(),x);
+            return x == it;
         };
         
 
