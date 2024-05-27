@@ -1,16 +1,20 @@
 class Solution {
 public:
     int specialArray(vector<int>& nums) {
-        int v[102];
-        memset(v, 0, sizeof v);
-        for (const auto &n : nums) {
-            ++v[n > 100 ? 100 : n];
-        }
-        for (int i = 100; i > 0; --i) {
-            v[i] = v[i + 1] + v[i];
-            if (v[i] == i)
+        sort(nums.begin(),nums.end());
+        int n = nums.size();
+        
+        auto solve = [&](int x){
+            int it = lower_bound(nums.begin(),nums.end(),x)-nums.begin();
+            return x == (n-it);
+        };
+        
+
+        for(int i = 0; i<=n; i++){
+            if(solve(i))
                 return i;
         }
+        
         return -1;
     }
 };
