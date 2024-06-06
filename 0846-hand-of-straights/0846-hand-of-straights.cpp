@@ -1,7 +1,6 @@
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
-        sort(hand.begin(), hand.end());
         int n = hand.size();
         map<int, int> mp;
         
