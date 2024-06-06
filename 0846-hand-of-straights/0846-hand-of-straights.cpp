@@ -15,11 +15,8 @@ public:
             auto it = mp.begin();
             int ele = it->first;
             
-            if (--it->second == 0)
-                mp.erase(it);
-            
-            for (int i = 0; i < groupSize - 1; i++, ele++) {
-                auto nextIt = mp.find(ele + 1);
+            for (int i = 0; i < groupSize; i++, ele++) {
+                auto nextIt = mp.find(ele);
                 
                 if (nextIt == mp.end()) {
                     return false;
