@@ -3,6 +3,7 @@ public:
     int numberOfSubarrays(vector<int>& nums, int k) {
         int n = nums.size(), ans = 0;
         
+        // done this step to convert our problem in no of subarays sum equal k
         for(int i = 0; i<n; i++){
             if(nums[i]&1){
                 nums[i] = 1;
