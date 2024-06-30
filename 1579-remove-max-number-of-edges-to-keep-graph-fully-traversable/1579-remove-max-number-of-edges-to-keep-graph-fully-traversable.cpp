@@ -21,7 +21,8 @@ public:
             return x;
         }
         
-        // Path compression.
+        // Path compression...
+        // itni 
         return representative[x] = findRepresentative(representative[x]);
     }
     
@@ -50,6 +51,8 @@ public:
         return components == 1;
     }
 };
+
+
 
 class Solution {
 public:
@@ -82,3 +85,12 @@ public:
         return -1;
     }
 };
+
+
+
+
+
+
+
+
+
