@@ -1,17 +1,16 @@
 class Solution {
 public:
     int findComplement(int num) {
-        int mask = 0, ans = ~num;
+        int ans = 0, turn = 0;
         
-        while(num){
-            mask <<= 1;
-            //last bit mai 0 aata rahega
-            mask |= 1;
+        while(num>0){
+            if(!(num%2)){
+                ans += pow(2,turn);
+            }
             
-            num >>= 1;
+            turn++;
+            num /= 2;
         }
-        
-        ans &= mask;
         
         return ans;
     }
