@@ -20,12 +20,14 @@ public:
         while(p){
             if(st.find(p->val) != st.end()){
                 prev->next = p->next;
+                ListNode *del = p;
+                p = p->next;
+                delete(del);
             }
             else{
                 prev = p;
+                p = p->next;
             }
-            
-            p = p->next;
         }
         
         return t->next;
