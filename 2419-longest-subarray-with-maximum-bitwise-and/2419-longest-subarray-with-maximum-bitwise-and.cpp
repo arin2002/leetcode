@@ -1,22 +1,30 @@
 class Solution {
 public:
-    static int longestSubarray(const vector<int>& nums) {
-        int k = 1;  // instead of k = *max_element(begin(nums), end(nums));
-        int ans = 0;
-        int curr = 0;
-        for (int n : nums) {
-            if (n == k) {
-                ++curr;
-                ans = max(ans, curr);
-            } else if (n > k) {
-                // We found a bigger number. Start all over.
-                k = n;
-                curr = 1;
-                ans = 1;
-            } else {
-                curr = 0;
+    int longestSubarray(vector<int>& nums) {
+        int maxvalue=INT_MIN;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(maxvalue<nums[i])
+            {
+                maxvalue=nums[i];
             }
         }
-        return ans;
+        int maxcount=1;
+        int tempcount=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]==maxvalue)
+            {
+                tempcount++;
+            }
+            else
+            {
+                maxcount=max(maxcount,tempcount);
+                tempcount=0;
+            }
+        }
+        maxcount=max(maxcount,tempcount);
+
+        return maxcount;
     }
 };
