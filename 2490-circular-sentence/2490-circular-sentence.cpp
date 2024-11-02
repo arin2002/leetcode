@@ -1,16 +1,26 @@
 class Solution {
 public:
     bool isCircularSentence(string s) {
-        unordered_map<char,int> ump;
         
+        int n = s.size();
         
-        if(s[0] !=  s[s.size()-1])
+        if(s[n-1] != s[0])
             return false;
         
-        for(int i = 0; i<s.length()-1; i++){
-            if(s[i] != ' ' && s[i+1] == ' ' && s[i+2] != s[i])
+        for(int i = 0; i<n; i++){  
+            
+            while(i+1<n && s[i+1] != ' '){
+                i++;
+            }
+            
+            if(i+2<n && s[i] != s[i+2]){
+                cout<<s[i]<<" "<<s[i+2]<<endl;
                 return false;
+            }
+            
+            i++;
         }
+        
         
         return true;
     }
