@@ -1,47 +1,46 @@
 class Solution {
 public:
-    int minimumSubarrayLength(vector<int>& nums, int k) {
+    int minimumSubarrayLength(vector<int>& nums, int k) 
+    {
         int n = nums.size();
-        int ans = INT_MAX;
-        vector<int> b(32,0);//this bits array
-        int temp=0;
-        int l = 0;
-        int r = 0;
-
-        while(r<n){
-            temp = temp | nums[r];
+        int minLength = INT_MAX;
+        int left = 0;
+        int currentOr = 0;
+        vector<int> bits(32, 0);
+        
+        for (int right = 0; right < n; right++) 
+        { 
+            currentOr |= nums[right];
             
-            for(int i =0;i<32;i++){
-                if(nums[r] & (1<<i)){
-                    b[i]++;
+            for (int bit = 0; bit < 32; bit++) 
+            {
+                if (nums[right] & (1 << bit)) 
+                {
+                    bits[bit]++;
                 }
             }
 
-            if(temp>=k){
-                //cout<<r<<l<<ans << " ddfa" ; this for debuging purpose
-                ans = min(ans,r-l+1);
-            }
+            while (left <= right && currentOr >= k) 
+            {
+                minLength = min(minLength, right - left + 1);
+                int newOr = 0;
 
-            while(l<r && temp>=k){
-                for(int i =0;i<32;i++){
-                    if(nums[l] & (1<<i)){
-                        b[i]--;
+                for (int bit = 0; bit < 32; bit++) 
+                {
+                    if (nums[left] & (1 << bit)) 
+                    {
+                       bits[bit]--;
                     }
-                }  
-                int recentnew=0;
-                for(int i =0;i<32;i++){
-                    if(b[i]>0){
-                        recentnew += 1<<i;
+                    if (bits[bit] > 0)
+                    {
+                       newOr |= (1 << bit);
                     }
-                }  
-                l++;
-                temp = recentnew;
-                if(temp>=k){
-                    ans = min(ans,r-l+1);
                 }
+                currentOr = newOr;
+                left++;
             }
-            r++;
         }
-        return ans==INT_MAX?-1:ans;
+
+        return (minLength == INT_MAX) ? -1 : minLength;
     }
 };
