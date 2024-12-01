@@ -1,28 +1,20 @@
 class Solution {
 public:
-    bool checkIfExist(vector<int>& nums) {
-        int n = nums.size();
-        
-        unordered_map<int,int> ump;
-        for(auto i : nums)
-            ump[i]++;
-        
-        for(int i = 0; i<n; i++)
-        {
-            long long int temp = nums[i]*2;
-            auto it = ump.find(temp);
-            
-            if(it!=ump.end()){
-                if(nums[i] == 1 || nums[i] == 0)
-                {
-                    if(it->second >=2)
-                        return true;
-                }
-                else
-                    return true;
-            }
-        }
-        
-        return false;
+    bool checkIfExist(vector<int>& arr) {
+        set<int>st;
+for( int i = 0 ; i< arr.size() ; i++){
+    if( (arr[i]%2 == 0)  && (st.find(arr[i] / 2) != st.end())){
+        cout << arr[i];
+        return true;
+    }
+
+    else if(st.find(arr[i]*2) != st.end()){
+        return true;
+    }
+
+    st.insert(arr[i]);
+}
+
+return false;
     }
 };
